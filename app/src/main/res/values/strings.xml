@@ -2,4 +2,12 @@
     <string name="app_name">Chikara</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Menu Titles -->
+    <string name="user">User</string>
+    <string name="my_chicks">My</string>
+    <string name="new_chick">New</string>
+    <string name="find_chick">Find</string>
+    <string name="nakamas">Nakamas</string>
+
+
 </resources>
