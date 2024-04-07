@@ -6,6 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentNakamaBinding
 import com.cafeconpalito.chikara.domain.useCase.GetLoginUseCase
@@ -14,12 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 
 @AndroidEntryPoint
 class NakamaFragment : Fragment() {
@@ -42,38 +41,87 @@ class NakamaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         initUI()
+
+        val user = "@usuario1"
+        val password = "a722c63db8ec8625af6cf71cb8c2d939"
+
+        nakamaViewModel.tryLogin(user,password)
 
     }
 
     private fun initUI() {
-        loggin()
+        //loggin() // sin modificar view
+        initUIState()
+
     }
+
+
 
     /**
      * Prueba de Login
+     * OJO NO PERMITE MODIFICAR LA VIEW (BINDING)
      */
     fun loggin() {
-
 
         val user = "@usuario1"
         val password = "a722c63db8ec8625af6cf71cb8c2d939"
 
 
-        //Hilo normal
         CoroutineScope(Dispatchers.IO).launch {
-
 
             if ( getLoginUseCase(user, password)) {
                 Log.i("Fragment Nakama: ", " Login Correcto")
 
             } else {
                 Log.i("Fragment Nakama: ", " Login Incorrecto")
+
+            }
+        }
+
+    }
+
+
+    //Necesario para Que initUIState Funcione
+    //SE TENDRIA QUE DECLARAR ARRIBA!
+    private val nakamaViewModel:NakamaViewModel by viewModels()
+
+    //Parte de el inicio de la UI para que este pendiende si cambia el estado al llamar al metodo.
+    private fun initUIState() {
+
+        //Hilo que esta pendiente de la vida de la VIEW, si la view muere el para!
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                nakamaViewModel.state.collect {
+                    //Siempre que cambien el estado hara lo siguiente
+                    when (it) {
+                        //it es la informacion del estado que puede contener informacion.
+                        //Cada cambio de estado llama a su metodo
+                        NakamaState.Loading -> loadingState()
+                        is NakamaState.Error -> errorState(it)
+                        is NakamaState.Success -> successState(it)
+                    }
+                }
             }
         }
     }
 
+    private fun successState(it: NakamaState.Success) {
+        //Lo que quieras hacer cuando sea OK
+        binding.pbLoggin.isVisible = false
+        binding.tvPrueba.text = it.toString()
+    }
+
+    private fun errorState(it: NakamaState.Error) {
+        //Lo que quieras hacer cuando sea Error
+        binding.pbLoggin.isVisible = false
+        binding.tvPrueba.text = it.toString()
+    }
+
+    private fun loadingState() {
+        binding.pbLoggin.isVisible = true
+        //Lo que quieras hacer cuando esta cargando
+    }
 
 
 }

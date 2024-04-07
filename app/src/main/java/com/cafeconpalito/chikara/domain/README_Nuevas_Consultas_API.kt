@@ -129,15 +129,151 @@ class README_Nuevas_Consultas_API {
 
         6.1.- FRAGMENTO:
 
-            Es necesario
+            Es necesario:
+
+            * Injectar como lateinit var el USE CASE, Encargado de realizar las consultas a la Api desde el dominio.
 
             @Inject
-            lateinit var getLogin: GetLogin // Injected dependency
+            lateinit var <name>UseCase: <name>UseCase // Injected dependency
 
-            @Inject
-            lateinit var getChicksUseCase: GetChicksUseCase
+            * Desde una funcion y dentro de una CoroutineScope se lanza la peticion y se espera respuesta.
+
+            OJO INCONVENIENTE DE ESTE METODO NO PERMITE MODIFICAR LA VISTA
+            YA QUE ESTA TRABAJANDO EN UN HILO SEPARADO
+
+               Ejemplo:
+
+               fun loggin() {
+
+                    val user = "@usuario1"
+                    val password = "a722c63db8ec8625af6cf71cb8c2d939"
+
+                    //Lanza un hilo
+                    CoroutineScope(Dispatchers.IO).launch {
+
+                        if ( getLoginUseCase(user, password)) {
+                            Log.i("Fragment Nakama: ", " Login Correcto")
+
+                        } else {
+                            Log.i("Fragment Nakama: ", " Login Incorrecto")
+                        }
+                    }
+                }
+
+            * PARA SOLUCIONARLO SE REALIZA LO SIGUIENTE.
+
+            Se crea una clase State, esta reflejara los estados posibles y la informacion que devuelven.
+
+            Ejemplo:
+
+            sealed class <name>State {
+
+                //Se ocupa del Estado de loading
+                data object Loading: <name>State()
+                //Al cambiar el estado a error enviara los datos que sean necesarios
+                data class Error(val error:String): <name>State()
+                //Al cambiar al estado de Success nos enciara los datos que necesitemos.
+                data class Success(val apiKey:String): <name>State()
+
+            }
+
+            Se crea una clase de tipo ViewModel se encargara de controlar los estados.
+            Se le injecta el constructor de los Use Case necesarios.
 
 
+            Ejemplo:
+
+            @HiltViewModel
+            class <name>ViewModel @Inject constructor(private val <name>UseCase: <name>UseCase) : ViewModel(){
+
+
+                //Como valor inicial le paso el estado de Cargando
+                private var _state = MutableStateFlow< <name>State>(<name>State.Loading)
+                //devuelve el estado en el que se encuentra, por eso no es publica
+                val state: StateFlow< <name>State > = _state
+
+
+                Se ocupa de intentar logear y cambia el estado en concecuencia
+
+                fun tryLogin(user: String, password: String){
+
+                    //Esta trabajando en el Hilo principal
+                    viewModelScope.launch {
+
+                        //Cambio el stado a loading.
+                        _state.value = NakamaState.Loading
+
+                        //Esto lanza un hilo secundario, almaceno la respuesta en result
+                        val result = withContext(Dispatchers.IO){
+                            <name>UseCase(user,password)
+                        }
+
+                        //si la respuesta es correcta
+                        if (result){
+                            //Paso el esdado a Success y le paso el texto del horoscopo
+                            //SE PUEDE DEVOLVER EL OBJETO ENTERO O LO QUE NECESITEMOS.
+                            _state.value = NakamaState.Success(result.toString())
+                        } else{
+                            _state.value = NakamaState.Error("No me logro conectar")
+                        }
+
+                    }
+                }
+
+            }
+
+            En el Fragmento quedaria crear un metodo que se ocupe de lanzar al modelo y modificar la vista
+            Es necesario inicializar initUIState() dentro del OnCreate del Fragmento.
+            Utiliza un lifecycleScope.launch {} para lanzar la Corutina.
+
+            Ejemplo: Codigo necesario dentro del fragmento.
+
+            //Necesario para Que loggin2 Funcione
+            private val <name>ViewModel:<name>ViewModel by viewModels()
+
+            //Parte de el inicio de la UI para que este pendiende si cambia el estado al llamar al metodo.
+            private fun initUIState() {
+
+                //Hilo que esta pendiente de la vida de la VIEW, si la view muere el para!
+                lifecycleScope.launch {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        <name>ViewModel.state.collect {
+                            //Siempre que cambien el estado hara lo siguiente
+                            when (it) {
+                                //it es la informacion del estado que puede contener informacion.
+                                //Cada cambio de estado llama a su metodo
+                                <name>State.Loading -> loadingState()
+                                is <name>State.Error -> errorState(it)
+                                is <name>State.Success -> successState(it)
+                            }
+                        }
+                    }
+                }
+            }
+
+            private fun successState(it: <name>State.Success) {
+                //Lo que quieras hacer cuando sea OK
+            }
+
+            private fun errorState(it: <name>State.Error) {
+                //Lo que quieras hacer cuando sea Error
+            }
+
+            private fun loadingState() {
+                //Lo que quieras hacer cuando esta cargando
+            }
+
+
+            SOLO QUEDARIA desde algun metodo o accion de un boton llamar a la funcion del ViewModel para que intente realizar la accion
+
+            fun metodoRandom(){
+
+                val user = "@usuario1"
+                val password = "a722c63db8ec8625af6cf71cb8c2d939"
+
+                <name>ViewModel.tryLogin(user,password)
+
+            }
 
 
      */
