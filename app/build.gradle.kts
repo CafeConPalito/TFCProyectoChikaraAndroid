@@ -41,12 +41,12 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String","BASE_URL" , "\"https://newastro.vercel.app/\"")
+            buildConfigField("String","BASE_URL" , "\"http://25.0.232.178:8000/\"")
 
         }
         getByName("debug") {
             isDebuggable = true
-            buildConfigField("String","BASE_URL" , "\"https://newastro.vercel.app/\"")
+            buildConfigField("String","BASE_URL" , "\"http://25.0.232.178:8000/api/v1/\"")
         }
 
     }
