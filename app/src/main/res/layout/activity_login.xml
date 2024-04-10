@@ -23,7 +23,7 @@
 
     <EditText
         android:id="@+id/etUserName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginTop="50dp"
         android:drawableRight="@drawable/ic_user_login"
@@ -38,7 +38,7 @@
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:drawableRight="@drawable/ic_password_login"
@@ -52,7 +52,7 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/psgreen"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@id/etPassword" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
