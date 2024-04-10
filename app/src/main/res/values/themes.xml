@@ -2,7 +2,33 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Chikara" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <!--Estilo base-->
+    <style name="FuenteBase">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <!--Estilo del título-->
+    <style name="TextoTítulo" parent="FuenteBase">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <!--Estilo campos rellenables-->
+    <style name="ETRegistro" parent="FuenteBase">
+        <item name= "android:textColorHint">@color/sgrey</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <!--Estilo campos discretito-->
+    <style name="TextoDiscreto" parent="FuenteBase">
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="Theme.Chikara" parent="Base.Theme.Chikara" />

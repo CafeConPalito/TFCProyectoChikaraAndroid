@@ -41,12 +41,12 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String","BASE_URL" , "\"http://25.0.232.178:8000/\"")
+            buildConfigField("String","BASE_URL" , "\"https://chikaradev.azurewebsites.net/api/v1/\"")
 
         }
         getByName("debug") {
             isDebuggable = true
-            buildConfigField("String","BASE_URL" , "\"http://25.0.232.178:8000/api/v1/\"")
+            buildConfigField("String","BASE_URL" , "\"https://chikaradev.azurewebsites.net/api/v1/\"")
         }
 
     }

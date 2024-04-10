@@ -13,12 +13,12 @@
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="210dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/chikara_logo_big" />
+        app:srcCompat="@drawable/ic_logo_chikara_500" />
 
 
     <EditText
@@ -26,14 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="50dp"
-        android:hint="User name"
-        android:imeOptions="actionNext"
         android:drawableRight="@drawable/ic_user_login"
-        android:backgroundTint="@color/swwhite"
-        android:textColorHint="@color/swwhite"
+        android:hint="User name/Email"
+        android:imeOptions="actionNext"
         android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
-        tools:layout_editor_absoluteX="10dp" />
+        style="@style/ETRegistro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
 
 
     <EditText
@@ -41,48 +41,53 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
-        android:imeOptions="actionDone"
-        android:textColorHint="@color/swwhite"
-        android:backgroundTint="@color/swwhite"
         android:drawableRight="@drawable/ic_password_login"
         android:hint="Password"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
+        style="@style/ETRegistro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUserName" />
 
     <Button
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
         android:layout_marginTop="30dp"
-        android:text="Login"
-        android:textSize="20sp"
-        android:textColor="@color/swwhite"
         android:backgroundTint="@color/psgreen"
-        android:id="@+id/btnLogin"
-        android:layout_marginBottom="20dp"/>
+        android:textAlignment="gravity"
+        android:text="Login"
+        style="@style/FuenteBase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Don't have an account?"
-            android:textColor="@color/swwhite"
-            android:textSize="15sp"/>
+            style="@style/TextoDiscreto"
+            android:text="Don't have an account?" />
+
         <Button
+            android:id="@+id/btnRegister"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:text="Register"
-            android:textColor="@color/swwhite"
+            android:layout_weight="0.6"
             android:backgroundTint="@color/ssblue"
-            android:id="@+id/btnRegister"
-            />
+            android:text="Register"
+            style="@style/TextoDiscreto"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
