@@ -2,21 +2,15 @@ package com.cafeconpalito.chikara.ui.welcome
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityWelcomeBinding
 import com.cafeconpalito.chikara.ui.home.HomeActivity
-import com.cafeconpalito.chikara.ui.nakama.NakamaState
-import com.cafeconpalito.chikara.ui.nakama.NakamaViewModel
+import com.cafeconpalito.chikara.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -42,7 +36,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         initUIState()
 
-        initUITryLogin()
+        initUIlaunchLoginFlow()
 
     }
 
@@ -73,17 +67,33 @@ class WelcomeActivity : AppCompatActivity() {
         binding.pbWelcome.isVisible = false
         binding.tvWelcomeMessage.text = "Lo importante no es lo que se promete, sino lo que se cumple"
 
-        delay(4000L)
+        delay(2000L)
         val intent =  Intent(this, HomeActivity::class.java)
         startActivity(intent)
 
     }
 
-    private fun errorState(it: WelcomeState.Error) {
+    /**
+     * En caso de error te envia al Loggin, espera unos segundos
+     */
+    private suspend fun errorState(it: WelcomeState.Error) {
         binding.pbWelcome.isVisible = false
         binding.tvWelcomeMessage.text = "Imposible Conectar"
+    
+        delay(2000L)
+        //TODO: TE ENVIA A EL LOGIN
+        val intent =  Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+
+        //TODO: SI QUIERES QUE AL DAR ERROR TE ENVIE A HOME, COMENTA LO DE ARRIBA Y ACTIVA ESTO
+        //val intent =  Intent(this, HomeActivity::class.java)
+        //startActivity(intent)
+
     }
 
+    /**
+     * Estado de carga, no tiene que hacer nada en principio
+     */
     private fun loadingState() {
 
     }
@@ -91,14 +101,9 @@ class WelcomeActivity : AppCompatActivity() {
     /**
      * Lee desde el fichero de properties e intenta loggear
      */
-    private fun initUITryLogin() {
+    private fun initUIlaunchLoginFlow() {
 
-        //TODO SIN IMPLEMENTAR CORRECTAMENTE
-
-        val user = "@usuario1"
-        val password = "a722c63db8ec8625af6cf71cb8c2d939"
-
-        welcomeViewModel.tryLogin(user, password)
+        welcomeViewModel.launchLoginFlow(applicationContext)
 
     }
 

@@ -24,7 +24,7 @@ private const val LAYOUT_PREFERENCES_NAME = "ChikaraSettings"
 //Data Store para los settings
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = LAYOUT_PREFERENCES_NAME)
 
-class UserPreferences @Inject constructor(private val context: Context) {
+class UserPreferences (private val context: Context) {
 
     /**
      * Listado de KEY name and Type of User Preferences.
@@ -68,7 +68,7 @@ class UserPreferences @Inject constructor(private val context: Context) {
      * Lee todos los datos y los devuelve,
      * Si no tiene datos por defecto pone  (   ?: ""  ) vacio,
      */
-    private fun getSettings(): Flow<UserPreferencesModel?> {
+    public fun getSettings(): Flow<UserPreferencesModel?> {
         return context.dataStore.data.map { preferences ->
             UserPreferencesModel(
                 user = preferences[KEY_USER_STR] ?: "",

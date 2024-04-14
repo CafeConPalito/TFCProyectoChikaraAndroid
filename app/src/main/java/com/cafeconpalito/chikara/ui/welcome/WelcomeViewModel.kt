@@ -1,13 +1,16 @@
 package com.cafeconpalito.chikara.ui.welcome
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeconpalito.chikara.domain.useCase.GetLoginUseCase
-import com.cafeconpalito.chikara.ui.nakama.NakamaState
+import com.cafeconpalito.chikara.utils.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,21 +24,22 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
     //devuelve el estado en el que se encuentra, por eso no es publica
     val state: StateFlow<WelcomeState> = _state
 
-    /**
-     * Se ocupa de intentar logear y cambia el estado en concecuencia
-     */
-    fun tryLogin(user: String, password: String){
+    lateinit var userPreferences:UserPreferences
 
+    /**
+     * Inicializa el Flow para la ventana de carga y lanza el Loggin esperando respuesta.
+     */
+    fun launchLoginFlow(context: Context){
+
+        userPreferences = UserPreferences(context)
         //Esta trabajando en el Hilo principal
         viewModelScope.launch {
 
             //Cambio el stado a loading.
             _state.value = WelcomeState.Loading
 
-            //Esto lanza un hilo secundario, almaceno la respuesta en result
-            val result = withContext(Dispatchers.IO){
-                getLoginUseCase(user,password)
-            }
+            //Espererando la respuesta
+            val result = tryToLoggin()
 
             //si la respuesta es correcta
             if (result){
@@ -49,5 +53,34 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
         }
     }
 
+    /**
+     * Intenta logear obteniendo los datos de userPreferences.
+     * devuelve True si lo Logra.
+     * Si no tiene datos o no lo consigue devuelve false
+     */
+    suspend fun tryToLoggin():Boolean {
+
+        return withContext(Dispatchers.IO) {
+            val userPreferenceModel = userPreferences.getSettings().first()
+
+            //Comprueba que los UserPreference no es null para leer los datos
+            if (userPreferenceModel != null) {
+                val user = userPreferenceModel.user
+                val password = userPreferenceModel.password
+
+                //Comprueba que los datos obtenidos no son falsos.
+                if (user.isNotBlank() && password.isNotBlank()){
+                    return@withContext getLoginUseCase(user, password)
+                }else{
+                    return@withContext false
+                }
+
+            } else {
+
+                return@withContext false
+            }
+        }
+
+    }
 
 }

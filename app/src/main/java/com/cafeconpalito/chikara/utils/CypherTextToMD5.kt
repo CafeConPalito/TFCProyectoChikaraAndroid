@@ -5,7 +5,7 @@ import java.security.MessageDigest
 class CypherTextToMD5 {
 
     @OptIn(ExperimentalStdlibApi::class)
-    fun invoke(textToCyfer: String): String {
+    operator fun invoke(textToCyfer: String): String {
         // Obtener la instancia de MessageDigest para MD5
         val md = MessageDigest.getInstance("MD5")
 
