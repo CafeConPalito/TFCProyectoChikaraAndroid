@@ -71,7 +71,7 @@ class WelcomeActivity : AppCompatActivity() {
     private suspend fun successState(it: WelcomeState.Success) {
 
         binding.pbWelcome.isVisible = false
-        binding.tvWelcomeMessage.text = "Lo importante no es lo que se promete, sino lo que se cumple"
+        binding.tvWelcomeMessage.text = "Lo importante no es lo que te prometes, sino lo que cumples"
 
         delay(4000L)
         val intent =  Intent(this, HomeActivity::class.java)
@@ -95,8 +95,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         //TODO SIN IMPLEMENTAR CORRECTAMENTE
 
-        val user = "@usuario1"
-        val password = "a722c63db8ec8625af6cf71cb8c2d939"
+        val user = "@ramiro"
+        val password = "81dc9bdb52d04dc20036dbd8313ed055"
 
         welcomeViewModel.tryLogin(user, password)
 
