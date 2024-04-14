@@ -46,6 +46,7 @@ android {
         }
         getByName("debug") {
             isDebuggable = true
+            //buildConfigField("String","BASE_URL" , "\"http://25.0.232.178:8000/api/v1/\"")
             buildConfigField("String","BASE_URL" , "\"https://chikaradev.azurewebsites.net/api/v1/\"")
         }
 
@@ -99,6 +100,9 @@ dependencies {
     implementation ("androidx.camera:camera-view:${cameraVersion}")
     implementation ("androidx.camera:camera-extensions:${cameraVersion}")
 
+
+    //DataStore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

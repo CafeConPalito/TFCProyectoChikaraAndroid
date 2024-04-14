@@ -53,7 +53,12 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .client(OkHttpClient.Builder().addInterceptor { chain ->
-                val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${AuthKey}").build()
+                val request = chain.request().newBuilder()
+                    .addHeader("authorization", "Bearer ${AuthKey}")
+                    .addHeader("phone_id", android.os.Build.ID)
+                    .addHeader("phone_model", android.os.Build.MODEL)
+                    .addHeader("phone_brand", android.os.Build.BRAND)
+                    .build()
                 chain.proceed(request)
             }.build())
             .build()
