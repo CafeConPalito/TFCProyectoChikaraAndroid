@@ -65,7 +65,7 @@ class WelcomeActivity : AppCompatActivity() {
     private suspend fun successState(it: WelcomeState.Success) {
 
         binding.pbWelcome.isVisible = false
-        binding.tvWelcomeMessage.text = "Lo importante no es lo que se promete, sino lo que se cumple"
+        binding.tvWelcomeMessage.text = "Lo importante no es lo que te prometes, sino lo que cumples"
 
         delay(2000L)
         val intent =  Intent(this, HomeActivity::class.java)
