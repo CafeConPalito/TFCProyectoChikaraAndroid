@@ -111,6 +111,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun errorState(it: LoginState.Error) {
         TODO("Not yet implemented")
+        it.PasswordMatched
+        it.UserFounded
     }
 
     private fun loadingState() {
