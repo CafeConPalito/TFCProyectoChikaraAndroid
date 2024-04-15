@@ -8,6 +8,7 @@ import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityLoginBinding
 import com.cafeconpalito.chikara.domain.utils
 import com.cafeconpalito.chikara.ui.register.RegisterActivity
+import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         if (!chekBlank()){
             val userInput = binding.etUserName.text.toString()
             val passwordInput = binding.etPassword.text.toString()
-            val passwordAuthentication = utils.cypherTextToMD5(passwordInput)
+            val passwordAuthentication = CypherTextToMD5(passwordInput)
 
         }
 
