@@ -28,5 +28,18 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
 
     }
 
+    override suspend fun userExist(user: String): Boolean {
+
+        runCatching {
+            apiService.checkUser(user)
+        }
+            .onSuccess {
+                return  true }
+            .onFailure { Log.i ("checkUser", "Usuario no esiste!: ${it.toString()}") }
+
+        return false
+
+    }
+
 
 }
