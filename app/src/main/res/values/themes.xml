@@ -22,7 +22,7 @@
 
     <!--Estilo campos rellenables-->
     <style name="ETRegistro" parent="FuenteBase">
-        <item name= "android:textColorHint">@color/sgrey</item>
+        <item name="android:textColorHint">@color/sgrey</item>
         <item name="android:backgroundTint">@color/white</item>
     </style>
 

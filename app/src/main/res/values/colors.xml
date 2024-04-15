@@ -14,6 +14,7 @@
     <color name="ctgrey">#d1ccc0</color>
     <color name="ssblue">#34ace0</color>
     <color name="swwhite">#f7f1e3</color>
+    <color name="error_text">#ff5252</color>
 
 
     <color name="test1">#FF0000</color>
