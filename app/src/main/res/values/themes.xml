@@ -22,8 +22,8 @@
 
     <!--Estilo campos rellenables-->
     <style name="ETRegistro" parent="FuenteBase">
-        <item name="android:textColorHint">@color/sgrey</item>
-        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColorHint">@color/hint_edit_text</item>
+        <item name="android:backgroundTint">@color/default_edit_text</item>
     </style>
 
     <!--Estilo campos discretito-->

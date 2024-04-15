@@ -30,7 +30,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginHorizontal="40dp"
         android:drawableRight="@drawable/ic_user_login"
-        android:hint="User name/Email"
+        android:hint="Username/Email"
         android:imeOptions="actionNext"
         android:inputType="text"
         style="@style/ETRegistro"
