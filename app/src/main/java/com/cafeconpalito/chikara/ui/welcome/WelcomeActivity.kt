@@ -35,7 +35,6 @@ class WelcomeActivity : AppCompatActivity() {
     private fun initUI() {
 
         initUIState()
-
         initUIlaunchLoginFlow()
 
     }
@@ -86,8 +85,8 @@ class WelcomeActivity : AppCompatActivity() {
         startActivity(intent)
 
         //TODO: SI QUIERES QUE AL DAR ERROR TE ENVIE A HOME, COMENTA LO DE ARRIBA Y ACTIVA ESTO
-        //val intent =  Intent(this, HomeActivity::class.java)
-        //startActivity(intent)
+//        val intent =  Intent(this, HomeActivity::class.java)
+//        startActivity(intent)
 
     }
 

@@ -1,35 +1,42 @@
 package com.cafeconpalito.chikara.ui.login
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityLoginBinding
-import com.cafeconpalito.chikara.domain.utils
 import com.cafeconpalito.chikara.ui.home.HomeActivity
-import com.cafeconpalito.chikara.ui.nakama.NakamaState
-import com.cafeconpalito.chikara.ui.nakama.NakamaViewModel
 import com.cafeconpalito.chikara.ui.register.RegisterActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
+import com.cafeconpalito.chikara.utils.ValidateUsername
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    val errorColor = ContextCompat.getColor(this, R.color.error_edit_text)
-    val defaultColor = ContextCompat.getColor(this, R.color.default_edit_text)
+//    val errorColor:I
+//    val defaultColor
+
     private lateinit var binding: ActivityLoginBinding
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        errorColor = ContextCompat.getColor(this, R.color.error_edit_text)
+//        defaultColor = ContextCompat.getColor(this, R.color.default_edit_text)
+
+
+        Log.i("TEST", "CREANDO LOGGIN ACTIVITY")
 
         initUI()
     }
@@ -52,14 +59,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun logginAction() {
         clearError()
-        if (!chekBlank()){
-            val userInput = binding.etUserName.text.toString()
-            val passwordInput = binding.etPassword.text.toString()
-            val cypherTextToMD5 = CypherTextToMD5()
-            val passwordAuthentication = cypherTextToMD5(passwordInput)
+        if (!chekBlank()){ //Si los editText no estan en blanco
+            val user = ValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
+            val password = CypherTextToMD5()(binding.etPassword.text.toString()) //Cifra en MD5 el Password
+
+            //TODO LLAMAR AL METODO QUE INTENTA REALIZAR EL LOGGIN
+            loginViewModel.launchLoginFlow(user,password);
         }
-
-
 
     }
 
@@ -67,22 +73,22 @@ class LoginActivity : AppCompatActivity() {
         var errorUser = false
         var errorPassword = false
         if (binding.etUserName.text.isBlank()){
-            binding.etUserName.setHintTextColor(errorColor)
+//            binding.etUserName.setHintTextColor(errorColor)
             errorUser = true
         }
         if (binding.etPassword.text.isBlank()){
-            binding.etPassword.setHintTextColor(errorColor)
+//            binding.etPassword.setHintTextColor(errorColor)
             errorPassword = true
         }
         return errorUser || errorPassword
     }
 
     private fun clearError() {
-        binding.etUserName.setHintTextColor(defaultColor);
-        binding.etPassword.setHintTextColor(defaultColor);
+//        binding.etUserName.setHintTextColor(defaultColor);
+//        binding.etPassword.setHintTextColor(defaultColor);
     }
 
-    private val loginViewModel: LoginViewModel by viewModels()
+
 
     //Parte de el inicio de la UI para que este pendiende si cambia el estado al llamar al metodo.
     private fun initUIState() {
