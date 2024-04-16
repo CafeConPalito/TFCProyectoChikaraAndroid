@@ -12,7 +12,7 @@ interface LoginApiService {
     @GET("/users/login")
     suspend fun getLogin(@Query("user") user:String, @Query("password") password:String):String
 
-    @GET("/users/searchuser")
+    @GET("/users/search")
     suspend fun checkUser(@Query("user") user: String):Boolean
 
 

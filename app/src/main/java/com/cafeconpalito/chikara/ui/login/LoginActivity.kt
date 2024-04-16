@@ -43,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initUI() {
         clearError()
+        //initUIState()
         initListeners()
     }
 
