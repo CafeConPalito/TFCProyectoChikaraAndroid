@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun logginAction() {
         clearError()
-        if (!chekBlank()){ //Si los editText no estan en blanco
+        if (!checkBlank()){ //Si los editText no estan en blanco
             val user = ValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
             val password = CypherTextToMD5()(binding.etPassword.text.toString()) //Cifra en MD5 el Password
 
@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun chekBlank(): Boolean {
+    private fun checkBlank(): Boolean {
         var errorUser = false
         var errorPassword = false
         if (binding.etUserName.text.isBlank()){
