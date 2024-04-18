@@ -34,36 +34,26 @@ class LoginViewModel @Inject constructor(
 
             //Espererando la respuesta
 
-            val result = checkUser(user)
+            val result = checkUserUseCase(user)
 
             //si la respuesta es correcta
             if (result) {
-                val result2 = tryToLoggin(user, password)
+
+                val result2 = getLoginUseCase(user, password)
 
                 if(result2){
-                    _state.value = LoginState.Success(true)
+                    _state.value = LoginState.Success(user,password)
                 //Paso el esdado a Success y le paso el texto del horoscopo
                 //SE PUEDE DEVOLVER EL OBJETO ENTERO O LO QUE NECESITEMOS.
                 } else {
-                    _state.value = LoginState.Error(true, false)
+                    _state.value = LoginState.Error(true)
                 }
+
             } else {
-                _state.value = LoginState.Error(false, false)
+                _state.value = LoginState.Error(false)
             }
 
         }
     }
 
-    /**
-     * Intenta logear obteniendo los datos de userPreferences.
-     * devuelve True si lo Logra.
-     * Si no tiene datos o no lo consigue devuelve false
-     */
-    private suspend fun tryToLoggin(user:String , password:String): Boolean {
-        return getLoginUseCase(user, password)
-    }
-
-    private suspend fun checkUser(user: String): Boolean {
-        return checkUserUseCase(user)
-    }
 }

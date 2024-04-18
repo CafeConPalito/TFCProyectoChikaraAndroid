@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
 import com.cafeconpalito.chikara.ui.login.LoginActivity
+import com.cafeconpalito.chikara.ui.register.RegisterActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.UserPreferences
 import com.cafeconpalito.chikara.utils.UserPreferencesModel
@@ -66,6 +67,10 @@ class MyChicksFragment : Fragment() {
         }
         binding.btnTestBORRAR.setOnClickListener {
             launchTestBorrar()
+        }
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(requireContext(), RegisterActivity::class.java)
+            startActivity(intent)
         }
 
     }

@@ -7,13 +7,14 @@
     <color name="lppurple">#40407a</color>
     <color name="lpurple">#474787</color>
     <color name="sgrey">#aaa69d</color>
-    <color name="dblue">#227093</color>
+    <color name="primary_background">#227093</color>
     <color name="psgreen">#218c74</color>
     <color name="fred">#ff5252</color>
     <color name="sporange">#ff793f</color>
     <color name="ctgrey">#d1ccc0</color>
     <color name="ssblue">#34ace0</color>
     <color name="swwhite">#f7f1e3</color>
+
     <color name="error_edit_text">#ff5252</color>
     <color name="default_edit_text">#FFFFFFFF</color>
     <color name="hint_edit_text">#aaa69d</color>

@@ -77,7 +77,7 @@ class WelcomeActivity : AppCompatActivity() {
      */
     private suspend fun errorState(it: WelcomeState.Error) {
         binding.pbWelcome.isVisible = false
-        binding.tvWelcomeMessage.text = "Imposible Conectar"
+        binding.tvWelcomeMessage.text = "Welcome To Chikara"
     
         delay(2000L)
         //TODO: TE ENVIA A EL LOGIN

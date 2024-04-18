@@ -1,12 +1,11 @@
 package com.cafeconpalito.chikara.ui.login
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -15,36 +14,42 @@ import com.cafeconpalito.chikara.databinding.ActivityLoginBinding
 import com.cafeconpalito.chikara.ui.home.HomeActivity
 import com.cafeconpalito.chikara.ui.register.RegisterActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
+import com.cafeconpalito.chikara.utils.UserPreferences
 import com.cafeconpalito.chikara.utils.ValidateUsername
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-//    val errorColor:I
-//    val defaultColor
+    //val defaultColor = getColor(R.color.default_edit_text)
+    //val errorColor = getColor(R.color.error_edit_text)
+    //val colorEjemplo = ContextCompat.getColor(this@LoginActivity, R.color.error_edit_text)
 
     private lateinit var binding: ActivityLoginBinding
+
     private val loginViewModel: LoginViewModel by viewModels()
+
+    lateinit var userPreferences:UserPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        errorColor = ContextCompat.getColor(this, R.color.error_edit_text)
-//        defaultColor = ContextCompat.getColor(this, R.color.default_edit_text)
-
-
-        Log.i("TEST", "CREANDO LOGGIN ACTIVITY")
+        userPreferences = UserPreferences(this)
 
         initUI()
     }
 
+
+
     private fun initUI() {
         clearError()
-        //initUIState()
         initListeners()
+        initUIState()
     }
 
     private fun initListeners() {
@@ -64,8 +69,12 @@ class LoginActivity : AppCompatActivity() {
             val user = ValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
             val password = CypherTextToMD5()(binding.etPassword.text.toString()) //Cifra en MD5 el Password
 
-            //TODO LLAMAR AL METODO QUE INTENTA REALIZAR EL LOGGIN
+            binding.pbLoggin.isVisible = true
+
             loginViewModel.launchLoginFlow(user,password);
+
+        }else{
+            //TODO SI ESTA EN BLANCO PINTAR LOS ERRORES!
         }
 
     }
@@ -74,19 +83,19 @@ class LoginActivity : AppCompatActivity() {
         var errorUser = false
         var errorPassword = false
         if (binding.etUserName.text.isBlank()){
-//            binding.etUserName.setHintTextColor(errorColor)
+            //binding.etUserName.setHintTextColor(errorColor)
             errorUser = true
         }
         if (binding.etPassword.text.isBlank()){
-//            binding.etPassword.setHintTextColor(errorColor)
+            //binding.etPassword.setHintTextColor(errorColor)
             errorPassword = true
         }
         return errorUser || errorPassword
     }
 
     private fun clearError() {
-//        binding.etUserName.setHintTextColor(defaultColor);
-//        binding.etPassword.setHintTextColor(defaultColor);
+        binding.etUserName.setHintTextColor(getColor(R.color.hint_edit_text));
+        binding.etPassword.setHintTextColor(getColor(R.color.hint_edit_text));
     }
 
 
@@ -112,18 +121,43 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun successState(it: LoginState.Success) {
+
+        binding.pbLoggin.isVisible = false
+
+        preferencesSaveUserLoginData(it.user,it.password)
+
         intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
+
     }
 
     private fun errorState(it: LoginState.Error) {
-        TODO("Not yet implemented")
-        it.PasswordMatched
-        it.UserFounded
+
+        binding.pbLoggin.isVisible = false
+
+        if (it.UserFounded){
+            //TODO: la contraseña esta mal pinta lo que sea ...
+            Toast.makeText(this,"Contraseña Incorrecta",Toast.LENGTH_LONG).show()
+        } else{
+            //TODO: no encontro al usuario pinta lo que sea ...
+            Toast.makeText(this,"Usuario No Existe",Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun loadingState() {
-        TODO("Not yet implemented")
+        //NO HACE FALTA HACER NADA EN PRINCIPIO
+        //TODO("Not yet implemented")
+    }
+
+    private fun preferencesSaveUserLoginData(user:String, password:String) {
+        //GUARDA LOS DATOS
+        CoroutineScope(Dispatchers.IO).launch {
+
+            userPreferences.savePreference(UserPreferences.KEY_PASSWORD_STR, password)
+            userPreferences.savePreference(UserPreferences.KEY_USER_STR, user)
+
+        }
     }
 
 }
