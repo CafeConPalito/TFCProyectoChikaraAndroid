@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -24,15 +25,18 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    //val defaultColor = getColor(R.color.default_edit_text)
-    //val errorColor = getColor(R.color.error_edit_text)
-    //val colorEjemplo = ContextCompat.getColor(this@LoginActivity, R.color.error_edit_text)
 
     private lateinit var binding: ActivityLoginBinding
 
     private val loginViewModel: LoginViewModel by viewModels()
 
-    lateinit var userPreferences:UserPreferences
+    lateinit var userPreferences: UserPreferences
+
+    //LLevar el metodo initColor()
+    private var defaultEditTextColor = 0
+    private var errorEditTextColor = 0
+    private var defaultHintColor = 0
+    private var errorHintColor = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +46,24 @@ class LoginActivity : AppCompatActivity() {
         userPreferences = UserPreferences(this)
 
         initUI()
-    }
 
+    }
 
 
     private fun initUI() {
         clearError()
         initListeners()
         initUIState()
+        initColors()
+    }
+
+    private fun initColors() {
+
+        defaultEditTextColor = ContextCompat.getColor(this, R.color.default_edit_text)
+        errorEditTextColor = getColor(R.color.error_edit_text)
+        defaultHintColor = getColor(R.color.default_hint_edit_text)
+        errorHintColor = getColor(R.color.error_hint_edit_text)
+
     }
 
     private fun initListeners() {
@@ -59,45 +73,66 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToRegister() {
-        val intent =  Intent(this, RegisterActivity::class.java)
+        val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
 
     private fun logginAction() {
         clearError()
-        if (!checkBlank()){ //Si los editText no estan en blanco
+        if (!checkBlank()) { //Si los editText no estan en blanco. chechBlank se ocupa de pintar los errores
+
             val user = ValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
-            val password = CypherTextToMD5()(binding.etPassword.text.toString()) //Cifra en MD5 el Password
+            val password =
+                CypherTextToMD5()(binding.etPassword.text.toString()) //Cifra en MD5 el Password
 
             binding.pbLoggin.isVisible = true
 
-            loginViewModel.launchLoginFlow(user,password);
+            loginViewModel.launchLoginFlow(user, password);
 
-        }else{
-            //TODO SI ESTA EN BLANCO PINTAR LOS ERRORES!
         }
 
     }
 
+    /**
+     * Comprueba que los campos no esten en blanco y pinta los Hint en rojo si lo estubieran
+     */
     private fun checkBlank(): Boolean {
         var errorUser = false
         var errorPassword = false
-        if (binding.etUserName.text.isBlank()){
-            //binding.etUserName.setHintTextColor(errorColor)
+        if (binding.etUserName.text.isBlank()) {
+            binding.etUserName.setHintTextColor(errorHintColor)
             errorUser = true
         }
-        if (binding.etPassword.text.isBlank()){
-            //binding.etPassword.setHintTextColor(errorColor)
+        if (binding.etPassword.text.isBlank()) {
+            binding.etPassword.setHintTextColor(errorHintColor)
             errorPassword = true
         }
         return errorUser || errorPassword
     }
 
+    /**
+     * Limpia todos los errores de los campos. Edit Text
+     */
     private fun clearError() {
-        binding.etUserName.setHintTextColor(getColor(R.color.hint_edit_text));
-        binding.etPassword.setHintTextColor(getColor(R.color.hint_edit_text));
+        clearErrorEtUserName()
+        clearErrorEtPassword()
     }
 
+    /**
+     * Limpia los errores del EditText UserName
+     */
+    private fun clearErrorEtUserName() {
+        binding.etUserName.setHintTextColor(defaultHintColor)
+        binding.etUserName.setTextColor(defaultEditTextColor)
+    }
+
+    /**
+     * Limpia los errores del EditText Password
+     */
+    private fun clearErrorEtPassword() {
+        binding.etPassword.setHintTextColor(defaultHintColor)
+        binding.etPassword.setTextColor(defaultEditTextColor)
+    }
 
 
     //Parte de el inicio de la UI para que este pendiende si cambia el estado al llamar al metodo.
@@ -124,7 +159,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.pbLoggin.isVisible = false
 
-        preferencesSaveUserLoginData(it.user,it.password)
+        preferencesSaveUserLoginData(it.user, it.password)
 
         intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
@@ -135,12 +170,12 @@ class LoginActivity : AppCompatActivity() {
 
         binding.pbLoggin.isVisible = false
 
-        if (it.UserFounded){
+        if (it.UserFounded) {
             //TODO: la contraseña esta mal pinta lo que sea ...
-            Toast.makeText(this,"Contraseña Incorrecta",Toast.LENGTH_LONG).show()
-        } else{
+            Toast.makeText(this, "Contraseña Incorrecta", Toast.LENGTH_LONG).show()
+        } else {
             //TODO: no encontro al usuario pinta lo que sea ...
-            Toast.makeText(this,"Usuario No Existe",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_LONG).show()
         }
 
     }
@@ -150,13 +185,11 @@ class LoginActivity : AppCompatActivity() {
         //TODO("Not yet implemented")
     }
 
-    private fun preferencesSaveUserLoginData(user:String, password:String) {
+    private fun preferencesSaveUserLoginData(user: String, password: String) {
         //GUARDA LOS DATOS
         CoroutineScope(Dispatchers.IO).launch {
-
             userPreferences.savePreference(UserPreferences.KEY_PASSWORD_STR, password)
             userPreferences.savePreference(UserPreferences.KEY_USER_STR, user)
-
         }
     }
 

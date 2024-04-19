@@ -17,8 +17,8 @@
 
     <color name="error_edit_text">#ff5252</color>
     <color name="default_edit_text">#FFFFFFFF</color>
-    <color name="hint_edit_text">#aaa69d</color>
-
+    <color name="default_hint_edit_text">#aaa69d</color>
+    <color name="error_hint_edit_text">#ff5252</color>
 
     <color name="test1">#FF0000</color>
     <color name="test2">#ffe78f</color>
