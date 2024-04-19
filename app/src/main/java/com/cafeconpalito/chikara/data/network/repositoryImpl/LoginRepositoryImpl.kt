@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.data.network.repositoryImpl
 
-import android.util.Log
 import com.cafeconpalito.chikara.data.network.NetworkModule
 import com.cafeconpalito.chikara.data.network.service.LoginApiService
 import com.cafeconpalito.chikara.domain.repository.LoginRepository
@@ -20,24 +19,26 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
         }
             .onSuccess {
                 NetworkModule.AuthKey = it
-                Log.i ("getLogin", "LOG OK: ${it.toString()}")
                 return  true }
-            .onFailure { Log.i ("getLogin", "IMPOSIBLE LOGUEAR: ${it.toString()}") }
+            .onFailure {  }
 
         return false
 
     }
 
-    override suspend fun userExist(user: String): Boolean {
+    /**
+     * Comprueba que el usuario Existe.
+     * Mirando por UserName O Email.
+     */
+    override suspend fun checkUser(user: String): Boolean {
 
         runCatching {
-            Log.i("checkUser", "el usuario es: " + user)
+
             apiService.checkUser(user)
         }
             .onSuccess {
-
                 return  true }
-            .onFailure { Log.i ("checkUser", "Usuario no esiste!: ${it.toString()}") }
+            .onFailure {  }
 
         return false
 
