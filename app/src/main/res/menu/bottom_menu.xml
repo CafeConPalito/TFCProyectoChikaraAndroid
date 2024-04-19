@@ -26,7 +26,7 @@
 
     <item
         android:id="@+id/nakamaFragment"
-        android:icon="@drawable/ic_nakama"
+        android:icon="@drawable/ic_account_group"
         android:title="@string/nakamas"
         />
 

@@ -108,18 +108,18 @@ class NakamaFragment : Fragment() {
 
     private fun successState(it: NakamaState.Success) {
         //Lo que quieras hacer cuando sea OK
-        binding.pbLoggin.isVisible = false
-        binding.tvPrueba.text = it.toString()
+        //binding.pbLoggin.isVisible = false
+        //binding.tvPrueba.text = it.toString()
     }
 
     private fun errorState(it: NakamaState.Error) {
         //Lo que quieras hacer cuando sea Error
-        binding.pbLoggin.isVisible = false
-        binding.tvPrueba.text = it.toString()
+        //binding.pbLoggin.isVisible = false
+        //binding.tvPrueba.text = it.toString()
     }
 
     private fun loadingState() {
-        binding.pbLoggin.isVisible = true
+        //binding.pbLoggin.isVisible = true
         //Lo que quieras hacer cuando esta cargando
     }
 
