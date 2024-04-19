@@ -9,8 +9,8 @@ sealed class LoginState {
     //Al cambiar el estado a error enviara los datos que sean necesarios
 
     /**
-     * Si userFounded = true el usuiario existe  y passwordMatched comprueba el Pass de ese usuario.
-     * Si userFounded = false el usuario no existe. no comprueba el password
+     * Si userFounded = true el usuiario existe
+     * Si userFounded = false el usuario no existe
      */
     data class Error(val UserFounded:Boolean): LoginState()
     //Al cambiar al estado de Success nos enciara los datos que necesitemos.

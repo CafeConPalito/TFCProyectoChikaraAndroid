@@ -1,0 +1,47 @@
+package com.cafeconpalito.chikara.utils
+
+class RegisterValidateFields {
+
+    /**
+     * Valida el Email utilizando un metodo de Android
+     */
+    fun validEmail(email:String):Boolean{
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    /**
+     * Valida e userName.
+     * Minimo 3 Caracteres y No puede contener @ (Arroba)
+     */
+    fun validUserName(user:String):Boolean{
+        val minLength = 3
+        val notContain = Regex("[@]")
+        return user.length >= minLength &&
+                !user.contains(notContain) //Negacion para que no lo contenga
+    }
+
+    /**
+     * Valida el Password.
+     * Tiene que contener minimo 8 Caracteres y al menos:
+     * una Mayuscula, una Minuscula y un numero.
+     */
+    fun validatePassword(password: String): Boolean {
+        val minLength = 8
+        val uppercaseRegex = Regex("[A-Z]")
+        val lowercaseRegex = Regex("[a-z]")
+        val digitRegex = Regex("\\d")
+
+        return password.length >= minLength &&
+                password.contains(uppercaseRegex) &&
+                password.contains(lowercaseRegex) &&
+                password.contains(digitRegex)
+    }
+
+    /**
+     * Comprueba que el Password y PasswordRepeat son iguales.
+     */
+    fun validatePasswordsMarches(passwordA: String,passwordB: String): Boolean {
+        return passwordA.equals(passwordB)
+    }
+
+}

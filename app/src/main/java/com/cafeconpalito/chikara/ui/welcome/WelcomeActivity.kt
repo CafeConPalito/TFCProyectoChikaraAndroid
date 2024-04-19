@@ -32,6 +32,9 @@ class WelcomeActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Inicializa todos los procesos necesarios para que la vista funcione.
+     */
     private fun initUI() {
 
         initUIState()
@@ -40,8 +43,9 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
 
-
-    //Parte de el inicio de la UI para que este pendiende si cambia el estado al llamar al metodo.
+    /**
+     * Inicializa el controlador para el cambio de estados.
+     */
     private fun initUIState() {
 
         //Hilo que esta pendiente de la vida de la VIEW, si la view muere el para!
@@ -61,6 +65,9 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Cambio de Estado a Success.
+     */
     private suspend fun successState(it: WelcomeState.Success) {
 
         binding.pbWelcome.isVisible = false
@@ -73,6 +80,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     /**
+     * Cambio de Estado a Error.
      * En caso de error te envia al Loggin, espera unos segundos
      */
     private suspend fun errorState(it: WelcomeState.Error) {
@@ -91,14 +99,15 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     /**
-     * Estado de carga, no tiene que hacer nada en principio
+     * Cambio de Estado a Loading.
+     * No tiene que hacer nada en principio.
      */
     private fun loadingState() {
 
     }
 
     /**
-     * Lee desde el fichero de properties e intenta loggear
+     * Lee desde el fichero de properties e intenta logear.
      */
     private fun initUIlaunchLoginFlow() {
 

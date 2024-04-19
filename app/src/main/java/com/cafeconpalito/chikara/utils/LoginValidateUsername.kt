@@ -1,6 +1,6 @@
 package com.cafeconpalito.chikara.utils
 
-class ValidateUsername {
+class LoginValidateUsername {
 
     /**
      * Comprueba que un usuario es correcto, validando el mail y el usuario. en caso de no tener @ al inicio del String lo añade.

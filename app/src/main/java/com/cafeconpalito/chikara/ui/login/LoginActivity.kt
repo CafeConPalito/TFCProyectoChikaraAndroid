@@ -2,7 +2,6 @@ package com.cafeconpalito.chikara.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,7 +15,7 @@ import com.cafeconpalito.chikara.ui.home.HomeActivity
 import com.cafeconpalito.chikara.ui.register.RegisterActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.UserPreferences
-import com.cafeconpalito.chikara.utils.ValidateUsername
+import com.cafeconpalito.chikara.utils.LoginValidateUsername
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,9 +48,10 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-
+    /**
+     * Inicializa todos los procesos necesarios para que la vista funcione.
+     */
     private fun initUI() {
-        clearError()
         initListeners()
         initUIState()
         initColors()
@@ -68,20 +68,27 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initListeners() {
         binding.btnLogin.setOnClickListener { logginAction() }
-        binding.btnRegister.setOnClickListener { goToRegister() }
-
+        binding.btnRegister.setOnClickListener { goToRegisterActivity() }
+        binding.etUserName.setOnClickListener { clearErrorEtUserName() }
+        binding.etPassword.setOnClickListener { clearErrorEtPassword() }
     }
 
-    private fun goToRegister() {
+    /**
+     * Te envia a la Activity de Registro.
+     */
+    private fun goToRegisterActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
 
+    /**
+     * Intenta realizar el login.
+     */
     private fun logginAction() {
         clearError()
         if (!checkBlank()) { //Si los editText no estan en blanco. chechBlank se ocupa de pintar los errores
 
-            val user = ValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
+            val user = LoginValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
             val password =
                 CypherTextToMD5()(binding.etPassword.text.toString()) //Cifra en MD5 el Password
 
@@ -94,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * Comprueba que los campos no esten en blanco y pinta los Hint en rojo si lo estubieran
+     * Comprueba que los campos no esten en blanco y pinta los Hint en rojo si lo estubieran.
      */
     private fun checkBlank(): Boolean {
         var errorUser = false
@@ -111,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * Limpia todos los errores de los campos. Edit Text
+     * Limpia todos los errores de los campos. Edit Text.
      */
     private fun clearError() {
         clearErrorEtUserName()
@@ -119,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * Limpia los errores del EditText UserName
+     * Limpia los errores del EditText UserName.
      */
     private fun clearErrorEtUserName() {
         binding.etUserName.setHintTextColor(defaultHintColor)
@@ -127,7 +134,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * Limpia los errores del EditText Password
+     * Limpia los errores del EditText Password.
      */
     private fun clearErrorEtPassword() {
         binding.etPassword.setHintTextColor(defaultHintColor)
@@ -135,7 +142,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    //Parte de el inicio de la UI para que este pendiende si cambia el estado al llamar al metodo.
+    /**
+     * Inicializa el controlador para el cambio de estados.
+     */
     private fun initUIState() {
 
         //Hilo que esta pendiente de la vida de la VIEW, si la view muere el para!
@@ -155,6 +164,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Cambio de Estado a Success. se pudo establecer la coneccion con el usuario y contraseña.
+     * Guarda los datos del usuario en las user preferences y cambia de ventana.
+     */
     private fun successState(it: LoginState.Success) {
 
         binding.pbLoggin.isVisible = false
@@ -166,25 +179,37 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Cambio de Estado a Error. no se pudo establecer un loggin.
+     * Segun la respuesta es por Usuario o Password.
+     */
     private fun errorState(it: LoginState.Error) {
 
         binding.pbLoggin.isVisible = false
 
         if (it.UserFounded) {
+            binding.etPassword.setTextColor(errorEditTextColor)
             //TODO: la contraseña esta mal pinta lo que sea ...
-            Toast.makeText(this, "Contraseña Incorrecta", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Contraseña Incorrecta", Toast.LENGTH_LONG).show()
         } else {
+            binding.etUserName.setTextColor(errorEditTextColor)
             //TODO: no encontro al usuario pinta lo que sea ...
-            Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_LONG).show()
         }
 
     }
 
+    /**
+     * Cambio de Estado a Loading.
+     * No es necesario implementar nada en el.
+     */
     private fun loadingState() {
         //NO HACE FALTA HACER NADA EN PRINCIPIO
-        //TODO("Not yet implemented")
     }
 
+    /**
+     * Guarda los datos del Usuario para realizar el Login en UserPreferences.
+     */
     private fun preferencesSaveUserLoginData(user: String, password: String) {
         //GUARDA LOS DATOS
         CoroutineScope(Dispatchers.IO).launch {

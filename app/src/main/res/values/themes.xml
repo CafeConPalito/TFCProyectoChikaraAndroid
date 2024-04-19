@@ -3,6 +3,8 @@
     <style name="Base.Theme.Chikara" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/primary_background</item>
+        <item name="android:textColorHighlight">@color/select_text</item>
+        <item name="android:colorControlActivated">@color/select_text</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
@@ -22,7 +24,7 @@
 
     <!--Estilo campos rellenables-->
     <style name="ETRegistro" parent="FuenteBase">
-        <item name="android:textColorHint">@color/hint_edit_text</item>
+        <item name="android:textColorHint">@color/default_hint_edit_text</item>
         <item name="android:backgroundTint">@color/default_edit_text</item>
     </style>
 
@@ -32,4 +34,5 @@
     </style>
 
     <style name="Theme.Chikara" parent="Base.Theme.Chikara" />
+
 </resources>

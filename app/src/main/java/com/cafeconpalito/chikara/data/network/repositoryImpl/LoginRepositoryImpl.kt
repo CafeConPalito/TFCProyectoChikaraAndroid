@@ -35,6 +35,7 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
             apiService.checkUser(user)
         }
             .onSuccess {
+
                 return  true }
             .onFailure { Log.i ("checkUser", "Usuario no esiste!: ${it.toString()}") }
 
