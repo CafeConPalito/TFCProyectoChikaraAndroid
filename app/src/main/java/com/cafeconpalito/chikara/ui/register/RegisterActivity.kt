@@ -16,11 +16,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegisterActivity @Inject constructor(private val registerValidateFields: RegisterValidateFields): AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
+
+    //@Inject constructor(private val registerValidateFields: RegisterValidateFields)
 
     //TODO: CAMBIAR EL BIRD DATE DE UN EDIT TEXT A UN DATE PICKER!
 
     private lateinit var binding: ActivityRegisterBinding
+
+    private lateinit var registerValidateFields: RegisterValidateFields
 
     //LLevar el metodo initColor()
     private var defaultEditTextColor = 0
@@ -32,6 +36,8 @@ class RegisterActivity @Inject constructor(private val registerValidateFields: R
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        registerValidateFields = RegisterValidateFields()
 
         initUI()
 

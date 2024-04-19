@@ -71,6 +71,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnRegister.setOnClickListener { goToRegisterActivity() }
         binding.etUserName.setOnClickListener { clearErrorEtUserName() }
         binding.etPassword.setOnClickListener { clearErrorEtPassword() }
+
     }
 
     /**
