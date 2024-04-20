@@ -2,6 +2,12 @@ package com.cafeconpalito.chikara.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -69,8 +75,46 @@ class LoginActivity : AppCompatActivity() {
     private fun initListeners() {
         binding.btnLogin.setOnClickListener { logginAction() }
         binding.btnRegister.setOnClickListener { goToRegisterActivity() }
-        binding.etUserName.setOnClickListener { clearErrorEtUserName() }
-        binding.etPassword.setOnClickListener { clearErrorEtPassword() }
+
+        //Cuando Gana Foco
+        binding.etUserName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) { // Al ganar foco
+                clearErrorEtUserName()
+            } else { // Al perder el foco
+
+            }
+        }
+
+        //Cuando el texto se modifica
+        binding.etUserName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+            override fun afterTextChanged(s: Editable?) { clearErrorEtUserName() } // Al modificar el texto
+        })
+
+        //Cuando Gana Foco
+        binding.etPassword.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                clearErrorEtPassword()
+            } else { }
+        }
+
+        //Cuando el texto se modifica
+        binding.etPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+            override fun afterTextChanged(s: Editable?) { clearErrorEtPassword() } // Al modificar el texto
+        })
+
+        //Cuando se preciona ok o intro en el password intentara Logear!
+        binding.etPassword.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    logginAction() //Intenta logear!
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
 
     }
 
@@ -141,7 +185,6 @@ class LoginActivity : AppCompatActivity() {
         binding.etPassword.setHintTextColor(defaultHintColor)
         binding.etPassword.setTextColor(defaultEditTextColor)
     }
-
 
     /**
      * Inicializa el controlador para el cambio de estados.
