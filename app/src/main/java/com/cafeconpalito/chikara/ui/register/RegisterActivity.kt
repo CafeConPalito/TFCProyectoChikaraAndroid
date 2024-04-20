@@ -5,13 +5,19 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityRegisterBinding
 import com.cafeconpalito.chikara.ui.login.LoginActivity
-import com.cafeconpalito.chikara.utils.RegisterValidateFields
+import com.cafeconpalito.chikara.utils.ValidateFields
+import com.cafeconpalito.chikara.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
@@ -22,7 +28,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    private lateinit var registerValidateFields: RegisterValidateFields
+    @Inject
+    lateinit var validateFields: ValidateFields
 
     //LLevar el metodo initColor()
     private var defaultEditTextColor = 0
@@ -35,8 +42,6 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        registerValidateFields = RegisterValidateFields()
-
         initUI()
 
     }
@@ -47,6 +52,7 @@ class RegisterActivity : AppCompatActivity() {
         initListeners()
 
     }
+
     private fun initColors() {
 
         defaultEditTextColor = ContextCompat.getColor(this, R.color.default_edit_text)
@@ -55,6 +61,7 @@ class RegisterActivity : AppCompatActivity() {
         errorHintColor = getColor(R.color.error_hint_edit_text)
 
     }
+
     private fun initListeners() {
 
         binding.btnLogin.setOnClickListener { goToLoginActivity() }
@@ -77,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
         //Cuando Gana Foco
         binding.etUserName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                clearErrorEtUserName()
+                genericClearErrorEt(binding.etUserName)
             } else {
                 //TODO AÑADIR VALIDAR
                 //TODO AÑADIR BUSCAR SI EXISTE EN DB
@@ -85,11 +92,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         //Cuando el texto se modifica
-        binding.etUserName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtUserName() } // Al modificar el texto
-        })
+        genericOnModifyTextListener(binding.etUserName)
 
     }
 
@@ -98,7 +101,7 @@ class RegisterActivity : AppCompatActivity() {
         //Cuando Gana Foco
         binding.etEmail.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                clearErrorEtEmail()
+                genericClearErrorEt(binding.etEmail)
             } else {
                 //TODO AÑADIR VALIDAR
                 //TODO AÑADIR BUSCAR SI EXISTE EN DB
@@ -106,11 +109,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         //Cuando el texto se modifica
-        binding.etEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtEmail() } // Al modificar el texto
-        })
+        genericOnModifyTextListener(binding.etEmail)
 
     }
 
@@ -120,58 +119,48 @@ class RegisterActivity : AppCompatActivity() {
         //Cuando Gana Foco
         binding.etFirstName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                clearErrorEtFirstName()
+                genericClearErrorEt(binding.etFirstName)
             } else {
                 //TODO AÑADIR VALIDAR
             }
         }
 
         //Cuando el texto se modifica
-        binding.etFirstName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtFirstName() } // Al modificar el texto
-        })
+        genericOnModifyTextListener(binding.etFirstName)
 
     }
 
     private fun etFirstLastNameListeners() {
 
         //Cuando Gana Foco
-        binding.etFirstLastName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                clearErrorEtFirstLastName()
-            } else {
-                //TODO AÑADIR VALIDAR
+        binding.etFirstLastName.onFocusChangeListener =
+            View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    genericClearErrorEt(binding.etFirstLastName)
+                } else {
+                    //TODO AÑADIR VALIDAR
+                }
             }
-        }
 
         //Cuando el texto se modifica
-        binding.etFirstLastName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtFirstLastName() } // Al modificar el texto
-        })
+        genericOnModifyTextListener(binding.etFirstLastName)
 
     }
 
     private fun etSecondLastNameListeners() {
 
         //Cuando Gana Foco
-        binding.etSecondLastName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                clearErrorEtSecondLastName()
-            } else {
-                //TODO AÑADIR VALIDAR
+        binding.etSecondLastName.onFocusChangeListener =
+            View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    genericClearErrorEt(binding.etSecondLastName)
+                } else {
+                    //TODO AÑADIR VALIDAR
+                }
             }
-        }
 
         //Cuando el texto se modifica
-        binding.etSecondLastName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtSecondLastName() } // Al modificar el texto
-        })
+        genericOnModifyTextListener(binding.etSecondLastName)
 
     }
 
@@ -184,57 +173,51 @@ class RegisterActivity : AppCompatActivity() {
         //Cuando Gana Foco
         binding.etPassword.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                clearErrorEtPassword()
+                genericClearErrorEt(binding.etPassword)
             } else {
                 //TODO AÑADIR QUE AL SALIR BUSQUE SI EL PASSWORD ES VALIDO
             }
         }
 
         //Cuando el texto se modifica
-        binding.etPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtPassword() } // Al modificar el texto
-        })
+        genericOnModifyTextListener(binding.etPassword)
 
     }
 
     private fun etPasswordRepeatListeners() {
 
         //Cuando Gana Foco
-        binding.etPasswordRepeat.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                clearErrorEtPasswordRepeat()
-            } else {
-                //TODO AÑADIR QUE AL SALIR BUSQUE SI EL PASSWORD ES VALIDO
+        binding.etPasswordRepeat.onFocusChangeListener =
+            View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    genericClearErrorEt(binding.etPasswordRepeat)
+                } else {
+                    //TODO AÑADIR QUE AL SALIR BUSQUE SI AMBOS PASS COINCIDEN
+                }
             }
-        }
-
         //Cuando el texto se modifica
-        binding.etPasswordRepeat.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtPasswordRepeat() } // Al modificar el texto
-        })
+        genericOnModifyTextListener(binding.etPasswordRepeat)
 
     }
 
+    /**
+     * Funcion Generica para inicializar al cambiar el cambio del texto de un EditText limpie los errores
+     */
+    private fun genericOnModifyTextListener(editText: EditText) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                genericClearErrorEt(editText)
+            } // Al modificar el texto
+        })
+    }
 
 
     private fun tryToRegister() {
 
         //Limpio los errores al dar al boton de registro.
         clearErrors()
-
-        if (!registerValidateFields.validUserName(binding.etUserName.text.toString())){
-
-        }
-        if (!registerValidateFields.validEmail(binding.etEmail.text.toString())){
-
-        }
-        if (!registerValidateFields.validatePassword(binding.etPassword.text.toString())){
-
-        }
 
     }
 
@@ -243,54 +226,117 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun clearErrors(){
-        clearErrorEtUserName()
-        clearErrorEtEmail()
-        clearErrorEtFirstName()
-        clearErrorEtFirstLastName()
-        clearErrorEtSecondLastName()
+    /**
+     * Clear All Errors
+     */
+    private fun validateRegisterFields() {
+        validateEtUserName()
+        validateEtEmail()
+        validateEtFirstName()
+        validateEtFirstLastName()
+        validateEtSecondLastName()
+        validateDpBirthDate() // TODO FALTA IMPLEMENTAR
+        validateEtPassword()
+        validateEtPasswordRepeat()
+    }
+
+
+    /**
+     * Validate if EditText Is Blank or Have Empty Spaces Y Pinta los errores
+     * Return True if is OK
+     */
+    private fun genericValidateEditText(editText: EditText):Boolean {
+        val textToValidate = editText.text.toString()
+        if (validateFields.validateHaveBlankSpaces(textToValidate)) {
+            val hintText = editText.hint// Obtiene el texto del Hint y lanso un toast
+            Toast.makeText(
+                this,
+                "El campo $hintText no puede contener espacios en blanco",
+                Toast.LENGTH_LONG
+            ).show()
+            editText.setTextColor(errorEditTextColor)
+            return false
+        } else if (binding.etUserName.text.isBlank()) {
+            editText.setHintTextColor(errorHintColor)
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Comprobar si el campo User Name es correcto
+     * True si es correcto;
+     */
+    private fun validateEtUserName():Boolean {
+
+        if (!genericValidateEditText(binding.etUserName)){
+            return false
+        } else if (!validateFields.validUserName(binding.etUserName.text.toString())) {
+            //TODO: Añadir TOAST de que el usuario no puede tener menos de tres caracteres o no puede contener @
+            return false
+        }
+        //TODO faltan cosas de comprobar!
+
+
+        return true
+    }
+
+    private fun validateEtEmail() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun validateEtFirstName() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun validateEtFirstLastName() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun validateEtSecondLastName() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun validateDpBirthDate() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun validateEtPassword() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun validateEtPasswordRepeat() {
+        //TODO("Not yet implemented")
+    }
+
+
+    /**
+     * Clear All Errors
+     */
+    private fun clearErrors() {
+        genericClearErrorEt(binding.etUserName)
+        genericClearErrorEt(binding.etEmail)
+        genericClearErrorEt(binding.etFirstName)
+        genericClearErrorEt(binding.etFirstLastName)
+        genericClearErrorEt(binding.etSecondLastName)
+        genericClearErrorEt(binding.etPassword)
+        genericClearErrorEt(binding.etPasswordRepeat)
+
         clearErrorDpBirthDate() // TODO FALTA IMPLEMENTAR
-        clearErrorEtPassword()
-        clearErrorEtPasswordRepeat()
+
     }
 
-    private fun clearErrorEtUserName() {
-        binding.etUserName.setHintTextColor(defaultHintColor)
-        binding.etUserName.setTextColor(defaultEditTextColor)
+    /**
+     * Generic clear errors of Edit Text
+     */
+    private fun genericClearErrorEt(editText: EditText) {
+        editText.setHintTextColor(defaultHintColor)
+        editText.setTextColor(defaultEditTextColor)
     }
 
-    private fun clearErrorEtEmail() {
-        binding.etEmail.setHintTextColor(defaultHintColor)
-        binding.etEmail.setTextColor(defaultEditTextColor)
-    }
-
-    private fun clearErrorEtFirstName() {
-        binding.etFirstName.setHintTextColor(defaultHintColor)
-        binding.etFirstName.setTextColor(defaultEditTextColor)
-    }
-
-    private fun clearErrorEtFirstLastName() {
-        binding.etFirstLastName.setHintTextColor(defaultHintColor)
-        binding.etFirstLastName.setTextColor(defaultEditTextColor)
-    }
-
-    private fun clearErrorEtSecondLastName() {
-        binding.etSecondLastName.setHintTextColor(defaultHintColor)
-        binding.etSecondLastName.setTextColor(defaultEditTextColor)
-    }
-
-    private fun clearErrorDpBirthDate(){
+    private fun clearErrorDpBirthDate() {
         //TODO SIN IMPLEMENTAR
     }
 
-    private fun clearErrorEtPassword() {
-        binding.etPassword.setHintTextColor(defaultHintColor)
-        binding.etPassword.setTextColor(defaultEditTextColor)
-    }
-
-    private fun clearErrorEtPasswordRepeat() {
-        binding.etPasswordRepeat.setHintTextColor(defaultHintColor)
-        binding.etPasswordRepeat.setTextColor(defaultEditTextColor)
-    }
 
 }

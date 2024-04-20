@@ -33,6 +33,21 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <!--    Toast-->
+    <style name="ErrorToast">
+        <item name="android:background">@color/toast_background_error</item>
+        <item name="android:textColor">@color/toast_text_error</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="WarningToast">
+        <item name="android:background">@color/toast_background_warning</item>
+        <item name="android:textColor">@color/toast_text_warning</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+
+
     <style name="Theme.Chikara" parent="Base.Theme.Chikara" />
 
 </resources>

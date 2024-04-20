@@ -10,6 +10,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +20,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.lang.reflect.Type
 import javax.inject.Inject
+import javax.inject.Singleton
 
 //Nombre de los settings
 private const val LAYOUT_PREFERENCES_NAME = "ChikaraSettings"
@@ -24,7 +28,7 @@ private const val LAYOUT_PREFERENCES_NAME = "ChikaraSettings"
 //Data Store para los settings
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = LAYOUT_PREFERENCES_NAME)
 
-class UserPreferences (private val context: Context) {
+class UserPreferences @Inject constructor(private val context: Context) {
 
     /**
      * Listado de KEY name and Type of User Preferences.

@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -22,20 +24,32 @@ import com.cafeconpalito.chikara.ui.register.RegisterActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.UserPreferences
 import com.cafeconpalito.chikara.utils.LoginValidateUsername
+import com.cafeconpalito.chikara.utils.ValidateFields
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.reflect.Constructor
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity :AppCompatActivity() {
 
 
     private lateinit var binding: ActivityLoginBinding
 
     private val loginViewModel: LoginViewModel by viewModels()
 
+//    @Inject
+//    lateinit var userPreferences: UserPreferences
+
     lateinit var userPreferences: UserPreferences
+
+    @Inject
+    lateinit var validateFields: ValidateFields
+
+//    @Inject
+//    lateinit var validateFields: ValidateFields
 
     //LLevar el metodo initColor()
     private var defaultEditTextColor = 0
@@ -81,36 +95,47 @@ class LoginActivity : AppCompatActivity() {
             if (hasFocus) { // Al ganar foco
                 clearErrorEtUserName()
             } else { // Al perder el foco
-
+                if (validateFields.validateHaveBlankSpaces(binding.etUserName.text.toString())){
+                    //TODO: AÑADIR TOAST
+                }
             }
         }
 
         //Cuando el texto se modifica
         binding.etUserName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtUserName() } // Al modificar el texto
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                clearErrorEtUserName()
+            } // Al modificar el texto
         })
 
         //Cuando Gana Foco
         binding.etPassword.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 clearErrorEtPassword()
-            } else { }
+            } else {
+                if (validateFields.validateHaveBlankSpaces(binding.etPassword.text.toString())){
+                    //TODO: AÑADIR TOAST
+                }
+            }
         }
 
         //Cuando el texto se modifica
         binding.etPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-            override fun afterTextChanged(s: Editable?) { clearErrorEtPassword() } // Al modificar el texto
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                clearErrorEtPassword()
+            } // Al modificar el texto
         })
 
         //Cuando se preciona ok o intro en el password intentara Logear!
         binding.etPassword.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
-                (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    logginAction() //Intenta logear!
+                (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
+            ) {
+                logginAction() //Intenta logear!
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
@@ -133,7 +158,8 @@ class LoginActivity : AppCompatActivity() {
         clearError()
         if (!checkBlank()) { //Si los editText no estan en blanco. chechBlank se ocupa de pintar los errores
 
-            val user = LoginValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
+            val user =
+                LoginValidateUsername()(binding.etUserName.text.toString()) // Valida el usuario
             val password =
                 CypherTextToMD5()(binding.etPassword.text.toString()) //Cifra en MD5 el Password
 
@@ -202,6 +228,7 @@ class LoginActivity : AppCompatActivity() {
                         LoginState.Loading -> loadingState()
                         is LoginState.Error -> errorState(it)
                         is LoginState.Success -> successState(it)
+
                     }
                 }
             }
