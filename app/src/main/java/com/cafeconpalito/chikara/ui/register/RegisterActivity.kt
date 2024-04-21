@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -11,16 +12,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityRegisterBinding
+import com.cafeconpalito.chikara.domain.useCase.GetLoginUseCase
+import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.utils.ValidateFields
 import com.cafeconpalito.chikara.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity  : AppCompatActivity() {
 
     //@Inject constructor(private val registerValidateFields: RegisterValidateFields)
 
@@ -30,6 +35,8 @@ class RegisterActivity : AppCompatActivity() {
 
     @Inject
     lateinit var validateFields: ValidateFields
+    @Inject
+    lateinit var registerUseCase: RegisterUseCase
 
     //LLevar el metodo initColor()
     private var defaultEditTextColor = 0
@@ -86,11 +93,9 @@ class RegisterActivity : AppCompatActivity() {
             if (hasFocus) {
                 genericClearErrorEt(binding.etUserName)
             } else {
-                //TODO AÑADIR VALIDAR
-                //TODO AÑADIR BUSCAR SI EXISTE EN DB
+                validateEtUserName()
             }
         }
-
         //Cuando el texto se modifica
         genericOnModifyTextListener(binding.etUserName)
 
@@ -103,8 +108,7 @@ class RegisterActivity : AppCompatActivity() {
             if (hasFocus) {
                 genericClearErrorEt(binding.etEmail)
             } else {
-                //TODO AÑADIR VALIDAR
-                //TODO AÑADIR BUSCAR SI EXISTE EN DB
+                validateEtEmail()
             }
         }
 
@@ -121,7 +125,7 @@ class RegisterActivity : AppCompatActivity() {
             if (hasFocus) {
                 genericClearErrorEt(binding.etFirstName)
             } else {
-                //TODO AÑADIR VALIDAR
+                validateEtFirstName()
             }
         }
 
@@ -138,7 +142,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (hasFocus) {
                     genericClearErrorEt(binding.etFirstLastName)
                 } else {
-                    //TODO AÑADIR VALIDAR
+                    validateEtFirstLastName()
                 }
             }
 
@@ -155,7 +159,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (hasFocus) {
                     genericClearErrorEt(binding.etSecondLastName)
                 } else {
-                    //TODO AÑADIR VALIDAR
+                    validateEtSecondLastName()
                 }
             }
 
@@ -165,7 +169,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun dpBithDateListener() {
-        //TODO("Not yet implemented")
+        //TODO("Not yet i+mplemented")
     }
 
     private fun etPasswordListeners() {
@@ -175,7 +179,7 @@ class RegisterActivity : AppCompatActivity() {
             if (hasFocus) {
                 genericClearErrorEt(binding.etPassword)
             } else {
-                //TODO AÑADIR QUE AL SALIR BUSQUE SI EL PASSWORD ES VALIDO
+                validateEtPassword()
             }
         }
 
@@ -192,7 +196,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (hasFocus) {
                     genericClearErrorEt(binding.etPasswordRepeat)
                 } else {
-                    //TODO AÑADIR QUE AL SALIR BUSQUE SI AMBOS PASS COINCIDEN
+                    validateEtPasswordRepeat()
                 }
             }
         //Cuando el texto se modifica
@@ -230,6 +234,7 @@ class RegisterActivity : AppCompatActivity() {
      * Clear All Errors
      */
     private fun validateRegisterFields() {
+
         validateEtUserName()
         validateEtEmail()
         validateEtFirstName()
@@ -238,6 +243,150 @@ class RegisterActivity : AppCompatActivity() {
         validateDpBirthDate() // TODO FALTA IMPLEMENTAR
         validateEtPassword()
         validateEtPasswordRepeat()
+
+    }
+
+    /**
+     * Comprueba si el campo User Name es correcto
+     * Tiene el formato correcto, El usuario existe previamente
+     * True si es correcto;
+     */
+    private fun validateEtUserName(): Boolean {
+
+        if (validateEtUserNameIsValid()){
+            validateEtUserNameExist {
+                if (it){ // El usuario Existe
+                    Toast.makeText(
+                        this,
+                        "El User Name ya existe",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    genericIsErrorEt(binding.etUserName)
+                }
+                return@validateEtUserNameExist
+            }
+        }
+        return false
+    }
+
+    /**
+     * Comprueba que el User Name es de formato valido.
+     * @return Boolean True si es valido
+     */
+    private fun validateEtUserNameIsValid(): Boolean {
+
+        if (!genericValidateEditText(binding.etUserName)) {
+            return false
+        } else if (!validateFields.validUserName(binding.etUserName.text.toString())) {
+            Toast.makeText(
+                this,
+                "El campo ${binding.etUserName.hint} tiene que tener al menos tres caracteres y no puede contener @",
+                Toast.LENGTH_LONG
+            ).show()
+            genericIsErrorEt(binding.etUserName) // Pinta los errores.
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Comprueba si el User Name Existe (Consulta a la API)
+     * @return Boolean True Si existe
+     */
+    private fun validateEtUserNameExist(callback: (Boolean) -> Unit) {
+        lifecycleScope.launch() {
+            //Completa con el @
+            var userName = validateFields.completeUserName(binding.etUserName.text.toString())
+            if (registerUseCase.userNameExist(userName)) {
+                Log.i("RegistroUsuario: ", "REGISTER Usuario Existe SI! EXISTE")
+                callback(true)
+            }else {
+                Log.i("RegistroUsuario: ", "REGISTER Usuario Existe NO! EXISTE")
+                callback(false)
+            }
+        }
+    }
+    
+    private fun validateEtEmail() {
+        //TODO("Not yet implemented")
+    }
+
+    /**
+     * Comprueba Que el First Name no este en blanco si lo esta pinta el error
+     * True si el campo es valido
+     */
+    private fun validateEtFirstName(): Boolean {
+        if (binding.etFirstName.text.isBlank()) {
+            genericIsErrorEt(binding.etFirstName)
+            return false
+        }
+        return true
+    }
+
+
+    /**
+     * Comprueba Que el First Last Name no este en blanco si lo esta pinta el error
+     * True si el campo es valido
+     */
+    private fun validateEtFirstLastName(): Boolean {
+        if (binding.etFirstLastName.text.isBlank()) {
+            genericIsErrorEt(binding.etFirstLastName)
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Comprueba Que el Second Last Name no este en blanco. NO PINTA NUNCA ERROR
+     * True si el campo es valido
+     */
+    private fun validateEtSecondLastName(): Boolean {
+        if (binding.etFirstLastName.text.isBlank()) {
+            return false
+        }
+        return true
+    }
+
+    private fun validateDpBirthDate() {
+        //TODO("Not yet implemented")
+    }
+
+    /**
+     * Comprueba el campo del password
+     */
+    private fun validateEtPassword(): Boolean {
+        if (!genericValidateEditText(binding.etPassword)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
+            return false
+        } else if (!validateFields.validatePassword(binding.etPassword.text.toString())) { // Valida que el Password formato correcto
+            Toast.makeText(
+                this,
+                "El Password debe contener al menos ocho caracteres una mayuscula una minuscula y un numero",
+                Toast.LENGTH_LONG
+            ).show()
+            genericIsErrorEt(binding.etPassword)
+            return false
+        }
+        return true
+
+    }
+
+    private fun validateEtPasswordRepeat(): Boolean {
+        if (!genericValidateEditText(binding.etPasswordRepeat)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
+            return false
+        } else if (!validateFields.validatePasswordsMarches(
+                binding.etPassword.text.toString(),
+                binding.etPasswordRepeat.text.toString()
+            )
+        ) {
+            Toast.makeText(
+                this,
+                "Los Passwords no coinciden",
+                Toast.LENGTH_LONG
+            ).show()
+            genericIsErrorEt(binding.etPasswordRepeat)
+            return false
+        }
+        return true
     }
 
 
@@ -245,7 +394,7 @@ class RegisterActivity : AppCompatActivity() {
      * Validate if EditText Is Blank or Have Empty Spaces Y Pinta los errores
      * Return True if is OK
      */
-    private fun genericValidateEditText(editText: EditText):Boolean {
+    private fun genericValidateEditText(editText: EditText): Boolean {
         val textToValidate = editText.text.toString()
         if (validateFields.validateHaveBlankSpaces(textToValidate)) {
             val hintText = editText.hint// Obtiene el texto del Hint y lanso un toast
@@ -254,59 +403,13 @@ class RegisterActivity : AppCompatActivity() {
                 "El campo $hintText no puede contener espacios en blanco",
                 Toast.LENGTH_LONG
             ).show()
-            editText.setTextColor(errorEditTextColor)
+            genericIsErrorEt(editText)//Pinta el error
             return false
         } else if (binding.etUserName.text.isBlank()) {
-            editText.setHintTextColor(errorHintColor)
+            genericIsErrorEt(editText)//Pinta el error
             return false
         }
         return true
-    }
-
-    /**
-     * Comprobar si el campo User Name es correcto
-     * True si es correcto;
-     */
-    private fun validateEtUserName():Boolean {
-
-        if (!genericValidateEditText(binding.etUserName)){
-            return false
-        } else if (!validateFields.validUserName(binding.etUserName.text.toString())) {
-            //TODO: Añadir TOAST de que el usuario no puede tener menos de tres caracteres o no puede contener @
-            return false
-        }
-        //TODO faltan cosas de comprobar!
-
-
-        return true
-    }
-
-    private fun validateEtEmail() {
-        //TODO("Not yet implemented")
-    }
-
-    private fun validateEtFirstName() {
-        //TODO("Not yet implemented")
-    }
-
-    private fun validateEtFirstLastName() {
-        //TODO("Not yet implemented")
-    }
-
-    private fun validateEtSecondLastName() {
-        //TODO("Not yet implemented")
-    }
-
-    private fun validateDpBirthDate() {
-        //TODO("Not yet implemented")
-    }
-
-    private fun validateEtPassword() {
-        //TODO("Not yet implemented")
-    }
-
-    private fun validateEtPasswordRepeat() {
-        //TODO("Not yet implemented")
     }
 
 
@@ -332,6 +435,15 @@ class RegisterActivity : AppCompatActivity() {
     private fun genericClearErrorEt(editText: EditText) {
         editText.setHintTextColor(defaultHintColor)
         editText.setTextColor(defaultEditTextColor)
+    }
+
+    /**
+     * Generic is errors of Edit Text
+     * Pinta los campos en rojo para los EditText
+     */
+    private fun genericIsErrorEt(editText: EditText) {
+        editText.setHintTextColor(errorHintColor)
+        editText.setTextColor(errorEditTextColor)
     }
 
     private fun clearErrorDpBirthDate() {

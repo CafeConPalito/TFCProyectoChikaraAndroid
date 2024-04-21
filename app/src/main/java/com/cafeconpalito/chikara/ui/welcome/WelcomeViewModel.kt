@@ -76,7 +76,6 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
                 }
 
             } else {
-
                 return@withContext false
             }
         }

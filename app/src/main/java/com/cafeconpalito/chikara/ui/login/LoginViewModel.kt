@@ -1,9 +1,8 @@
 package com.cafeconpalito.chikara.ui.login
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cafeconpalito.chikara.domain.useCase.CheckUserUseCase
+import com.cafeconpalito.chikara.domain.useCase.LoginCheckUserUseCase
 import com.cafeconpalito.chikara.domain.useCase.GetLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getLoginUseCase: GetLoginUseCase,
-    private val checkUserUseCase: CheckUserUseCase
+    private val loginCheckUserUseCase: LoginCheckUserUseCase
 ) : ViewModel() {
 
     //Como valor inicial le paso el estado de Cargando
@@ -34,7 +33,7 @@ class LoginViewModel @Inject constructor(
 
             //Espererando la respuesta
 
-            val result = checkUserUseCase(user)
+            val result = loginCheckUserUseCase(user)
 
             //si la respuesta es correcta
             if (result) {

@@ -72,4 +72,18 @@ class ValidateFields @Inject constructor() {
         return text.contains(" ")
     }
 
+    /**
+     * Comprueba si el texto tiene espacios en blanco
+     * Si es asi devuelve True
+     */
+    @Provides
+    fun completeUserName(userName: String): String {
+        if(!userName.startsWith('@')){
+            return "@"+userName
+        }
+
+        return userName
+    }
+
+
 }

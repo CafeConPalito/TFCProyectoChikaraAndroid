@@ -2,8 +2,12 @@ package com.cafeconpalito.chikara.data.network
 
 import com.cafeconpalito.chikara.BuildConfig.BASE_URL
 import com.cafeconpalito.chikara.data.network.repositoryImpl.LoginRepositoryImpl
+import com.cafeconpalito.chikara.data.network.repositoryImpl.RegisterRepositoryImpl
 import com.cafeconpalito.chikara.data.network.service.LoginApiService
+import com.cafeconpalito.chikara.data.network.service.RegisterApiService
 import com.cafeconpalito.chikara.domain.repository.LoginRepository
+import com.cafeconpalito.chikara.domain.repository.RegisterRepository
+import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +17,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import okhttp3.Interceptor
 
 /**
  * Tiene la conexion a la API utilizando retrofit
@@ -99,5 +102,23 @@ object NetworkModule {
     fun provideLoginRepository(apiService: LoginApiService):LoginRepository {
         return LoginRepositoryImpl(apiService)
     }
+
+    /**
+     * Construye el repositorio de API SERVICE
+     */
+    @Provides
+    fun providerRegisterApiService(retrofit: Retrofit):RegisterApiService{
+        return retrofit.create(RegisterApiService::class.java)
+    }
+
+    /**
+     * Provee lo necesario para contruir la clase
+     *
+     */
+    @Provides
+    fun provideRegisterRepository(apiService: RegisterApiService):RegisterRepository {
+        return RegisterRepositoryImpl(apiService)
+    }
+
 
 }

@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.data.network.service
 
-import dagger.MapKey
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,21 +13,6 @@ interface LoginApiService {
 
     @GET("/users/search")
     suspend fun checkUser(@Query("user") user: String):Boolean
-
-
-    //AHORA
-    //URL...BASE
-    // http://loclahjots:8000/
-
-    //peticion
-    // /api/v1/users/login
-
-    //NUEVO
-    //URL...BASE
-    // http://loclahjots:8000/api/v1/
-
-    //peticion
-    // /users/login
 
 
 

@@ -4,7 +4,7 @@ import android.util.Log
 import com.cafeconpalito.chikara.domain.repository.LoginRepository
 import javax.inject.Inject
 
-class GetLoginUseCase@Inject constructor(private val repository: LoginRepository) {
+class GetLoginUseCase @Inject constructor(private val repository: LoginRepository) {
 
 
     /**
