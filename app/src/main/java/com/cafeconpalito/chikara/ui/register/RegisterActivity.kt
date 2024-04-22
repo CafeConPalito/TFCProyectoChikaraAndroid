@@ -10,18 +10,18 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityRegisterBinding
-import com.cafeconpalito.chikara.domain.useCase.GetLoginUseCase
+import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
+import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.ValidateFields
-import com.cafeconpalito.chikara.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.sql.Date
+import java.util.Calendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -84,6 +84,86 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Accion del boton Login, cambia a la vista LoginActivity
+     */
+    private fun goToLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**
+     * Accion del boton Register, comprueba que todos los campos son correctos, si es asi intenta registrar.
+     */
+    private fun tryToRegister() {
+
+        clearErrors() //Limpia los errores al dar al boton de registro.
+        if (validateRegisterFields()) { // Comprueba que todos los campos son correctos.
+            registerUseCase.registerUser(makeUserDto())
+        }
+
+        //TODO ME SALTO LA VALIDACION PARA REALIZAR UN INTENTO DE REGISTRO
+        registerUseCase.registerUser(makeUserDto())
+
+    }
+
+    /**
+     * Lanza la corrutina para realizar el registro.
+     * TODO creo que es mejor lanzarlo directamente en el hilo para que espere a la respuesta.
+     */
+    private fun reg(callback: (Boolean) -> Unit) {
+        lifecycleScope.launch() {
+            if (registerUseCase.emailExist(binding.etEmail.text.toString())) {
+                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = SI! EXISTE")
+                callback(true)
+            } else {
+                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = NO! EXISTE")
+                callback(false)
+            }
+        }
+    }
+
+    /**
+     * Genera un UserDto con los datos del Registro.
+     */
+    private fun makeUserDto(): UserDto{
+
+        val cypherTextToMD5 = CypherTextToMD5();
+        val date : Date = Date(Calendar.getInstance().timeInMillis)
+
+        //METODO CORRETO, FALTA LA FECHA
+//        val userDto = UserDto (
+//
+//            user_name = binding.etUserName.text.toString(),
+//            email = binding.etEmail.text.toString(),
+//            pwd = cypherTextToMD5(binding.etPassword.text.toString()),
+//            first_name = binding.etFirstName.text.toString(),
+//            first_last_name = binding.etFirstLastName.text.toString(),
+//            second_last_name = binding.etSecondLastName.text.toString(), // Puedes asignar null si es opcional
+//            birthdate = date
+//
+//        )
+
+        //TODO DATOS RAPIDOS PARA PROBAR EL REGISTRO
+        val userDto = UserDto (
+
+            user_name = "@userA",
+            email = "anareldis@gmail.com",
+            pwd = cypherTextToMD5("1234"),
+            first_name = "Daniel",
+            first_last_name = "Espinosa",
+            second_last_name = "Garcia", // Puedes asignar null si es opcional
+            birthdate = date
+
+        )
+
+        return userDto
+
+    }
+
+
+
+    //LISTENERS
 
     private fun etUserNameListeners() {
 
@@ -217,31 +297,22 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    private fun tryToRegister() {
-
-        //Limpio los errores al dar al boton de registro.
-        clearErrors()
-
-    }
-
-    private fun goToLoginActivity() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
+    //VALIDATION MANAGERS
 
     /**
-     * Clear All Errors
+     * valida todos los campos.
+     * return True si todos son correctos.
      */
-    private fun validateRegisterFields() {
+    private fun validateRegisterFields(): Boolean {
 
-        validateEtUserName()
-        validateEtEmail()
-        validateEtFirstName()
-        validateEtFirstLastName()
-        validateEtSecondLastName()
-        validateDpBirthDate() // TODO FALTA IMPLEMENTAR
-        validateEtPassword()
-        validateEtPasswordRepeat()
+        return validateEtUserName() ||
+                validateEtEmail() ||
+                validateEtFirstName() ||
+                validateEtFirstLastName() ||
+                validateEtSecondLastName() ||
+                validateDpBirthDate() || // TODO FALTA IMPLEMENTAR
+                validateEtPassword() ||
+                validateEtPasswordRepeat()
 
     }
 
@@ -311,7 +382,7 @@ class RegisterActivity : AppCompatActivity() {
      * Tiene el formato correcto, El Email existe previamente
      * True si es correcto;
      */
-    private fun validateEtEmail():Boolean {
+    private fun validateEtEmail(): Boolean {
         if (validateEtEmailIsValid()) {
             validateEtEmailExist {
                 if (it) { // El Email ya esta registrado
@@ -400,8 +471,11 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
-    private fun validateDpBirthDate() {
+    private fun validateDpBirthDate(): Boolean {
         //TODO("Not yet implemented")
+
+        return true
+
     }
 
     /**
@@ -465,6 +539,8 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+
+    //ERROR MANAGERS
 
     /**
      * Clear All Errors

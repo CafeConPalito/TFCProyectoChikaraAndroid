@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.domain.model
 
-import org.jetbrains.annotations.NotNull
 import java.sql.Date
 
 data class UserDto(
@@ -12,7 +11,9 @@ data class UserDto(
     val first_last_name: String,
     val second_last_name: String, //Optional
     val birthdate: Date,
-    val account_creation: Date,
-    val is_premium: Boolean //Optional
+    //val account_creation: Date,
+    val is_premium: Boolean = false
 
 )
+
+

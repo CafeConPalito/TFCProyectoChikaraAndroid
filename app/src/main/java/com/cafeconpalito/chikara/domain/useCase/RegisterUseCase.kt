@@ -9,6 +9,6 @@ class RegisterUseCase @Inject constructor(private val repository: RegisterReposi
 
     suspend fun userNameExist(userName:String) = repository.userNameExist(userName)
     suspend fun emailExist(email:String) = repository.emailExist(email)
-    suspend fun registerUser(userDto: UserDto) = repository.registerUser(userDto)
+    fun registerUser(userDto: UserDto) = repository.registerUser(userDto)
 
 }
