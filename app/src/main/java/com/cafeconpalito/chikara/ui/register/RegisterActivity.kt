@@ -25,9 +25,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegisterActivity  : AppCompatActivity() {
-
-    //@Inject constructor(private val registerValidateFields: RegisterValidateFields)
+class RegisterActivity : AppCompatActivity() {
 
     //TODO: CAMBIAR EL BIRD DATE DE UN EDIT TEXT A UN DATE PICKER!
 
@@ -35,6 +33,7 @@ class RegisterActivity  : AppCompatActivity() {
 
     @Inject
     lateinit var validateFields: ValidateFields
+
     @Inject
     lateinit var registerUseCase: RegisterUseCase
 
@@ -253,9 +252,9 @@ class RegisterActivity  : AppCompatActivity() {
      */
     private fun validateEtUserName(): Boolean {
 
-        if (validateEtUserNameIsValid()){
+        if (validateEtUserNameIsValid()) {
             validateEtUserNameExist {
-                if (it){ // El usuario Existe
+                if (it) { // El usuario Existe
                     Toast.makeText(
                         this,
                         "El User Name ya existe",
@@ -300,15 +299,69 @@ class RegisterActivity  : AppCompatActivity() {
             if (registerUseCase.userNameExist(userName)) {
                 Log.i("RegistroUsuario: ", "REGISTER Usuario Existe SI! EXISTE")
                 callback(true)
-            }else {
+            } else {
                 Log.i("RegistroUsuario: ", "REGISTER Usuario Existe NO! EXISTE")
                 callback(false)
             }
         }
     }
-    
-    private fun validateEtEmail() {
-        //TODO("Not yet implemented")
+
+    /**
+     * Comprueba si el campo Email es correcto
+     * Tiene el formato correcto, El Email existe previamente
+     * True si es correcto;
+     */
+    private fun validateEtEmail():Boolean {
+        if (validateEtEmailIsValid()) {
+            validateEtEmailExist {
+                if (it) { // El Email ya esta registrado
+                    Toast.makeText(
+                        this,
+                        "El Email ya esta registrado",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    genericIsErrorEt(binding.etEmail)
+                }
+                return@validateEtEmailExist
+            }
+        }
+        return false
+    }
+
+    /**
+     * Comprueba que el Email es de formato valido.
+     * @return Boolean True si es valido
+     */
+    private fun validateEtEmailIsValid(): Boolean {
+
+        if (!genericValidateEditText(binding.etEmail)) {
+            return false
+        } else if (!validateFields.validEmail(binding.etEmail.text.toString())) {
+            Toast.makeText(
+                this,
+                "Email con formato incorrecto",
+                Toast.LENGTH_LONG
+            ).show()
+            genericIsErrorEt(binding.etUserName) // Pinta los errores.
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Comprueba si el Email Existe (Consulta a la API)
+     * @return Boolean True Si existe
+     */
+    private fun validateEtEmailExist(callback: (Boolean) -> Unit) {
+        lifecycleScope.launch() {
+            if (registerUseCase.emailExist(binding.etEmail.text.toString())) {
+                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = SI! EXISTE")
+                callback(true)
+            } else {
+                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = NO! EXISTE")
+                callback(false)
+            }
+        }
     }
 
     /**
