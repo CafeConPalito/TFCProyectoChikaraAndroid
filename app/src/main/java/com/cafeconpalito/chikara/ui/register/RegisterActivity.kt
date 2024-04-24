@@ -1,11 +1,13 @@
 package com.cafeconpalito.chikara.ui.register
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,13 +23,13 @@ import com.cafeconpalito.chikara.utils.ValidateFields
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.sql.Date
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
-
-    //TODO: CAMBIAR EL BIRD DATE DE UN EDIT TEXT A UN DATE PICKER!
 
     private lateinit var binding: ActivityRegisterBinding
 
@@ -78,7 +80,7 @@ class RegisterActivity : AppCompatActivity() {
         etFirstNamelListeners()
         etFirstLastNameListeners()
         etSecondLastNameListeners()
-        dpBithDateListener() //TODO FALTA EL LISTENER DEL DATE PICKER
+        dpBithDateListener()
         etPasswordListeners()
         etPasswordRepeatListeners()
 
@@ -99,11 +101,14 @@ class RegisterActivity : AppCompatActivity() {
 
         clearErrors() //Limpia los errores al dar al boton de registro.
         if (validateRegisterFields()) { // Comprueba que todos los campos son correctos.
-            registerUseCase.registerUser(makeUserDto())
+            Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
+            lifecycleScope.launch() {
+                registerUseCase.registerUser(makeUserDto())
+            }
+        } else {
+            Log.i("RegistroUsuario: ", "alguno de los campos es incorrecto")
         }
 
-        //TODO ME SALTO LA VALIDACION PARA REALIZAR UN INTENTO DE REGISTRO
-        registerUseCase.registerUser(makeUserDto())
 
     }
 
@@ -126,41 +131,38 @@ class RegisterActivity : AppCompatActivity() {
     /**
      * Genera un UserDto con los datos del Registro.
      */
-    private fun makeUserDto(): UserDto{
+    private fun makeUserDto(): UserDto {
 
         val cypherTextToMD5 = CypherTextToMD5();
-        val date : Date = Date(Calendar.getInstance().timeInMillis)
+        val date: Date = Date(Calendar.getInstance().timeInMillis)
 
         //METODO CORRETO, FALTA LA FECHA
-//        val userDto = UserDto (
-//
-//            user_name = binding.etUserName.text.toString(),
-//            email = binding.etEmail.text.toString(),
-//            pwd = cypherTextToMD5(binding.etPassword.text.toString()),
-//            first_name = binding.etFirstName.text.toString(),
-//            first_last_name = binding.etFirstLastName.text.toString(),
-//            second_last_name = binding.etSecondLastName.text.toString(), // Puedes asignar null si es opcional
-//            birthdate = date
-//
-//        )
+        val userDto = UserDto(
 
-        //TODO DATOS RAPIDOS PARA PROBAR EL REGISTRO
-        val userDto = UserDto (
-
-            user_name = "@userA",
-            email = "anareldis@gmail.com",
-            pwd = cypherTextToMD5("1234"),
-            first_name = "Daniel",
-            first_last_name = "Espinosa",
-            second_last_name = "Garcia", // Puedes asignar null si es opcional
-            birthdate = date
+            user_name = binding.etUserName.text.toString(),
+            email = binding.etEmail.text.toString(),
+            pwd = cypherTextToMD5(binding.etPassword.text.toString()),
+            first_name = binding.etFirstName.text.toString(),
+            first_last_name = binding.etFirstLastName.text.toString(),
+            second_last_name = binding.etSecondLastName.text.toString(), // Puedes asignar null si es opcional
+            birthdate = date.toString()
 
         )
+
+        //TODO DATOS RAPIDOS PARA PROBAR EL REGISTRO
+//        val userDto = UserDto (
+//            user_name = "@userA",
+//            email = "anareldis@gmail.com",
+//            pwd = cypherTextToMD5("1234"),
+//            first_name = "Daniel",
+//            first_last_name = "Espinosa",
+//            second_last_name = "Garcia", // Puedes asignar null si es opcional
+//            birthdate = date.toString() // OJO CON EL DATE!
+//        )
 
         return userDto
 
     }
-
 
 
     //LISTENERS
@@ -247,8 +249,39 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun dpBithDateListener() {
-        //TODO("Not yet i+mplemented")
+
+        binding.etBirthDate.setOnClickListener {
+
+            val calendar = Calendar.getInstance()
+            val brithDate = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.DAY_OF_MONTH, day)
+
+                updateBirthDate(calendar)
+
+            }
+
+            DatePickerDialog(
+                this,
+                brithDate,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        genericOnModifyTextListener(binding.etBirthDate)
+
+    }
+
+    private fun updateBirthDate(calendar: Calendar) {
+        val dateFormat = "yyyy-MM-dd"
+        val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.ENGLISH)
+        binding.etBirthDate.setText (simpleDateFormat.format(calendar.time))
     }
 
     private fun etPasswordListeners() {
@@ -305,13 +338,13 @@ class RegisterActivity : AppCompatActivity() {
      */
     private fun validateRegisterFields(): Boolean {
 
-        return validateEtUserName() ||
-                validateEtEmail() ||
-                validateEtFirstName() ||
-                validateEtFirstLastName() ||
-                validateEtSecondLastName() ||
-                validateDpBirthDate() || // TODO FALTA IMPLEMENTAR
-                validateEtPassword() ||
+        return validateEtUserName() and
+                validateEtEmail() and
+                validateEtFirstName() and
+                validateEtFirstLastName() and
+                validateEtSecondLastName() and
+                validateDpBirthDate() and
+                validateEtPassword() and
                 validateEtPasswordRepeat()
 
     }
@@ -447,9 +480,8 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
-
     /**
-     * Comprueba Que el First Last Name no este en blanco si lo esta pinta el error
+     * Comprueba que el First Last Name no este en blanco si lo esta pinta el error
      * True si el campo es valido
      */
     private fun validateEtFirstLastName(): Boolean {
@@ -471,11 +503,16 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * Comprueba que el Birth Date no este en blanco si lo esta pinta el error
+     * True si el campo es valido
+     */
     private fun validateDpBirthDate(): Boolean {
-        //TODO("Not yet implemented")
-
+        if (binding.etBirthDate.text.isBlank()){
+            genericIsErrorEt(binding.etBirthDate)
+            return false
+        }
         return true
-
     }
 
     /**
@@ -553,9 +590,7 @@ class RegisterActivity : AppCompatActivity() {
         genericClearErrorEt(binding.etSecondLastName)
         genericClearErrorEt(binding.etPassword)
         genericClearErrorEt(binding.etPasswordRepeat)
-
-        clearErrorDpBirthDate() // TODO FALTA IMPLEMENTAR
-
+        genericClearErrorEt(binding.etBirthDate)
     }
 
     /**
@@ -574,10 +609,5 @@ class RegisterActivity : AppCompatActivity() {
         editText.setHintTextColor(errorHintColor)
         editText.setTextColor(errorEditTextColor)
     }
-
-    private fun clearErrorDpBirthDate() {
-        //TODO SIN IMPLEMENTAR
-    }
-
 
 }

@@ -50,7 +50,7 @@ class RegisterRepositoryImpl @Inject constructor(private val apiService: Registe
      * Intenta registrar un Nuevo Usuario.
      * Devuelve el DTO
      */
-    override fun registerUser(userDto: UserDto): Boolean {
+    override suspend fun registerUser(userDto: UserDto):Boolean {
         runCatching {
 
             apiService.registerUser(userDto)
@@ -59,7 +59,7 @@ class RegisterRepositoryImpl @Inject constructor(private val apiService: Registe
                 Log.i("RegistroUsuario: ", "Registro de usuario satisfactorio " + it)
                 return true }
             .onFailure {
-                Log.i("RegistroUsuario: ", "Error registro de usuario " + it)
+                Log.i("RegistroUsuario: ", "Error registro de usuario " + it.message)
             }
 
         return false

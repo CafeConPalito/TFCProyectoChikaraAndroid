@@ -1,6 +1,7 @@
 package com.cafeconpalito.chikara.data.network.service
 
 import com.cafeconpalito.chikara.domain.model.UserDto
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -16,20 +17,6 @@ interface RegisterApiService {
     suspend fun emailExist(@Query("email") email:String):Boolean
 
     @POST("/users/register")
-    fun registerUser(@Body userDto:UserDto):Boolean
-
-    /*
-    {
-  "user_name": "string",
-  "email": "string",
-  "pwd": "string",
-  "first_name": "string",
-  "first_last_name": "string",
-  "second_last_name": "string",
-  "birthdate": "2024-04-21",
-  "is_premium": true
-}
-     */
-
+    suspend fun registerUser(@Body userDto:UserDto):Boolean
 
 }

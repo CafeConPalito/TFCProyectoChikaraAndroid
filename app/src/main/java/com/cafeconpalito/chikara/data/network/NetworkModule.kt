@@ -27,7 +27,7 @@ import javax.inject.Singleton
 object NetworkModule {
 
     // Auth Key Para poder acceder a los endpoints de la App
-    var AuthKey:String = ""
+    var AuthKey: String = ""
 
     /**
      * SINGELTON
@@ -38,7 +38,7 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient):Retrofit{
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
 
         //Sin Autorizacion
         /*
@@ -75,7 +75,7 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun providesOkHttpClient():OkHttpClient{
+    fun providesOkHttpClient(): OkHttpClient {
         //Este nivel de interceptor captura toda la respuesda de la Api
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -84,22 +84,21 @@ object NetworkModule {
             .addInterceptor(interceptor)
             .build()
     }
-    
+
     /**
      * Construye el repositorio de API SERVICE
      */
     @Provides
-    fun providerLoginApiService(retrofit: Retrofit):LoginApiService{
+    fun providerLoginApiService(retrofit: Retrofit): LoginApiService {
         return retrofit.create(LoginApiService::class.java)
     }
 
     /**
-     *
      * Para difenrecioar entre repositorios utilizamos la Notacion @Name
      */
     //@Named
     @Provides
-    fun provideLoginRepository(apiService: LoginApiService):LoginRepository {
+    fun provideLoginRepository(apiService: LoginApiService): LoginRepository {
         return LoginRepositoryImpl(apiService)
     }
 
@@ -107,16 +106,15 @@ object NetworkModule {
      * Construye el repositorio de API SERVICE
      */
     @Provides
-    fun providerRegisterApiService(retrofit: Retrofit):RegisterApiService{
+    fun providerRegisterApiService(retrofit: Retrofit): RegisterApiService {
         return retrofit.create(RegisterApiService::class.java)
     }
 
     /**
      * Provee lo necesario para contruir la clase
-     *
      */
     @Provides
-    fun provideRegisterRepository(apiService: RegisterApiService):RegisterRepository {
+    fun provideRegisterRepository(apiService: RegisterApiService): RegisterRepository {
         return RegisterRepositoryImpl(apiService)
     }
 
