@@ -7,7 +7,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,10 +18,11 @@ import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
+import com.cafeconpalito.chikara.utils.UserPreferences
+import com.cafeconpalito.chikara.utils.UserPreferencesModel
 import com.cafeconpalito.chikara.utils.ValidateFields
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -80,7 +80,7 @@ class RegisterActivity : AppCompatActivity() {
         etFirstNamelListeners()
         etFirstLastNameListeners()
         etSecondLastNameListeners()
-        dpBithDateListener()
+        dpBirthDateListener()
         etPasswordListeners()
         etPasswordRepeatListeners()
 
@@ -103,13 +103,28 @@ class RegisterActivity : AppCompatActivity() {
         if (validateRegisterFields()) { // Comprueba que todos los campos son correctos.
             Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
             lifecycleScope.launch() {
-                registerUseCase.registerUser(makeUserDto())
+                if(registerUseCase.registerUser(makeUserDto())){ //Si el registro es satisfactorio
+                    registerSatisfactoryGoToLogin()
+                }else { //Si no lo es.
+                    //TODO: Lanzar un Toas de error inexplicable!
+                }
             }
         } else {
             Log.i("RegistroUsuario: ", "alguno de los campos es incorrecto")
         }
 
+    }
 
+    private fun registerSatisfactoryGoToLogin(){
+//        var bundle:Bundle = Bundle()
+//        bundle.putString(UserPreferences.KEY_USER_STR.name, "@"+binding.etUserName.text.toString())
+//        bundle.putString(UserPreferences.KEY_PASSWORD_STR.name, binding.etPassword.text.toString())
+
+        val intent = Intent(this, LoginActivity::class.java).apply {
+            putExtra(UserPreferences.KEY_USER_STR.name, "@"+binding.etUserName.text.toString())
+            putExtra(UserPreferences.KEY_PASSWORD_STR.name, binding.etPassword.text.toString())
+        }
+        startActivity(intent)
     }
 
     /**
@@ -134,20 +149,23 @@ class RegisterActivity : AppCompatActivity() {
     private fun makeUserDto(): UserDto {
 
         val cypherTextToMD5 = CypherTextToMD5();
-        val date: Date = Date(Calendar.getInstance().timeInMillis)
+        Log.i("RegistroUsuario: ", "Creando UserDto")
+
 
         //METODO CORRETO, FALTA LA FECHA
         val userDto = UserDto(
 
-            user_name = binding.etUserName.text.toString(),
+            user_name = "@"+binding.etUserName.text.toString(),
             email = binding.etEmail.text.toString(),
             pwd = cypherTextToMD5(binding.etPassword.text.toString()),
             first_name = binding.etFirstName.text.toString(),
             first_last_name = binding.etFirstLastName.text.toString(),
             second_last_name = binding.etSecondLastName.text.toString(), // Puedes asignar null si es opcional
-            birthdate = date.toString()
+            birthdate = binding.etBirthDate.text.toString()
 
         )
+
+        //val date: Date = Date(Calendar.getInstance().timeInMillis)
 
         //TODO DATOS RAPIDOS PARA PROBAR EL REGISTRO
 //        val userDto = UserDto (
@@ -251,7 +269,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
-    private fun dpBithDateListener() {
+    private fun dpBirthDateListener() {
 
         binding.etBirthDate.setOnClickListener {
 
@@ -338,8 +356,8 @@ class RegisterActivity : AppCompatActivity() {
      */
     private fun validateRegisterFields(): Boolean {
 
-        return validateEtUserName() and
-                validateEtEmail() and
+        return !validateEtUserName() and //Es Necesario Negarlo para que si es falso se que no esta utilizado
+                !validateEtEmail() and //Es Necesario Negarlo para que si es falso se que no esta utilizado
                 validateEtFirstName() and
                 validateEtFirstLastName() and
                 validateEtSecondLastName() and

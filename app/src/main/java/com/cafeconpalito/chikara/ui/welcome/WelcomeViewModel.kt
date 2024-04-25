@@ -1,7 +1,6 @@
 package com.cafeconpalito.chikara.ui.welcome
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cafeconpalito.chikara.domain.useCase.GetLoginUseCase
@@ -65,7 +64,7 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
 
             //Comprueba que los UserPreference no es null para leer los datos
             if (userPreferenceModel != null) {
-                val user = userPreferenceModel.user
+                val user = userPreferenceModel.userName
                 val password = userPreferenceModel.password
 
                 //Comprueba que los datos obtenidos no son falsos.

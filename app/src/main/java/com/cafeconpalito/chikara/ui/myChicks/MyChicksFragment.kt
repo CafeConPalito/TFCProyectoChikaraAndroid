@@ -13,7 +13,6 @@ import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.ui.register.RegisterActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.UserPreferences
-import com.cafeconpalito.chikara.utils.UserPreferencesModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -90,7 +89,7 @@ class MyChicksFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             userPreferences.getSettings().collect { userPreferenceModel ->
                 if (userPreferenceModel != null) {
-                    Log.i("TEST", userPreferenceModel.user)
+                    Log.i("TEST", userPreferenceModel.userName)
                     Log.i("TEST", "" + userPreferenceModel.password)
                 }
             }

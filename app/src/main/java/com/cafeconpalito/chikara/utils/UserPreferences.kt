@@ -1,26 +1,14 @@
 package com.cafeconpalito.chikara.utils
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import javax.inject.Inject
-import javax.inject.Singleton
 
 //Nombre de los settings
 private const val LAYOUT_PREFERENCES_NAME = "ChikaraSettings"
@@ -75,7 +63,7 @@ class UserPreferences @Inject constructor(private val context: Context) {
     public fun getSettings(): Flow<UserPreferencesModel?> {
         return context.dataStore.data.map { preferences ->
             UserPreferencesModel(
-                user = preferences[KEY_USER_STR] ?: "",
+                userName = preferences[KEY_USER_STR] ?: "",
                 password = preferences[KEY_PASSWORD_STR] ?: ""
             )
         }

@@ -33,7 +33,7 @@ import java.lang.reflect.Constructor
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity :AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityLoginBinding
@@ -66,6 +66,26 @@ class LoginActivity :AppCompatActivity() {
 
         initUI()
 
+        //Lo mismo que abajo pero resumido!
+//        val userName = intent.getStringExtra(UserPreferences.KEY_USER_STR.name)
+//        val password = intent.getStringExtra(UserPreferences.KEY_PASSWORD_STR.name)
+//
+//        if (userName != null) {
+//            binding.etUserName.setText(userName)
+//        }
+//        if (password != null) {
+//            binding.etPassword.setText(password)
+//        }
+
+
+        // Recuperar los datos del Intent y establecer en EditText si no son null
+        intent.getStringExtra(UserPreferences.KEY_USER_STR.name)?.let {
+            binding.etUserName.setText(it)
+        }
+        intent.getStringExtra(UserPreferences.KEY_PASSWORD_STR.name)?.let {
+            binding.etPassword.setText(it)
+        }
+
     }
 
     /**
@@ -95,7 +115,7 @@ class LoginActivity :AppCompatActivity() {
             if (hasFocus) { // Al ganar foco
                 clearErrorEtUserName()
             } else { // Al perder el foco
-                if (validateFields.validateHaveBlankSpaces(binding.etUserName.text.toString())){
+                if (validateFields.validateHaveBlankSpaces(binding.etUserName.text.toString())) {
                     //TODO: AÑADIR TOAST
                 }
             }
@@ -115,7 +135,7 @@ class LoginActivity :AppCompatActivity() {
             if (hasFocus) {
                 clearErrorEtPassword()
             } else {
-                if (validateFields.validateHaveBlankSpaces(binding.etPassword.text.toString())){
+                if (validateFields.validateHaveBlankSpaces(binding.etPassword.text.toString())) {
                     //TODO: AÑADIR TOAST
                 }
             }
