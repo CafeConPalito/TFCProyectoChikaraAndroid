@@ -464,7 +464,7 @@ class RegisterActivity : AppCompatActivity() {
                 "Email con formato incorrecto",
                 Toast.LENGTH_LONG
             ).show()
-            genericIsErrorEt(binding.etUserName) // Pinta los errores.
+            genericIsErrorEt(binding.etEmail) // Pinta los errores.
             return false
         }
         return true
