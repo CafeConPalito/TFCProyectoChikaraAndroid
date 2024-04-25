@@ -16,10 +16,9 @@
     <color name="swwhite">#f7f1e3</color>
 
     <!--    Toast-->
-    <color name="toast_background_error">#ff5252</color>
-    <color name="toast_text_error">#f7f1e3</color>
-    <color name="toast_background_warning">#ff793f</color>
-    <color name="toast_text_warning">#f7f1e3</color>
+    <color name="toast_text_error">#ff5252</color>
+    <color name="toast_text">#f7f1e3</color>
+    <color name="toast_background">#C30B2B3A</color>
 
     <!--    Icon Colors-->
     <color name="selected_icon_background">#6DFF793F</color> <!-- Cambia el color como desees -->
