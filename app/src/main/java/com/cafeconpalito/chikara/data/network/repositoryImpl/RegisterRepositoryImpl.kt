@@ -45,7 +45,6 @@ class RegisterRepositoryImpl @Inject constructor(private val apiService: Registe
         return false
     }
 
-    //TODO REVISAR LA RESPUESTA
     /**
      * Intenta registrar un Nuevo Usuario.
      * Devuelve el DTO

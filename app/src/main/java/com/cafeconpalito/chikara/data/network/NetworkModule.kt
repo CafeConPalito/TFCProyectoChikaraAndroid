@@ -1,13 +1,15 @@
 package com.cafeconpalito.chikara.data.network
 
 import com.cafeconpalito.chikara.BuildConfig.BASE_URL
+import com.cafeconpalito.chikara.data.network.repositoryImpl.ChickRepositoryImpl
 import com.cafeconpalito.chikara.data.network.repositoryImpl.LoginRepositoryImpl
 import com.cafeconpalito.chikara.data.network.repositoryImpl.RegisterRepositoryImpl
+import com.cafeconpalito.chikara.data.network.service.ChickApiService
 import com.cafeconpalito.chikara.data.network.service.LoginApiService
 import com.cafeconpalito.chikara.data.network.service.RegisterApiService
+import com.cafeconpalito.chikara.domain.repository.ChickRepository
 import com.cafeconpalito.chikara.domain.repository.LoginRepository
 import com.cafeconpalito.chikara.domain.repository.RegisterRepository
-import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -116,6 +118,22 @@ object NetworkModule {
     @Provides
     fun provideRegisterRepository(apiService: RegisterApiService): RegisterRepository {
         return RegisterRepositoryImpl(apiService)
+    }
+
+    /**
+     * Construye el repositorio de API SERVICE
+     */
+    @Provides
+    fun providerChickApiService(retrofit: Retrofit): ChickApiService {
+        return retrofit.create(ChickApiService::class.java)
+    }
+
+    /**
+     * Provee lo necesario para contruir la clase
+     */
+    @Provides
+    fun provideChickRepository(apiService: ChickApiService): ChickRepository {
+        return ChickRepositoryImpl(apiService)
     }
 
 
