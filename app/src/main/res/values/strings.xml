@@ -10,4 +10,20 @@
     <string name="nakamas">Nakamas</string>
 
 
+
+
+
+    <!--Toast Error Messages  -->
+    <string name="ToastGenericFail">Algo extraño ha sucedido. Vuelva a intentarlo</string>
+    <string name="ToastUserAlreadyExists">El nombre de usuario ya existe</string>
+    <string name="ToastUserFormatIncorrect">El nombre del usuario tiene que tener al menos tres caracteres y no puede contener @</string>
+    <string name="ToastEmailAlreadyExists">El Email ya está registrado</string>
+    <string name="ToastEmailFormatIncorrect">El Email tiene formato incorrecto</string>
+    <string name="ToastPasswordFormatIncorrect">El formato del password es incorrecto. Mayúscula, Minúscula, Número y al menos 8 caracteres</string>
+    <string name="ToastPasswordMissMatch">Los passwords no coinciden</string>
+    <string name="ToastFieldWithOutBlankSpaces">El campo no puede contener espacios en blanco</string>
+
+
+
+
 </resources>

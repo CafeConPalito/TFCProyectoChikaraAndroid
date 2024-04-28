@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityRegisterBinding
@@ -18,8 +19,8 @@ import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
+import com.cafeconpalito.chikara.utils.GenericToast
 import com.cafeconpalito.chikara.utils.UserPreferences
-import com.cafeconpalito.chikara.utils.UserPreferencesModel
 import com.cafeconpalito.chikara.utils.ValidateFields
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -100,18 +101,21 @@ class RegisterActivity : AppCompatActivity() {
     private fun tryToRegister() {
 
         clearErrors() //Limpia los errores al dar al boton de registro.
+        binding.pbRegister.isVisible = true
         if (validateRegisterFields()) { // Comprueba que todos los campos son correctos.
+
             Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
             lifecycleScope.launch() {
                 if(registerUseCase.registerUser(makeUserDto())){ //Si el registro es satisfactorio
                     registerSatisfactoryGoToLogin()
                 }else { //Si no lo es.
-                    //TODO: Lanzar un Toas de error inexplicable!
+                    GenericToast.generateToast(applicationContext,getString(R.string.ToastGenericFail), Toast.LENGTH_LONG, true).show()
                 }
             }
         } else {
             Log.i("RegistroUsuario: ", "alguno de los campos es incorrecto")
         }
+        binding.pbRegister.isVisible = false
 
     }
 
@@ -128,29 +132,11 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     /**
-     * Lanza la corrutina para realizar el registro.
-     * TODO creo que es mejor lanzarlo directamente en el hilo para que espere a la respuesta.
-     */
-    private fun reg(callback: (Boolean) -> Unit) {
-        lifecycleScope.launch() {
-            if (registerUseCase.emailExist(binding.etEmail.text.toString())) {
-                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = SI! EXISTE")
-                callback(true)
-            } else {
-                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = NO! EXISTE")
-                callback(false)
-            }
-        }
-    }
-
-    /**
      * Genera un UserDto con los datos del Registro.
      */
     private fun makeUserDto(): UserDto {
 
-        val cypherTextToMD5 = CypherTextToMD5();
-        Log.i("RegistroUsuario: ", "Creando UserDto")
-
+        val cypherTextToMD5 = CypherTextToMD5()
 
         //METODO CORRETO, FALTA LA FECHA
         val userDto = UserDto(
@@ -158,25 +144,12 @@ class RegisterActivity : AppCompatActivity() {
             user_name = "@"+binding.etUserName.text.toString(),
             email = binding.etEmail.text.toString(),
             pwd = cypherTextToMD5(binding.etPassword.text.toString()),
-            first_name = binding.etFirstName.text.toString(),
-            first_last_name = binding.etFirstLastName.text.toString(),
-            second_last_name = binding.etSecondLastName.text.toString(), // Puedes asignar null si es opcional
+            first_name = binding.etFirstName.text.toString().trim().replace(Regex("\\s+"), " "),
+            first_last_name = binding.etFirstLastName.text.toString().trim().replace(Regex("\\s+"), " "),
+            second_last_name = binding.etSecondLastName.text.toString().trim().replace(Regex("\\s+"), " "), // Puedes asignar null si es opcional
             birthdate = binding.etBirthDate.text.toString()
 
         )
-
-        //val date: Date = Date(Calendar.getInstance().timeInMillis)
-
-        //TODO DATOS RAPIDOS PARA PROBAR EL REGISTRO
-//        val userDto = UserDto (
-//            user_name = "@userA",
-//            email = "anareldis@gmail.com",
-//            pwd = cypherTextToMD5("1234"),
-//            first_name = "Daniel",
-//            first_last_name = "Espinosa",
-//            second_last_name = "Garcia", // Puedes asignar null si es opcional
-//            birthdate = date.toString() // OJO CON EL DATE!
-//        )
 
         return userDto
 
@@ -377,11 +350,7 @@ class RegisterActivity : AppCompatActivity() {
         if (validateEtUserNameIsValid()) {
             validateEtUserNameExist {
                 if (it) { // El usuario Existe
-                    Toast.makeText(
-                        this,
-                        "El User Name ya existe",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    GenericToast.generateToast(this,getString(R.string.ToastUserAlreadyExists), Toast.LENGTH_LONG, true).show()
                     genericIsErrorEt(binding.etUserName)
                 }
                 return@validateEtUserNameExist
@@ -399,11 +368,7 @@ class RegisterActivity : AppCompatActivity() {
         if (!genericValidateEditText(binding.etUserName)) {
             return false
         } else if (!validateFields.validUserName(binding.etUserName.text.toString())) {
-            Toast.makeText(
-                this,
-                "El campo ${binding.etUserName.hint} tiene que tener al menos tres caracteres y no puede contener @",
-                Toast.LENGTH_LONG
-            ).show()
+            GenericToast.generateToast(this,getString(R.string.ToastUserFormatIncorrect), Toast.LENGTH_LONG, true).show()
             genericIsErrorEt(binding.etUserName) // Pinta los errores.
             return false
         }
@@ -417,12 +382,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun validateEtUserNameExist(callback: (Boolean) -> Unit) {
         lifecycleScope.launch() {
             //Completa con el @
-            var userName = validateFields.completeUserName(binding.etUserName.text.toString())
+            val userName = validateFields.completeUserName(binding.etUserName.text.toString())
             if (registerUseCase.userNameExist(userName)) {
-                Log.i("RegistroUsuario: ", "REGISTER Usuario Existe SI! EXISTE")
                 callback(true)
             } else {
-                Log.i("RegistroUsuario: ", "REGISTER Usuario Existe NO! EXISTE")
                 callback(false)
             }
         }
@@ -437,11 +400,7 @@ class RegisterActivity : AppCompatActivity() {
         if (validateEtEmailIsValid()) {
             validateEtEmailExist {
                 if (it) { // El Email ya esta registrado
-                    Toast.makeText(
-                        this,
-                        "El Email ya esta registrado",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    GenericToast.generateToast(this,getString(R.string.ToastEmailAlreadyExists), Toast.LENGTH_LONG, true).show()
                     genericIsErrorEt(binding.etEmail)
                 }
                 return@validateEtEmailExist
@@ -459,11 +418,7 @@ class RegisterActivity : AppCompatActivity() {
         if (!genericValidateEditText(binding.etEmail)) {
             return false
         } else if (!validateFields.validEmail(binding.etEmail.text.toString())) {
-            Toast.makeText(
-                this,
-                "Email con formato incorrecto",
-                Toast.LENGTH_LONG
-            ).show()
+            GenericToast.generateToast(this,getString(R.string.ToastEmailFormatIncorrect), Toast.LENGTH_LONG, true).show()
             genericIsErrorEt(binding.etEmail) // Pinta los errores.
             return false
         }
@@ -477,10 +432,8 @@ class RegisterActivity : AppCompatActivity() {
     private fun validateEtEmailExist(callback: (Boolean) -> Unit) {
         lifecycleScope.launch() {
             if (registerUseCase.emailExist(binding.etEmail.text.toString())) {
-                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = SI! EXISTE")
                 callback(true)
             } else {
-                Log.i("RegistroUsuario: ", "REGISTER Email Existe? = NO! EXISTE")
                 callback(false)
             }
         }
@@ -540,11 +493,7 @@ class RegisterActivity : AppCompatActivity() {
         if (!genericValidateEditText(binding.etPassword)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
             return false
         } else if (!validateFields.validatePassword(binding.etPassword.text.toString())) { // Valida que el Password formato correcto
-            Toast.makeText(
-                this,
-                "El Password debe contener al menos ocho caracteres una mayuscula una minuscula y un numero",
-                Toast.LENGTH_LONG
-            ).show()
+            GenericToast.generateToast(this,getString(R.string.ToastPasswordFormatIncorrect), Toast.LENGTH_LONG, true).show()
             genericIsErrorEt(binding.etPassword)
             return false
         }
@@ -552,6 +501,9 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Valida que los passwords coinciden.
+     */
     private fun validateEtPasswordRepeat(): Boolean {
         if (!genericValidateEditText(binding.etPasswordRepeat)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
             return false
@@ -560,11 +512,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.etPasswordRepeat.text.toString()
             )
         ) {
-            Toast.makeText(
-                this,
-                "Los Passwords no coinciden",
-                Toast.LENGTH_LONG
-            ).show()
+            GenericToast.generateToast(this,getString(R.string.ToastPasswordMissMatch), Toast.LENGTH_LONG, true).show()
             genericIsErrorEt(binding.etPasswordRepeat)
             return false
         }
@@ -579,12 +527,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun genericValidateEditText(editText: EditText): Boolean {
         val textToValidate = editText.text.toString()
         if (validateFields.validateHaveBlankSpaces(textToValidate)) {
-            val hintText = editText.hint// Obtiene el texto del Hint y lanso un toast
-            Toast.makeText(
-                this,
-                "El campo $hintText no puede contener espacios en blanco",
-                Toast.LENGTH_LONG
-            ).show()
+            GenericToast.generateToast(this,getString(R.string.ToastFieldWithOutBlankSpaces), Toast.LENGTH_LONG, true).show()
             genericIsErrorEt(editText)//Pinta el error
             return false
         } else if (binding.etUserName.text.isBlank()) {
