@@ -5,6 +5,106 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_background"
     tools:context=".ui.chik.ChikActivity">
+
+
+    <!--
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:hint="Titulo del chik"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageSwitcher
+        android:id="@+id/isImagenes"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <LinearLayout
+        android:id="@+id/llDots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/isImagenes">
+
+        <TextView
+            android:id="@+id/tvAutor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Autor"
+            android:textColorHint="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/isImagenes" />
+
+        <TextView
+            android:id="@+id/tvlikes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.4"
+            android:gravity="right"
+            android:hint="nº likes"
+
+            android:textColorHint="@color/white"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/ivLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_not_liked" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lledit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_edit" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_delete" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
