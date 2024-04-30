@@ -24,6 +24,9 @@
     <string name="ToastFieldWithOutBlankSpaces">El campo no puede contener espacios en blanco</string>
 
 
-
+    <!--Alert Dialog-->
+    <string name="AlertDialogAccept">Aceptar</string>
+    <string name="AlertDialogCancel">Cancelar</string>
+    <string name="AlertDialogMessage">¿Estás seguro de realizar esta acción?</string>
 
 </resources>
