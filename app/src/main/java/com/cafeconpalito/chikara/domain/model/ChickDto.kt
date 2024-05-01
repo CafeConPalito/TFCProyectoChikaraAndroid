@@ -2,7 +2,7 @@ package com.cafeconpalito.chikara.domain.model
 
 data class ChickDto (
 
-        val id:String?,
+        val _id:String?,
         val title : String,
         val author : String?,
         val date : String?,
