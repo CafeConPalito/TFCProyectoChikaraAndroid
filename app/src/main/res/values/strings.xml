@@ -9,10 +9,6 @@
     <string name="find_chick">Find</string>
     <string name="nakamas">Nakamas</string>
 
-
-
-
-
     <!--Toast Error Messages  -->
     <string name="ToastGenericFail">Algo extraño ha sucedido. Vuelva a intentarlo</string>
     <string name="ToastUserAlreadyExists">El nombre de usuario ya existe</string>
@@ -28,5 +24,26 @@
     <string name="AlertDialogAccept">Aceptar</string>
     <string name="AlertDialogCancel">Cancelar</string>
     <string name="AlertDialogMessage">¿Estás seguro de realizar esta acción?</string>
+
+    <!--Hints-->
+    <string name="hint_title_chick">Titulo del chik</string>
+    <string name="hint_autor">Autor</string>
+    <string name="hint_n_likes">nº likes</string>
+    <string name="hint_username_email">Username/Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_first_last_name">First Last Name</string>
+    <string name="hint_second_last_name_optional">Second Last Name (optional)</string>
+    <string name="hint_birth_date">Birth Date</string>
+    <string name="hint_repeat_password">Repeat password</string>
+
+    <!--Key Words-->
+    <string name="text_login">Login</string>
+    <string name="text_register">Register</string>
+    <string name="text_don_t_have_an_account">Don\'t have an account?</string>
+    <string name="text_already_have_an_account">Already have an account?</string>
+
 
 </resources>

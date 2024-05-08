@@ -18,7 +18,7 @@
     <!--    Toast-->
     <color name="toast_text_error">#ff5252</color>
     <color name="toast_text">#f7f1e3</color>
-    <color name="toast_background">#C30B2B3A</color>
+    <color name="toast_background">#DF14516C</color>
 
     <!--    Icon Colors-->
     <color name="selected_icon_background">#6DFF793F</color> <!-- Cambia el color como desees -->
@@ -29,9 +29,10 @@
     <color name="default_hint_edit_text">#aaa69d</color>
     <color name="error_hint_edit_text">#ff5252</color>
 
-<!--    Select Colors para copiar y pegar-->
+    <!--    Select Colors para copiar y pegar-->
     <color name="select_text">#aaa69d</color>
 
     <color name="test1">#FF0000</color>
     <color name="test2">#ffe78f</color>
+
 </resources>

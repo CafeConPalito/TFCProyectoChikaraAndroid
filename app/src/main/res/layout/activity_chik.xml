@@ -27,7 +27,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:hint="Titulo del chik"
+        android:hint="@string/hint_title_chick"
         android:textColorHint="@color/white"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Autor"
+            android:hint="@string/hint_autor"
             android:textColorHint="@color/white"
             android:textSize="24sp"
             app:layout_constraintTop_toBottomOf="@id/isImagenes" />
@@ -68,7 +68,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="0.4"
             android:gravity="right"
-            android:hint="nº likes"
+            android:hint="@string/hint_n_likes"
 
             android:textColorHint="@color/white"
             android:textSize="14sp" />

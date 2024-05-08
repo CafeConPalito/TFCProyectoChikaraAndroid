@@ -43,7 +43,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginHorizontal="40dp"
         android:drawableRight="@drawable/ic_user_login"
-        android:hint="Username/Email"
+        android:hint="@string/hint_username_email"
         android:imeOptions="actionNext"
         android:inputType="text"
         style="@style/ETRegistro"
@@ -59,7 +59,7 @@
         android:layout_weight="1"
         android:layout_marginTop="20dp"
         android:drawableRight="@drawable/ic_password_login"
-        android:hint="Password"
+        android:hint="@string/hint_password"
         android:layout_marginHorizontal="40dp"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
@@ -77,7 +77,7 @@
         android:layout_marginTop="40dp"
         android:layout_weight="1"
         android:backgroundTint="@color/psgreen"
-        android:text="Login"
+        android:text="@string/text_login"
         android:textAlignment="gravity"
         android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@id/llRegister"
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:text="Don't have an account?" />
+            android:text="@string/text_don_t_have_an_account" />
 
         <Button
             android:id="@+id/btnRegister"
@@ -116,7 +116,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.6"
             android:backgroundTint="@color/ssblue"
-            android:text="Register"
+            android:text="@string/text_register"
             android:textColor="@color/white" />
 
     </LinearLayout>
