@@ -1,7 +1,5 @@
 package com.cafeconpalito.chikara.ui.login
 
-import com.cafeconpalito.chikara.ui.nakama.NakamaState
-
 sealed class LoginState {
 
     //Se ocupa del Estado de loading

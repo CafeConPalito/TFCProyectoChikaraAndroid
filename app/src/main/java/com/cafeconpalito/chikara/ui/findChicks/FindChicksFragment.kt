@@ -2,15 +2,13 @@ package com.cafeconpalito.chikara.ui.findChicks
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentFindChicksBinding
-import com.cafeconpalito.chikara.databinding.FragmentUserBinding
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,7 +38,6 @@ class FindChicksFragment : Fragment() {
 
     private fun initUI() {
         initListeners()
-
         initRecyclerView()
     }
 
@@ -68,5 +65,8 @@ class FindChicksFragment : Fragment() {
                 else -> false
             }
         }
+
+
+
     }
 }

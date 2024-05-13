@@ -2,15 +2,11 @@ package com.cafeconpalito.chikara.ui.chik
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityChikBinding
-import com.cafeconpalito.chikara.databinding.ActivityHomeBinding
 import com.cafeconpalito.chikara.ui.home.HomeActivity
 
 class ChikActivity : AppCompatActivity() {

@@ -1,26 +1,14 @@
 package com.cafeconpalito.chikara.ui.myChicks
 
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
-import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
-import com.cafeconpalito.chikara.ui.login.LoginActivity
-import com.cafeconpalito.chikara.ui.register.RegisterActivity
-import com.cafeconpalito.chikara.utils.CypherTextToMD5
-import com.cafeconpalito.chikara.utils.UserPreferences
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 /**
