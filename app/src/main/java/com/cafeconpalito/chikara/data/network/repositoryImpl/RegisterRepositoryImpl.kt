@@ -1,7 +1,6 @@
 package com.cafeconpalito.chikara.data.network.repositoryImpl
 
 import android.util.Log
-import com.cafeconpalito.chikara.data.network.service.LoginApiService
 import com.cafeconpalito.chikara.data.network.service.RegisterApiService
 import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.repository.RegisterRepository
@@ -20,10 +19,10 @@ class RegisterRepositoryImpl @Inject constructor(private val apiService: Registe
             apiService.userNameExist(userName)
         }
             .onSuccess {
-                Log.i("RegistroUsuario: ", "API Usuario Existe = " + it)
+                Log.i("RegistroUsuario: ", "API Usuario Existe = $it")
                 return  true }
             .onFailure {
-                Log.i("RegistroUsuario: ", "API Usuario Existe = " + it)
+                Log.i("RegistroUsuario: ", "API Usuario Existe = $it")
             }
 
         return false
@@ -55,7 +54,7 @@ class RegisterRepositoryImpl @Inject constructor(private val apiService: Registe
             apiService.registerUser(userDto)
         }
             .onSuccess {
-                Log.i("RegistroUsuario: ", "Registro de usuario satisfactorio " + it)
+                Log.i("RegistroUsuario: ", "Registro de usuario satisfactorio $it")
                 return true }
             .onFailure {
                 Log.i("RegistroUsuario: ", "Error registro de usuario " + it.message)

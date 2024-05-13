@@ -25,7 +25,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 return it
             }
             .onFailure {
-                Log.i("ChickRepository: ", "getTopChicks API FAIL " + it)
+                Log.i("ChickRepository: ", "getTopChicks API FAIL $it")
             }
 
         return emptyList()
@@ -47,7 +47,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 return it
             }
             .onFailure {
-                Log.i("ChickRepository: ", "findByAuthor API FAIL " + it)
+                Log.i("ChickRepository: ", "findByAuthor API FAIL $it")
             }
 
         return emptyList()
