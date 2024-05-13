@@ -38,6 +38,7 @@
     <string name="hint_second_last_name_optional">Second Last Name (optional)</string>
     <string name="hint_birth_date">Birth Date</string>
     <string name="hint_repeat_password">Repeat password</string>
+    <string name="hint_find_chick">Find Chick</string>
 
     <!--Key Words-->
     <string name="text_login">Login</string>
@@ -45,7 +46,7 @@
     <string name="text_don_t_have_an_account">Don\'t have an account?</string>
     <string name="text_already_have_an_account">Already have an account?</string>
     <string name="text_update_info">Update Information</string>
-    <string name="hint_find_chick">Find Chick</string>
+    <string name="text_welcome_message">Welcome To Chikara</string>
 
 
 </resources>

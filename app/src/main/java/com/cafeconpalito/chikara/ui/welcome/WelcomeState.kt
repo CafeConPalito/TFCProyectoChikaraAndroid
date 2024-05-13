@@ -1,7 +1,5 @@
 package com.cafeconpalito.chikara.ui.welcome
 
-import com.cafeconpalito.chikara.ui.nakama.NakamaState
-
 sealed class WelcomeState {
 
     //Se ocupa del Estado de loading

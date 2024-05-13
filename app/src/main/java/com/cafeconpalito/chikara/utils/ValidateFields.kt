@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.utils
 
-import androidx.appcompat.app.AppCompatActivity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

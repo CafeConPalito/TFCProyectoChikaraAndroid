@@ -26,16 +26,18 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-
-        android:drawableEnd="@drawable/ic_search_et"
         android:hint="@string/hint_find_chick"
-        android:padding="20dp"
-        style="@style/EditTextField"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/rv_find_chick"
+
+        android:padding="20dp"
+        style="@style/EditTextField"
+
+        android:drawableEnd="@drawable/ic_search_et"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
         />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityWelcomeBinding
 import com.cafeconpalito.chikara.ui.home.HomeActivity
 import com.cafeconpalito.chikara.ui.login.LoginActivity
@@ -85,14 +86,13 @@ class WelcomeActivity : AppCompatActivity() {
      */
     private suspend fun errorState(it: WelcomeState.Error) {
         binding.pbWelcome.isVisible = false
-        binding.tvWelcomeMessage.text = "Welcome To Chikara"
+        binding.tvWelcomeMessage.text = R.string.text_welcome_message.toString()
     
         delay(2000L)
-        //TODO: TE ENVIA A EL LOGIN
         val intent =  Intent(this, LoginActivity::class.java)
         startActivity(intent)
 
-        //TODO: SI QUIERES QUE AL DAR ERROR TE ENVIE A HOME, COMENTA LO DE ARRIBA Y ACTIVA ESTO
+//        SI QUIERES QUE AL DAR ERROR TE ENVIE A HOME, COMENTA LO DE ARRIBA Y ACTIVA ESTO
 //        val intent =  Intent(this, HomeActivity::class.java)
 //        startActivity(intent)
 

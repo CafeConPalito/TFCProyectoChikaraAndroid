@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
@@ -51,7 +52,21 @@ class MyChicksFragment : Fragment() {
     }
 
     private fun initUI() {
+        initListeners()
+    }
 
+    private fun initListeners() {
+
+        //EDIT TEXT AL DARLE BUSCAR
+        binding.etFindChick.setOnEditorActionListener { v, actionId, event ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    //TODO AL DARLE BUSCAR LLAMAR A LA API
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
 

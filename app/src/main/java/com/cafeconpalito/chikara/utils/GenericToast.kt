@@ -3,7 +3,6 @@ package com.cafeconpalito.chikara.utils
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.cafeconpalito.chikara.R
@@ -12,12 +11,20 @@ import com.cafeconpalito.chikara.databinding.CustomToastLayoutBinding
 class GenericToast {
 
     companion object {
-            fun generateToast(context: Context, mensaje: String, toastLength: Int, isError: Boolean): Toast {
+
+        /**
+         * Generate a generic toast.
+         * @param context Application Context
+         * @param message String to display
+         * @param toastLength Duration of Toast
+         * @param isError type of Toast
+         */
+        fun generateToast(context: Context, message: String, toastLength: Int, isError: Boolean): Toast {
 
                 val binding = CustomToastLayoutBinding.inflate(LayoutInflater.from(context))
 
                 //Seteamos el mensaje
-                binding.customToastText.text = mensaje
+                binding.customToastText.text = message
 
                 // Setear el clor del texto
                 binding.customToastText.setTextColor(
