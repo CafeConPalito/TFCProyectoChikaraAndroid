@@ -45,6 +45,7 @@
     <string name="text_don_t_have_an_account">Don\'t have an account?</string>
     <string name="text_already_have_an_account">Already have an account?</string>
     <string name="text_update_info">Update Information</string>
+    <string name="hint_find_chick">Find Chick</string>
 
 
 </resources>

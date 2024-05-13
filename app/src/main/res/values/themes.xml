@@ -22,8 +22,19 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <!--Estilo del título ItemChick-->
+    <style name="TextoTítuloItemChick" parent="FuenteBase">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary_background</item>
+    </style>
+
+    <!--Estilo del título ItemChick-->
+    <style name="FuenteBaseItemChick" parent="FuenteBase">
+        <item name="android:textColor">@color/primary_background</item>
+    </style>
+
     <!--Estilo campos rellenables-->
-    <style name="ETRegistro" parent="FuenteBase">
+    <style name="EditTextField" parent="FuenteBase">
         <item name="android:textColorHint">@color/default_hint_edit_text</item>
         <item name="android:backgroundTint">@color/default_edit_text</item>
     </style>

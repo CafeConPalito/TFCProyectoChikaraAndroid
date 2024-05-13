@@ -34,10 +34,6 @@ class MyChicksFragment : Fragment() {
     //Manera de trabajar con Binding y Fragmentos
     private var _binding: FragmentMyChicksBinding? = null
     private val binding get() = _binding!!
-    lateinit var userPreferences: UserPreferences
-
-    @Inject
-    lateinit var chickUseCases: ChickUseCases
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,99 +46,13 @@ class MyChicksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //Le paso el contecto a User Preferences.
-        userPreferences = UserPreferences(requireContext())
+
         initUI()
     }
 
     private fun initUI() {
-        initListeners()
-    }
-
-    private fun initListeners() {
-
-        //TODO: GO TO ->
-        binding.btnLogin.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnRegister.setOnClickListener {
-            val intent = Intent(requireContext(), RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        //TODO USER PREFERENCES PRUEBAS ->
-        binding.btnTestCIFRAR.setOnClickListener {
-            launchTestCifrar()
-        }
-        binding.btnTestGUARDAR.setOnClickListener {
-            launchTestGuardar()
-        }
-        binding.btnTestLEER.setOnClickListener {
-            launchTestLeer()
-        }
-        binding.btnTestBORRAR.setOnClickListener {
-            launchTestBorrar()
-        }
-
-        //TODO CHICK PRUEBAS ->
-
-        binding.btnFindChick.setOnClickListener {
-            launchFindTopChick()
-        }
 
     }
 
-    private fun launchFindTopChick() {
 
-        lifecycleScope.launch {
-            val listTopChicks = chickUseCases.getTopChicks()
-
-            for( x in listTopChicks){
-                Log.i("Chick", x.toString())
-            }
-        }
-    }
-
-    private fun launchTestBorrar() {
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            userPreferences.deltePreference(UserPreferences.KEY_USER_STR)
-            userPreferences.deltePreference(UserPreferences.KEY_PASSWORD_STR)
-
-        }
-
-    }
-
-    private fun launchTestLeer() {
-        CoroutineScope(Dispatchers.IO).launch {
-            userPreferences.getSettings().collect { userPreferenceModel ->
-                if (userPreferenceModel != null) {
-                    Log.i("TEST", userPreferenceModel.userName)
-                    Log.i("TEST", "" + userPreferenceModel.password)
-                }
-            }
-        }
-    }
-
-    private fun launchTestGuardar() {
-        //GUARDA LOS DATOS
-        CoroutineScope(Dispatchers.IO).launch {
-
-            userPreferences.savePreference(
-                UserPreferences.KEY_PASSWORD_STR,
-                "81dc9bdb52d04dc20036dbd8313ed055"
-            )
-            userPreferences.savePreference(UserPreferences.KEY_USER_STR, "@daniel")
-
-        }
-    }
-
-    private fun launchTestCifrar() {
-        val cypherMD5 = CypherTextToMD5()
-        val cypher: String = cypherMD5("1234")
-        Log.i("TEST", "Cifrado MD5:" + cypher)
-
-    }
 }
