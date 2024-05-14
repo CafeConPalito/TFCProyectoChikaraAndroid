@@ -72,7 +72,7 @@ class WelcomeActivity : AppCompatActivity() {
     private suspend fun successState(it: WelcomeState.Success) {
 
         binding.pbWelcome.isVisible = false
-        binding.tvWelcomeMessage.text = "Lo importante no es lo que te prometes, sino lo que cumples"
+        binding.tvWelcomeMessage.text = getText(R.string.text_welcome_message2)
 
         delay(2000L)
         val intent =  Intent(this, HomeActivity::class.java)
@@ -86,7 +86,7 @@ class WelcomeActivity : AppCompatActivity() {
      */
     private suspend fun errorState(it: WelcomeState.Error) {
         binding.pbWelcome.isVisible = false
-        binding.tvWelcomeMessage.text = R.string.text_welcome_message.toString()
+        binding.tvWelcomeMessage.text = getText(R.string.text_welcome_message)
     
         delay(2000L)
         val intent =  Intent(this, LoginActivity::class.java)

@@ -47,6 +47,7 @@
     <string name="text_already_have_an_account">Already have an account?</string>
     <string name="text_update_info">Update Information</string>
     <string name="text_welcome_message">Welcome To Chikara</string>
+    <string name="text_welcome_message2">"Lo importante no es lo que te prometes, sino lo que cumples"</string>
 
 
 </resources>
