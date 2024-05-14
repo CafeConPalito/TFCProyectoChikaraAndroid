@@ -507,7 +507,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun validateEtPasswordRepeat(): Boolean {
         if (!genericValidateEditText(binding.etPasswordRepeat)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
             return false
-        } else if (!validateFields.validatePasswordsMarches(
+        } else if (!validateFields.validatePasswordsMatches(
                 binding.etPassword.text.toString(),
                 binding.etPasswordRepeat.text.toString()
             )
