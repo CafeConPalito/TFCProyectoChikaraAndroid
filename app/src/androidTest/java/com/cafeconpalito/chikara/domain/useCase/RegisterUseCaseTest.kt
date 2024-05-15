@@ -1,5 +1,6 @@
 package com.cafeconpalito.chikara.domain.useCase
 
+import com.cafeconpalito.chikara.domain.model.UserDto
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
@@ -84,7 +85,6 @@ class RegisterUseCaseTest {
 
         val result = runBlocking {
             repository.emailExist(test)
-
         }
 
         assertFalse(result)
@@ -103,7 +103,32 @@ class RegisterUseCaseTest {
 
         val result = runBlocking {
             repository.emailExist(test)
+        }
 
+        assertTrue(result)
+
+    }
+
+    /**
+     * Test for registerUser
+     * try to register a New User
+     * @exception assertTrue
+     */
+    @Test
+    fun registerUser() {
+
+        val test = UserDto(
+            user_name = "@newTestUser",
+            email = "newTestEmail@email.com",
+            pwd = "81dc9bdb52d04dc20036dbd8313ed055",
+            first_name = "newName",
+            first_last_name = "newLastName",
+            second_last_name = "newSecondLastName",
+            birthdate = "1983-04-09"
+        )
+
+        val result = runBlocking {
+            repository.registerUser(test)
         }
 
         assertTrue(result)
