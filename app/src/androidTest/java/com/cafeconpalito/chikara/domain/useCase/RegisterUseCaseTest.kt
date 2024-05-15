@@ -15,7 +15,7 @@ import javax.inject.Inject
 class RegisterUseCaseTest {
 
     @Inject
-    lateinit var registerUseCase: RegisterUseCase
+    lateinit var repository: RegisterUseCase
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -27,22 +27,13 @@ class RegisterUseCaseTest {
 
     /**
      * Check If de dependencies injection is OK
+     * @exception assertNotNull
      */
     @Test
-    fun testInjection(){
-        assertNotNull(registerUseCase)
+    fun testInjection() {
+        assertNotNull(repository)
     }
 
-    /**
-     * Try to connect to Api in case of fail check Connection information or Api is online
-     * @exception assertTrue
-     */
-    @Test
-    fun checkApiConnection(){
-
-
-
-    }
 
     /**
      * Test for userNameExist
@@ -50,12 +41,50 @@ class RegisterUseCaseTest {
      * @exception assertFalse
      */
     @Test
-    fun userNameNotExist(){
+    fun userNameNotExist() {
 
-        val test = "thisUserNotExistInTheDataBase"
+        val test = "@thisUserNotExistInTheDataBase"
 
         val result = runBlocking {
-            registerUseCase.userNameExist(test)
+            repository.userNameExist(test)
+        }
+
+        assertFalse(result)
+
+    }
+
+    /**
+     * Test for userNameExist
+     * Consult if given Username is already registered in the System
+     * @exception assertTrue
+     */
+    @Test
+    fun userNameExist() {
+
+        val test = "@testUsername"
+
+        val result = runBlocking {
+            repository.userNameExist(test)
+        }
+
+        assertTrue(result)
+
+    }
+
+
+    /**
+     * Test for emailExist
+     * Consult if given Email is already registered in the System
+     * @exception assertFalse
+     */
+    @Test
+    fun emailNotExist() {
+
+        val test = "thisUserNotExistInTheDataBase@email.com"
+
+        val result = runBlocking {
+            repository.emailExist(test)
+
         }
 
         assertFalse(result)
@@ -65,19 +94,19 @@ class RegisterUseCaseTest {
     /**
      * Test for emailExist
      * Consult if given Email is already registered in the System
-     * @exception assertFalse
+     * @exception assertTrue
      */
     @Test
-    fun emailNotExist(){
+    fun emailExist() {
 
         val test = "test@email.com"
 
         val result = runBlocking {
-            registerUseCase.emailExist(test)
+            repository.emailExist(test)
 
         }
 
-        assertFalse(result)
+        assertTrue(result)
 
     }
 
