@@ -73,9 +73,8 @@ android {
     }
 
 //    testOptions {
-//        // Encapsulates options for local unit tests.
 //        unitTests {
-//            //includeAndroidResources = true
+//            isIncludeAndroidResources = true
 //        }
 //    }
 
