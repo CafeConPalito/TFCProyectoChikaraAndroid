@@ -34,21 +34,7 @@ class ValidateFieldsTest {
 
 //    @Test
 //    fun validEmail() {
-//        //TODO: NO FUNCIONA REVISAR
-//        val validateFields = ValidateFields()
-//
-//        val testA = "pruebaDeEmail@Correcto.com"
-//        val testB = "emailIncorrecto"
-//
-////        val expectedA = true
-////        val expectedB = false
-//
-//        val resultA = validateFields.validEmail(testA)
-//        val resultB = validateFields.validEmail(testB)
-//
-//        assertTrue(resultA)
-//        assertFalse(resultB)
-//
+//        //TODO: COMO NECESITA DEPENDEICIAS SE REALIZA EN ANDROID TEST
 //    }
 
     /**
