@@ -27,17 +27,6 @@ class UserPreferences @Inject constructor(private val context: Context) {
         val KEY_PASSWORD_STR = stringPreferencesKey("Password")
     }
 
-
-//    //NO BORRAR COORUTINA PARA GUARDAR DATOS DESDE UN ACTIVITY O FRAME
-//    private fun initUI() {
-//        binding.rsVolume.addOnChangeListener { _, value, _ ->
-//            Log.i("Aris", "El valor es $value")
-//            CoroutineScope(Dispatchers.IO).launch {
-//                saveVolume(value.toInt())
-//            }
-//        }
-//    }
-
     /**
      * Metodo generico para añadir
      */
@@ -68,6 +57,18 @@ class UserPreferences @Inject constructor(private val context: Context) {
             )
         }
     }
+
+
+//    //NO BORRAR COORUTINA PARA GUARDAR DATOS DESDE UN ACTIVITY O FRAME
+//    private fun initUI() {
+//        binding.rsVolume.addOnChangeListener { _, value, _ ->
+//            Log.i("Aris", "El valor es $value")
+//            CoroutineScope(Dispatchers.IO).launch {
+//                saveVolume(value.toInt())
+//            }
+//        }
+//    }
+
 
 
 

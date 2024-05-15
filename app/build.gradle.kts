@@ -6,11 +6,14 @@ plugins {
     //alias(libs.plugins.ksp)
     //alias(libs.plugins.hilt)
     //Es lo mismo
-    id("com.google.devtools.ksp")version "1.9.10-1.0.13"
+    //id("com.google.devtools.ksp")version "1.9.10-1.0.13"
     id("com.google.dagger.hilt.android")version "2.50"
 
     //Safeargs
     id("androidx.navigation.safeargs.kotlin")
+
+    //kapt -> DaggerHilt
+    id("kotlin-kapt")
 
 }
 
@@ -25,7 +28,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.cafeconpalito.chikara.CustomTestRunner"
     }
 
     //Tipos de Configuracion en funcion del estado de la aplicacion.
@@ -68,10 +71,19 @@ android {
     viewBinding{
         enable=true
     }
+
+//    testOptions {
+//        // Encapsulates options for local unit tests.
+//        unitTests {
+//            //includeAndroidResources = true
+//        }
+//    }
+
 }
 
 dependencies {
 
+    implementation(libs.androidx.runner)
     //navigation Fragments
     val navVersion = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
@@ -82,7 +94,10 @@ dependencies {
     //implementation(libs.hilt.android)
     //Es lo mismo
     implementation("com.google.dagger:hilt-android:2.50")
-    ksp("com.google.dagger:hilt-android-compiler:2.50")
+    //ksp("com.google.dagger:hilt-android-compiler:2.50")
+    kapt("com.google.dagger:hilt-compiler:2.50")
+
+    annotationProcessor ("com.google.dagger:hilt-compiler:2.50")
 
     //Retrofit2
     val retrofitVersion = "2.9.0"
@@ -109,7 +124,33 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    //TEST
+
+    //UnitTesting
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation ("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    // Optional -- Robolectric environment
+    testImplementation ("androidx.test:core:1.5.0")
+
+    //DaggerHilt Test For instrumentation tests
+    androidTestImplementation  ("com.google.dagger:hilt-android-testing:2.50")
+    kaptAndroidTest ("com.google.dagger:hilt-compiler:2.50")
+
+    // DaggerHilt Test For local unit tests
+    testImplementation ("com.google.dagger:hilt-android-testing:2.50")
+    kaptTest ("com.google.dagger:hilt-compiler:2.50")
+
+    //TEST CORRUTINAS!
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+    //Junit 5
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+
+    //UITesting
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.4.0")
+    androidTestImplementation ("androidx.fragment:fragment-testing:1.6.1")
+
 }

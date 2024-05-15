@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.utils
 
-import androidx.appcompat.app.AppCompatActivity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,7 +58,7 @@ class ValidateFields @Inject constructor() {
      * Si son iguales devuelve True
      */
     @Provides
-    fun validatePasswordsMarches(passwordA: String, passwordB: String): Boolean {
+    fun validatePasswordsMatches(passwordA: String, passwordB: String): Boolean {
         return passwordA.equals(passwordB)
     }
 

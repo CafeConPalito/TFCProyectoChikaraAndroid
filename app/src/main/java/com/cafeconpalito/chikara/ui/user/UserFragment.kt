@@ -1,14 +1,11 @@
 package com.cafeconpalito.chikara.ui.user
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cafeconpalito.chikara.R
-import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
+import androidx.fragment.app.Fragment
 import com.cafeconpalito.chikara.databinding.FragmentUserBinding
-import com.cafeconpalito.chikara.utils.UserPreferences
 
 class UserFragment : Fragment() {
 

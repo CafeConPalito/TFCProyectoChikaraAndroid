@@ -11,7 +11,7 @@ class LoginValidateUsername {
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(user).matches()){
             return user;
         }else if (!user.startsWith('@')){
-            return "@"+user;
+            return "@$user";
         }
         return user;
     }

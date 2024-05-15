@@ -2,8 +2,8 @@ package com.cafeconpalito.chikara.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cafeconpalito.chikara.domain.useCase.LoginCheckUserUseCase
 import com.cafeconpalito.chikara.domain.useCase.GetLoginUseCase
+import com.cafeconpalito.chikara.domain.useCase.LoginCheckUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

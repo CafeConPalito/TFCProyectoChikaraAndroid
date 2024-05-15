@@ -60,7 +60,7 @@
 
             <EditText
                 android:id="@+id/etUserName"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"
@@ -76,7 +76,7 @@
 
             <EditText
                 android:id="@+id/etEmail"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"
@@ -92,7 +92,7 @@
 
             <EditText
                 android:id="@+id/etFirstName"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"
@@ -108,7 +108,7 @@
 
             <EditText
                 android:id="@+id/etFirstLastName"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"
@@ -124,7 +124,7 @@
 
             <EditText
                 android:id="@+id/etSecondLastName"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"
@@ -140,7 +140,7 @@
 
             <EditText
                 android:id="@+id/etBirthDate"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"
@@ -157,7 +157,7 @@
 
             <EditText
                 android:id="@+id/etPassword"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"
@@ -173,7 +173,7 @@
 
             <EditText
                 android:id="@+id/etPasswordRepeat"
-                style="@style/ETRegistro"
+                style="@style/EditTextField"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="40dp"

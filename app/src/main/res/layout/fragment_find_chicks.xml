@@ -7,7 +7,7 @@
     tools:context=".ui.findChicks.FindChicksFragment"
     android:background="@color/primary_background">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: DELETE ME! -->
     <TextView
         android:id="@+id/text_find_chicks"
         android:layout_width="wrap_content"
@@ -19,5 +19,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_find_chick"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/hint_find_chick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rv_find_chick"
+
+        android:padding="20dp"
+        style="@style/EditTextField"
+
+        android:drawableEnd="@drawable/ic_search_et"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_find_chick"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_find_chick"
+        android:padding="20dp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
