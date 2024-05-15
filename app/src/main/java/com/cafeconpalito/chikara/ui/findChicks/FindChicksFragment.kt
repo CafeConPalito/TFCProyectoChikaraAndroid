@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.databinding.FragmentFindChicksBinding
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class FindChicksFragment : Fragment() {
     //Manera de trabajar con Binding y Fragmentos
     private var _binding: FragmentFindChicksBinding? = null

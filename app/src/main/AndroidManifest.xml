@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Permiso de coneccion a internet -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permiso de de Camara -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- camera.any camaras frontal y posterior -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Permiso de de Camara -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- camera.any camaras frontal y posterior -->
     <uses-feature android:name="android.hardware.camera.any" />
 
     <!--Permiso para lectura de ficheros-->

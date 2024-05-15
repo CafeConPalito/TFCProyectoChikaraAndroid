@@ -8,7 +8,9 @@ import androidx.core.view.isVisible
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityChikBinding
 import com.cafeconpalito.chikara.ui.home.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChikActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChikBinding
