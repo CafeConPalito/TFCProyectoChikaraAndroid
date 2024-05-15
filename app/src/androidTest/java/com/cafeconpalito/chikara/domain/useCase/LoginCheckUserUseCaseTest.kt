@@ -108,17 +108,4 @@ class LoginCheckUserUseCaseTest {
     }
 
 
-//    /**
-//     * Test for LoginUser
-//     * Whit given userName and password login
-//     * @exception assertFalse
-//     */
-//    @Test
-//    fun login() {
-//
-//        val email = "test@email.com"
-//        val pass = "81dc9bdb52d04dc20036dbd8313ed055"
-//
-//    }
-
 }

@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="GetLoginUseCaseTest">
+        <State />
+      </entry>
       <entry key="LoginCheckUserUseCaseTest">
         <State />
       </entry>
@@ -40,21 +43,8 @@
           <timeTargetWasSelectedWithDropDown value="2024-05-15T06:32:36.180770700Z" />
         </State>
       </entry>
-      <entry key="validEmail()">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\despinosa\.android\avd\Pixel_8_API_27.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-15T08:55:35.057812400Z" />
-        </State>
+      <entry key="validLoginWhitEmail()">
+        <State />
       </entry>
     </value>
   </component>
