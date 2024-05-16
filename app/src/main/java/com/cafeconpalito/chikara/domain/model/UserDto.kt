@@ -15,6 +15,7 @@ data class UserDto(
     //val account_creation: Date,
     val is_premium: Boolean = false
 
+)
 
 //    {
 //        "user_name": "string",
@@ -26,7 +27,3 @@ data class UserDto(
 //        "birthdate": "2024-04-22",
 //        "is_premium": true
 //    }
-
-)
-
-

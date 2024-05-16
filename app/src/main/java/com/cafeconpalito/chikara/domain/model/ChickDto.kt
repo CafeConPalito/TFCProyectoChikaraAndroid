@@ -2,15 +2,17 @@ package com.cafeconpalito.chikara.domain.model
 
 data class ChickDto (
 
-        val _id:String?,
+        var _id:String = "",
         val title : String,
-        val author : String?,
-        val date : String?,
-        val likes : Long,
+        val author : String? = null,
+        val date : String? = null,
+        var likes : Long = 0,
         val isprivate : Boolean,
-        val content : List<ChickContentDto>,
-        val comments : List<ChickCommentDto>,
-        val mencions : List<String>
+        var content : List<ChickContentDto> = emptyList(),
+        var comments : List<ChickCommentDto> = emptyList(),
+        var mencions : List<String> = emptyList()
+
+)
 
 //    [
 //    {
@@ -38,5 +40,3 @@ data class ChickDto (
 //        ]
 //    }
 //    ]
-
-)
