@@ -18,5 +18,13 @@ interface ChickRepository {
      */
     suspend fun findByAuthor(userId:String):List<ChickDto>
 
+    /**
+     * Add new Chick
+     */
+    suspend fun newChick(chickDto: ChickDto):Boolean
+
+    /**
+     *
+     */
 
 }

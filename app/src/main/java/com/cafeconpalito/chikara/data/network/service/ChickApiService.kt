@@ -15,8 +15,7 @@ interface ChickApiService {
     @GET("/chiks/findByAuthor")
     suspend fun findByAuthor(@Query("id") userId:String):List<ChickDto>
 
-    @Multipart
-    @POST("/chiks/newChick")
+    @POST("/chiks/create")
     suspend fun newChick(@Body chickDto: ChickDto)
 
 }

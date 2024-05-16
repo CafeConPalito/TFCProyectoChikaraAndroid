@@ -17,15 +17,14 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      */
     override suspend fun getTopChicks(): List<ChickDto> {
         runCatching {
-
             apiService.getTopChicks()
         }
             .onSuccess {
-                Log.i("ChickRepository: ", "getTopChicks API SUCCESS")
+                Log.d("ChickRepository: ", "getTopChicks API SUCCESS")
                 return it
             }
             .onFailure {
-                Log.i("ChickRepository: ", "getTopChicks API FAIL $it")
+                Log.d("ChickRepository: ", "getTopChicks API FAIL $it")
             }
 
         return emptyList()
@@ -38,19 +37,41 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      */
     override suspend fun findByAuthor(userId: String): List<ChickDto> {
         runCatching {
-
             apiService.findByAuthor(userId)
-
         }
             .onSuccess {
-                Log.i("ChickRepository: ", "findByAuthor API SUCCESS")
+                Log.d("ChickRepository: ", "findByAuthor API SUCCESS")
                 return it
             }
             .onFailure {
-                Log.i("ChickRepository: ", "findByAuthor API FAIL $it")
+                Log.d("ChickRepository: ", "findByAuthor API FAIL $it")
             }
 
         return emptyList()
+    }
+
+    /**
+     * Add NewChick
+     * if the chick is inserted correctly return true
+     *
+     */
+    override suspend fun newChick(chickDto: ChickDto): Boolean {
+        runCatching {
+
+            Log.d("ChickRepository: ", "DTO Send:\n $chickDto")
+
+            apiService.newChick(chickDto)
+        }
+            .onSuccess {
+                Log.d("ChickRepository: ", "newChick API SUCCESS")
+                return true
+            }
+            .onFailure {
+                Log.d("ChickRepository: ", "newChick API FAIL $it")
+                return false
+            }
+
+        return false
     }
 
 
