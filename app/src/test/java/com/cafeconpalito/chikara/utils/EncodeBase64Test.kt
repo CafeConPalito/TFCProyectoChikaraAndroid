@@ -51,5 +51,4 @@ class EncodeBase64Test {
 
     }
 
-
 }

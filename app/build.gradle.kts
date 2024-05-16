@@ -72,6 +72,12 @@ android {
         enable=true
     }
 
+    //Test
+    sourceSets {
+        named("androidTest") {
+            res.srcDirs("src/androidTest/res")
+        }
+    }
 //    testOptions {
 //        unitTests {
 //            isIncludeAndroidResources = true
