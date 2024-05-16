@@ -49,5 +49,12 @@
     <string name="text_welcome_message">Welcome To Chikara</string>
     <string name="text_welcome_message2">"Lo importante no es lo que te prometes, sino lo que cumples"</string>
 
+    <!--New Chick-->
+    <string name="publish">Publish</string>
+    <string name="element_type">Element Type</string>
+    <string name="chick_title">Chick Title</string>
+    <string name="private_chick">Private Chick</string>
+    <string name="add_element">Add Element</string>
+
 
 </resources>
