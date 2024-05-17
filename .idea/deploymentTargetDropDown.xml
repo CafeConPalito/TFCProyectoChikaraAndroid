@@ -13,12 +13,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\despinosa\.android\avd\Pixel_8_API_27.avd" />
+                  <value value="C:\Users\despinosa\.android\avd\Pixel_3a_API_27.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-15T06:32:36.180770700Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-16T11:02:36.020548200Z" />
         </State>
       </entry>
       <entry key="getTopChicks()">

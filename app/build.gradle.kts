@@ -99,10 +99,10 @@ dependencies {
     //implementation(libs.hilt.android)
     //Es lo mismo
     implementation("com.google.dagger:hilt-android:2.50")
-    //ksp("com.google.dagger:hilt-android-compiler:2.50")
-    kapt("com.google.dagger:hilt-compiler:2.50")
-
     annotationProcessor ("com.google.dagger:hilt-compiler:2.50")
+    kapt("com.google.dagger:hilt-compiler:2.50")
+    //cambio esta por KAPT
+    //ksp("com.google.dagger:hilt-android-compiler:2.50")
 
     //Retrofit2
     val retrofitVersion = "2.9.0"
@@ -111,6 +111,7 @@ dependencies {
     //interceptor Guarda en el log las respuestas de la API, o Añadir info a los envios AUTH, va con retrofit
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     //implementation("com.google.code.gson:gson:2.10.1")
+
 
     //Camera X
     val cameraVersion = "1.3.2"
