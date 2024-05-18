@@ -138,6 +138,17 @@ dependencies {
     testImplementation ("io.kotlintest:kotlintest-runner-junit5:3.4.2")
     // Optional -- Robolectric environment
     testImplementation ("androidx.test:core:1.5.0")
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+//    testImplementation("org.mockito:mockito-core:5.12.0")
+//    // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
+//    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
+//    // https://mvnrepository.com/artifact/io.mockk/mockk
+//    testImplementation("io.mockk:mockk:1.13.11")
+
+    // https://mvnrepository.com/artifact/org.robolectric/robolectric
+    testImplementation("org.robolectric:robolectric:4.12.1")
+
+
 
     //DaggerHilt Test For instrumentation tests
     androidTestImplementation  ("com.google.dagger:hilt-android-testing:2.50")
@@ -146,6 +157,7 @@ dependencies {
     // DaggerHilt Test For local unit tests
     testImplementation ("com.google.dagger:hilt-android-testing:2.50")
     kaptTest ("com.google.dagger:hilt-compiler:2.50")
+
 
     //TEST CORRUTINAS!
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
