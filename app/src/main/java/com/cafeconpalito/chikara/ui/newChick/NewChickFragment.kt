@@ -131,17 +131,28 @@ class NewChickFragment : Fragment() {
 
     //TODO PONER BONITO
     private fun publishNewChick() {
-        if (elements.isEmpty()){
-            GenericToast.generateToast(requireContext(),"AÑADE UN TITULO!!!!!!", Toast.LENGTH_LONG, true).show()
+        if (elements.isEmpty()) {
+            GenericToast.generateToast(
+                requireContext(),
+                "AÑADE UN TITULO!!!!!!",
+                Toast.LENGTH_LONG,
+                true
+            ).show()
 
         } else if (binding.etTitle.text.isBlank()) {
-            GenericToast.generateToast(requireContext(),"AÑADE UN ELEMENTOS!!!!!!", Toast.LENGTH_LONG, true).show()
+            GenericToast.generateToast(
+                requireContext(),
+                "AÑADE UN ELEMENTOS!!!!!!",
+                Toast.LENGTH_LONG,
+                true
+            ).show()
         } else {
 
             val newChick = generateChickDto(elements)
 
             CoroutineScope(Dispatchers.Main).launch {
-                chickUseCases.newChick(newChick)
+                //Envio el contexto de la Aplicacion!
+                chickUseCases.newChick(requireContext().applicationContext, newChick)
                 Log.d("PhotoPicker", "Chick Publish $newChick")
             }
 
@@ -196,9 +207,6 @@ class NewChickFragment : Fragment() {
      */
     private fun generateChickContentDto(elements: List<Uri>): List<ChickContentDto> {
 
-        //Encoder Base64
-        val encodeBase64 = EncodeBase64()
-
         //List to return of Content
         val list: MutableList<ChickContentDto> = LinkedList()
 
@@ -207,30 +215,16 @@ class NewChickFragment : Fragment() {
 
         //For each element add to list
         for (uri in elements) {
-
             //position
             pos++
 
-            var base64String: String = ""
+            val content = ChickContentDto(
+                position = pos,
+                value = uri.toString(),
+                type = ChickTypeDto.TYPE_IMG
+            )
 
-            //Encode
-            //TODO LLEVAR EL ENCODE A EL USE CASE PARA QUE ESPERE A TERMINAR PARA ENVIAR LO OTRO!
-            CoroutineScope(Dispatchers.Main).launch {
-                base64String =
-                    encodeBase64(requireContext(), uri)
-                Log.d("PhotoPicker", "Base64 String: $base64String")
-
-                //Generate Content
-                val content = ChickContentDto(
-                    position = pos,
-                    value = base64String,
-                    type = ChickTypeDto.TYPE_IMG
-                )
-
-                // Added to list
-                list.add(content)
-
-            }
+            list.add(content)
 
         }
 

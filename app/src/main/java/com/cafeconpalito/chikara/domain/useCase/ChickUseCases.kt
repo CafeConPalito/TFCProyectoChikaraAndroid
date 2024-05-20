@@ -1,5 +1,7 @@
 package com.cafeconpalito.chikara.domain.useCase
 
+import android.content.Context
+import android.net.Uri
 import androidx.camera.core.impl.utils.ContextUtil
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.cafeconpalito.chikara.domain.model.ChickDto
@@ -28,17 +30,17 @@ class ChickUseCases @Inject constructor(private val repository: ChickRepository)
     /**
      * Add new Chick
      */
-    suspend fun newChick(chickDto: ChickDto): Boolean {
-
+    suspend fun newChick(context: Context, chickDto: ChickDto): Boolean {
 
         val encodeBase64 = EncodeBase64()
 
-        //TODO ARREGLAR!
-//        chickDto.content.forEach { cont ->
-//            if (cont.type == ChickTypeDto.TYPE_IMG){
-//                cont.value = encodeBase64(cont.value)
-//            }
-//        }
+        //For Each Element in the Dto check if is Image and Encode to Base64
+        chickDto.content.forEach { cont ->
+            if (cont.type == ChickTypeDto.TYPE_IMG) {
+                val uri: Uri = Uri.parse(cont.value)
+                cont.value = encodeBase64(context, uri)
+            }
+        }
 
         return repository.newChick(chickDto)
 
