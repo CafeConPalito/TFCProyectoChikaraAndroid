@@ -6,7 +6,7 @@
     <!-- colores para chickara de https://flatuicolors.com/palette/es -->
     <color name="lppurple">#40407a</color>
     <color name="lpurple">#474787</color>
-    <color name="sgrey">#aaa69d</color>
+    <color name="secondary">#aaa69d</color>
     <color name="primary_background">#227093</color>
     <color name="psgreen">#218c74</color>
     <color name="fred">#ff5252</color>

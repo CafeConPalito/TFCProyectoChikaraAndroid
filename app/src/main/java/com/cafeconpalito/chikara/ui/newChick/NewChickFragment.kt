@@ -1,5 +1,6 @@
 package com.cafeconpalito.chikara.ui.newChick
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,12 +12,14 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.model.ChickContentDto
 import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.cafeconpalito.chikara.domain.model.ChickTypeDto
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
+import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
 import com.cafeconpalito.chikara.utils.EncodeBase64
 import com.cafeconpalito.chikara.utils.GenericToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -95,7 +98,34 @@ class NewChickFragment : Fragment() {
     private fun initRecyclerView() {
 
         //El estilo del la lista de Objetos para mostrar (lista vertical normalita)
-        binding.rvChickElements.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvChickElements.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        //Añado decoracion al RecyclerView
+
+        //TODO AÑADIR POR DAGGER HILT LA INJECTION DEL CONTEXTO ;)
+        /*
+        @Module
+@InstallIn(ApplicationComponent::class)
+object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideContext(@ApplicationContext context: Context): Context {
+        return context
+    }
+}
+
+class DotIndicatorDecoration @Inject constructor(
+    @ApplicationContext private val context: Context
+) : RecyclerView.ItemDecoration() {
+
+    // Usa el contexto aquí según sea necesario
+}
+         */
+
+        binding.rvChickElements.addItemDecoration(DotIndicatorDecoration(requireContext()))
+
         //Le paso la lista al adaptador inicialmente.
         // Con lambda
         adapter = ElementChickAdapter(elements) { deleteElement(it) }
