@@ -214,6 +214,7 @@ class NewChickFragment : Fragment() {
             var base64String: String = ""
 
             //Encode
+            //TODO LLEVAR EL ENCODE A EL USE CASE PARA QUE ESPERE A TERMINAR PARA ENVIAR LO OTRO!
             CoroutineScope(Dispatchers.Main).launch {
                 base64String =
                     encodeBase64(requireContext(), uri)
