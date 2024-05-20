@@ -27,7 +27,7 @@ class EncodeBase64Test {
 
         val encodeBase64 = EncodeBase64()
 
-        val filePath = "src/test/java/com/cafeconpalito/chikara/res/descarga.png"
+        val filePath = "src/test/java/com/cafeconpalito/chikara/res/testBase64.txt"
         val file = File(filePath)
         val uri = Uri.fromFile(file)
 
