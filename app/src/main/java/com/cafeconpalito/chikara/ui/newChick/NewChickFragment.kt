@@ -33,6 +33,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NewChickFragment : Fragment() {
 
+    //TODO ADD DRAG AND DROP FOR THE ELEMENTS!
 
     //Manera de trabajar con Binding y Fragmentos
     private var _binding: FragmentNewChickBinding? = null
@@ -102,28 +103,6 @@ class NewChickFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         //Añado decoracion al RecyclerView
-
-        //TODO AÑADIR POR DAGGER HILT LA INJECTION DEL CONTEXTO ;)
-        /*
-        @Module
-@InstallIn(ApplicationComponent::class)
-object AppModule {
-
-    @Provides
-    @Singleton
-    fun provideContext(@ApplicationContext context: Context): Context {
-        return context
-    }
-}
-
-class DotIndicatorDecoration @Inject constructor(
-    @ApplicationContext private val context: Context
-) : RecyclerView.ItemDecoration() {
-
-    // Usa el contexto aquí según sea necesario
-}
-         */
-
         binding.rvChickElements.addItemDecoration(DotIndicatorDecoration(requireContext()))
 
         //Le paso la lista al adaptador inicialmente.
