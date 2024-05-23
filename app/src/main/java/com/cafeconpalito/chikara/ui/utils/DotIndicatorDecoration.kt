@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeconpalito.chikara.R
+import kotlin.math.abs
 
 class DotIndicatorDecoration(
     context: Context
@@ -46,7 +47,9 @@ class DotIndicatorDecoration(
         val posY = totalHeight - 2 * activeRadius
 
         val layoutManager = parent.layoutManager as LinearLayoutManager
-        val activePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+        //val activePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+        val activePosition = findActivePosition(layoutManager, parent)
+
 
         for (i in 0 until itemCount) {
             val x = startX + i * (2 * inactiveRadius + padding)
@@ -55,4 +58,29 @@ class DotIndicatorDecoration(
             c.drawCircle(x, posY, radius, paint)
         }
     }
+    private fun findActivePosition(layoutManager: LinearLayoutManager, parent: RecyclerView): Int {
+        val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+        val lastVisiblePosition = layoutManager.findLastVisibleItemPosition()
+
+        if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) {
+            return RecyclerView.NO_POSITION
+        }
+
+        val centerX = parent.width / 2
+        var closestPosition = firstVisiblePosition
+        var minDistance = Int.MAX_VALUE
+
+        for (i in firstVisiblePosition..lastVisiblePosition) {
+            val child = layoutManager.findViewByPosition(i) ?: continue
+            val childCenterX = (child.left + child.right) / 2
+            val distance = abs(centerX - childCenterX)
+            if (distance < minDistance) {
+                minDistance = distance
+                closestPosition = i
+            }
+        }
+
+        return closestPosition
+    }
+
 }
