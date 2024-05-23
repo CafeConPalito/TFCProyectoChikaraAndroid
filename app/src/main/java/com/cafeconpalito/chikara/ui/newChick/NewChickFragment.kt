@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.ui.newChick
 
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,16 +11,13 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.model.ChickContentDto
 import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.cafeconpalito.chikara.domain.model.ChickTypeDto
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
-import com.cafeconpalito.chikara.utils.EncodeBase64
-import com.cafeconpalito.chikara.utils.GenericToast
+import com.cafeconpalito.chikara.ui.utils.GenericToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
