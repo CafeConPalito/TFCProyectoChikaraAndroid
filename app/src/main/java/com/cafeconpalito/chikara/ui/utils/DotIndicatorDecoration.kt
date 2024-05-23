@@ -20,8 +20,6 @@ class DotIndicatorDecoration(
     private val inactiveRadius = 5f // Radio de los puntos inactivos
     private val padding = 16f // Espacio entre los puntos
 
-    val xactiveColor = Color.BLACK
-
     private val activePaint = Paint().apply {
         style = Paint.Style.FILL
         isAntiAlias = true

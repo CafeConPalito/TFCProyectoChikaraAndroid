@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeconpalito.chikara.R
+import java.util.Collections
 
 
 /**
@@ -12,7 +13,7 @@ import com.cafeconpalito.chikara.R
  * Recibe el item done pasado desde el Main
  */
 //Para operar con tasks, la lista de tareas, private val!
-class ElementChickAdapter (private val elements:List<Uri>, private val onItemDone:(Int)-> Unit): RecyclerView.Adapter<ElementChickViewHolder>() {
+class ElementChickAdapter (private val elements:MutableList<Uri>, private val onItemDone:(Int)-> Unit): RecyclerView.Adapter<ElementChickViewHolder>() {
 
     /**
      * Devuelve el numero de objetos de la lista.
@@ -39,4 +40,16 @@ class ElementChickAdapter (private val elements:List<Uri>, private val onItemDon
         return ElementChickViewHolder(layoutInflater.inflate(R.layout.item_element_chick,parent,false))
     }
 
+    fun onItemMove(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(elements, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(elements, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
 }
