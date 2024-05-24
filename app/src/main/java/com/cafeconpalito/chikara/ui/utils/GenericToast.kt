@@ -1,4 +1,4 @@
-package com.cafeconpalito.chikara.utils
+package com.cafeconpalito.chikara.ui.utils
 
 import android.content.Context
 import android.view.Gravity

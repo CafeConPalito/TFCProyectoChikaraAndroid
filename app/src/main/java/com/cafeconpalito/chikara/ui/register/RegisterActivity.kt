@@ -19,7 +19,7 @@ import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
-import com.cafeconpalito.chikara.utils.GenericToast
+import com.cafeconpalito.chikara.ui.utils.GenericToast
 import com.cafeconpalito.chikara.utils.UserPreferences
 import com.cafeconpalito.chikara.utils.ValidateFields
 import dagger.hilt.android.AndroidEntryPoint
