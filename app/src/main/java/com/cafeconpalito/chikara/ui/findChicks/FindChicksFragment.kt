@@ -53,9 +53,9 @@ class FindChicksFragment : Fragment() {
             //TODO EL RV ESTA SIN TESTEAR.
             val listTopChicks = chickUseCases.getTopChicks()
 
-//            for (x in listTopChicks) {
-//                Log.i("Chick", x.toString())
-//            }
+            for (x in listTopChicks) {
+                Log.i("Chick", x.toString())
+            }
 
             //El estilo del la lista de Objetos para mostrar (lista vertical normalita)
             binding.rvFindChick.layoutManager =

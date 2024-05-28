@@ -1,9 +1,11 @@
 package com.cafeconpalito.chikara.ui.findChicks
 
+import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeconpalito.chikara.databinding.ItemChickBinding
 import com.cafeconpalito.chikara.domain.model.ChickDto
+import java.net.URI
 
 class FindChicksViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
@@ -17,6 +19,10 @@ class FindChicksViewHolder(view: View): RecyclerView.ViewHolder(view) {
         //COMO CREO QUE SOLO LLEGAMOS A IMAGENES QUE CARGE LA URL DE LA PRIMERA.
         //CARGAR DE URL que viene en el VALUE
         //binding.ivChickImage.setImageBitmap(chick.content.get(0).value)
+        binding.tvTitle.text = chick.title
+        val uri: Uri = Uri.parse(chick.content[0].value)
+        binding.ivChickImage.setImageURI(uri)
+
     }
 
 
