@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MyChicksViewModel @Inject constructor(private val chickUseCases: ChickUseCases):ViewModel() {
 
     //La lista que vamos a devolver con la info
-    val topChicksLiveData = MutableLiveData<List<ChickDto>>()
+    val userChicksLiveData = MutableLiveData<List<ChickDto>>()
     //La lista que mientras carga los datos esta mostrando datos Dummies
     val isLoading = MutableLiveData<Boolean>()
 
@@ -22,15 +22,15 @@ class MyChicksViewModel @Inject constructor(private val chickUseCases: ChickUseC
     //lateinit var chickUseCases: ChickUseCases
 
     //TODO PARA LA BUSQUEDA SE PUEDE AÑADIR COMO PARAMETRO UN STRING A BUSCAR
-    fun getTopChicks(){
+    fun getUserChicks(){
 
-        Log.d("FindChicks", "Enter ViewModel -> getTopChick()")
+        Log.d("UserChicks", "Enter ViewModel -> getTopChick()")
 
         viewModelScope.launch {
 
             isLoading.postValue(true)
-            val response = chickUseCases.getTopChicks()
-            topChicksLiveData.postValue(response)
+            val response = chickUseCases.getUserChicks()
+            userChicksLiveData.postValue(response)
             isLoading.postValue(false)
 
         }

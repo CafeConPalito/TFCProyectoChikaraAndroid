@@ -9,10 +9,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
+import com.cafeconpalito.chikara.ui.findChicks.FindChicksAdapter
+import com.cafeconpalito.chikara.ui.findChicks.FindChicksViewModel
 import com.cafeconpalito.chikara.ui.home.HomeActivity
 import com.cafeconpalito.chikara.ui.utils.isKeyboardVisible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 /**
@@ -28,6 +36,8 @@ class MyChicksFragment : Fragment() {
     private var _binding: FragmentMyChicksBinding? = null
     private val binding get() = _binding!!
 
+    private val mcViewModel : MyChicksViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,11 +51,12 @@ class MyChicksFragment : Fragment() {
         //Le paso el contecto a User Preferences.
 
         initUI()
-        setupKeyboardListener(view)
+        //setupKeyboardListener(view)
     }
 
     private fun initUI() {
         initListeners()
+        initRecyclerView()
     }
 
     private fun initListeners() {
@@ -74,6 +85,42 @@ class MyChicksFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initRecyclerView() {
+
+        Log.d("FindChicks", " UserChickFragment -> initRecyclerView()")
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            mcViewModel.getUserChicks()
+
+            withContext(Dispatchers.Main) {
+                mcViewModel.userChicksLiveData.observe(viewLifecycleOwner, { ListTopChicks ->
+                    with(binding.rvFindChick) {
+                        //Selecciono el tipo de Layout para el RV
+                        layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        //Paso la nueva lista de datos!
+                        adapter = MyChicksAdapter(ListTopChicks) {
+                            /*
+                        //CREO QUE ESTO NO ES NECESARIO
+                        val intentDetail = Intent(context, DetailActivity::class.java)
+                        intentDetail.putExtra(EXTRA, it)
+                        startActivity(intentDetail)
+                        */
+                        }
+
+                    }
+                })
+
+                //Mientras no carge estara sin ser visible...
+                mcViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+                    Log.d("UserChicks", " UserChickFragment -> isLoagind!")
+                    //TODO POR SI QUEREMOS AÑADIR UN PROGRESS BAR
+                })
+            }
+        }
     }
 
 
