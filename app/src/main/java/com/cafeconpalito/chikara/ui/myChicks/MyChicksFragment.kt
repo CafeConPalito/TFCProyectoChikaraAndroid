@@ -2,12 +2,16 @@ package com.cafeconpalito.chikara.ui.myChicks
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
+import com.cafeconpalito.chikara.ui.home.HomeActivity
+import com.cafeconpalito.chikara.ui.utils.isKeyboardVisible
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -37,6 +41,7 @@ class MyChicksFragment : Fragment() {
         //Le paso el contecto a User Preferences.
 
         initUI()
+        setupKeyboardListener(view)
     }
 
     private fun initUI() {
@@ -56,6 +61,21 @@ class MyChicksFragment : Fragment() {
             }
         }
     }
+
+    private fun setupKeyboardListener(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val isKeyboardVisible = view.isKeyboardVisible()
+            Log.d("keyboard", "Keyboard visible: $isKeyboardVisible")
+            (activity as? HomeActivity)?.showNavBar(!isKeyboardVisible)
+            insets
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
 
 }

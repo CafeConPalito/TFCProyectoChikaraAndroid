@@ -2,15 +2,19 @@ package com.cafeconpalito.chikara.ui.home
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityHomeBinding
+import com.cafeconpalito.chikara.ui.utils.isKeyboardVisible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,10 +38,24 @@ class HomeActivity : AppCompatActivity() {
         initNavigation()
 
         //TODO FUNCIONA REGULAR.
-        setupFocusListener()
+        //setupFocusListener()
 
         //TODO PRUEBO CON LA VARIANTE DE TECLADO, no termina de funcionar!
         //setupKeyboardListener()
+
+        //TODO View.isKeyboardVisible
+        setupKeyboardIsVisible()
+    }
+
+
+    private fun setupKeyboardIsVisible() {
+        Log.d("keyboard", "startGlobalListener")
+        val rootView = findViewById<View>(android.R.id.content)
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { _, insets ->
+            val isKeyboardVisible = rootView.isKeyboardVisible()
+            showNavBar(!isKeyboardVisible)
+            insets
+        }
     }
 
     private fun initNavigation() {
@@ -50,7 +68,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupFocusListener() {
         val rootView = findViewById<View>(android.R.id.content)
-        //TODO MODIFICAR COMPORTAMIENTO
         rootView.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
             if (newFocus is EditText) {
                 showNavBar(false)
@@ -59,7 +76,6 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun setupKeyboardListener() {
         val rootView = findViewById<View>(android.R.id.content)
@@ -107,7 +123,8 @@ class HomeActivity : AppCompatActivity() {
     /**
      * NO BORRAR!
      */
-    private fun showNavBar(show: Boolean) {
+    fun showNavBar(show: Boolean) {
+        Log.d("keyboard", "Modificando Visibilidad Valor: $show" )
         binding.navBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
