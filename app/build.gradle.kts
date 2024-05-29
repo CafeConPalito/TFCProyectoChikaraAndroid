@@ -101,6 +101,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.50")
     annotationProcessor ("com.google.dagger:hilt-compiler:2.50")
     kapt("com.google.dagger:hilt-compiler:2.50")
+
     //cambio esta por KAPT
     //ksp("com.google.dagger:hilt-android-compiler:2.50")
 

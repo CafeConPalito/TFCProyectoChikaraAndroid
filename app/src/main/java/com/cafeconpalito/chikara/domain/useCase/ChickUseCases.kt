@@ -2,8 +2,6 @@ package com.cafeconpalito.chikara.domain.useCase
 
 import android.content.Context
 import android.net.Uri
-import androidx.camera.core.impl.utils.ContextUtil
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.cafeconpalito.chikara.domain.model.ChickTypeDto
 import com.cafeconpalito.chikara.domain.repository.ChickRepository
@@ -25,7 +23,7 @@ class ChickUseCases @Inject constructor(private val repository: ChickRepository)
      * si lo consigue devuelve la lista. (puede estar vacia)
      * en caso de error devuelve una lista vacia.
      */
-    suspend fun findByAuthor(userId: String) = repository.findByAuthor(userId)
+    suspend fun getUserChicks() = repository.getUserChicks()
 
     /**
      * Add new Chick

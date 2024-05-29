@@ -16,7 +16,7 @@ interface ChickRepository {
      * si lo consigue devuelve la lista. (puede estar vacia)
      * en caso de error devuelve una lista vacia.
      */
-    suspend fun findByAuthor(userId:String):List<ChickDto>
+    suspend fun getUserChicks():List<ChickDto>
 
     /**
      * Add new Chick

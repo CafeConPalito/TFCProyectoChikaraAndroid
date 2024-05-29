@@ -35,9 +35,9 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      * si lo consigue devuelve la lista. (puede estar vacia)
      * en caso de error devuelve una lista vacia.
      */
-    override suspend fun findByAuthor(userId: String): List<ChickDto> {
+    override suspend fun getUserChicks(): List<ChickDto> {
         runCatching {
-            apiService.findByAuthor(userId)
+            apiService.getUserChicks()
         }
             .onSuccess {
                 Log.d("ChickRepository: ", "findByAuthor API SUCCESS")
