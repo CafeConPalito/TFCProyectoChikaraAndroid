@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentFindChicksBinding
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import com.cafeconpalito.chikara.ui.newChick.ElementChickAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -23,11 +28,7 @@ class FindChicksFragment : Fragment() {
     private var _binding: FragmentFindChicksBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: FindChicksAdapter
-
-    @Inject
-    lateinit var chickUseCases: ChickUseCases
-
+    private val fcViewModel : FindChicksViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,27 +49,39 @@ class FindChicksFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        lifecycleScope.launch {
 
-            //TODO EL RV ESTA SIN TESTEAR.
-            val listTopChicks = chickUseCases.getTopChicks()
+        Log.d("FindChicks", " FindChickFragment -> initRecyclerView()")
 
-            for (x in listTopChicks) {
-                Log.i("Chick", x.toString())
+        CoroutineScope(Dispatchers.IO).launch {
+
+            fcViewModel.getTopChicks()
+
+            withContext(Dispatchers.Main) {
+                fcViewModel.topChicksLiveData.observe(viewLifecycleOwner, { ListTopChicks ->
+                    with(binding.rvFindChick) {
+                        //Selecciono el tipo de Layout para el RV
+                        layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        //Paso la nueva lista de datos!
+                        adapter = FindChicksAdapter(ListTopChicks) {
+                            /*
+                        //CREO QUE ESTO NO ES NECESARIO
+                        val intentDetail = Intent(context, DetailActivity::class.java)
+                        intentDetail.putExtra(EXTRA, it)
+                        startActivity(intentDetail)
+                        */
+                        }
+
+                    }
+                })
+
+                //Mientras no carge estara sin ser visible...
+                fcViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+                    Log.d("FindChicks", " FindChickFragment -> isLoagind!")
+                    //TODO POR SI QUEREMOS AÑADIR UN PROGRESS BAR
+                })
             }
-
-            //El estilo del la lista de Objetos para mostrar (lista vertical normalita)
-            binding.rvFindChick.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-            //Le paso la lista al adaptador inicialmente.
-            adapter = FindChicksAdapter(listTopChicks){ }
-
-            //le paso el adaptador a el Recycler View
-            binding.rvFindChick.adapter = adapter
-
         }
-
     }
 
     private fun initListeners() {
