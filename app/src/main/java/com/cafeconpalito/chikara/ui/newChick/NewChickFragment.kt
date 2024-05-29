@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
@@ -201,7 +201,7 @@ class NewChickFragment : Fragment() {
 
         return ChickDto(
             title = binding.etTitle.text.toString(),
-            isprivate = binding.sIsPrivate.isActivated,
+            isprivate = binding.sIsPrivate.isChecked,
             content = content
         )
 
