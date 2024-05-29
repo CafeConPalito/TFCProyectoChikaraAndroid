@@ -131,6 +131,9 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
+    //Picasso para descargar imagenes
+    implementation("com.squareup.picasso:picasso:2.8")
+
     //TEST
 
     //UnitTesting
@@ -147,8 +150,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.robolectric/robolectric
     testImplementation("org.robolectric:robolectric:4.12.1")
-
-
 
     //DaggerHilt Test For instrumentation tests
     androidTestImplementation  ("com.google.dagger:hilt-android-testing:2.50")

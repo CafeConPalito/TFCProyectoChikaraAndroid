@@ -1,11 +1,10 @@
 package com.cafeconpalito.chikara.ui.findChicks
 
-import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeconpalito.chikara.databinding.ItemChickBinding
 import com.cafeconpalito.chikara.domain.model.ChickDto
-import java.net.URI
+import com.squareup.picasso.Picasso
 
 class FindChicksViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
@@ -14,14 +13,11 @@ class FindChicksViewHolder(view: View): RecyclerView.ViewHolder(view) {
     //se ocupa de setear el texto de la tareas!
     //On ItemDone Borra La tarea, esta recibe como un Int la posicion de la lista (ID)
     fun render(chick: ChickDto, onItemDone:(Int) -> Unit){
-        //Al arrancar Setea la imagen
-        //TODO REVISAR COMO SETEAR SEGUN EL TIPO LA IMAGEN.
-        //COMO CREO QUE SOLO LLEGAMOS A IMAGENES QUE CARGE LA URL DE LA PRIMERA.
-        //CARGAR DE URL que viene en el VALUE
-        //binding.ivChickImage.setImageBitmap(chick.content.get(0).value)
+
+        //SET TITTLE
         binding.tvTitle.text = chick.title
-        val uri: Uri = Uri.parse(chick.content[0].value)
-        binding.ivChickImage.setImageURI(uri)
+        //SET IMAGE
+        Picasso.get().load(chick.content[0].value).into(binding.ivChickImage)
 
     }
 
