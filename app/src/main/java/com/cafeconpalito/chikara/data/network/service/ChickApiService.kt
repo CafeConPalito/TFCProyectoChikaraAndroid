@@ -4,14 +4,13 @@ import com.cafeconpalito.chikara.domain.model.ChickDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface ChickApiService {
 
     @GET("/chiks/top")
     suspend fun getTopChicks():List<ChickDto>
 
-    @GET("/chiks/findByAuthor")
+    @GET("/chiks/findbyauthor")
     suspend fun getUserChicks():List<ChickDto>
 
     @POST("/chiks/create")
