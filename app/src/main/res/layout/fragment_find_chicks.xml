@@ -7,7 +7,7 @@
     tools:context=".ui.findChicks.FindChicksFragment"
     android:background="@color/primary_background">
 
-    <!-- TODO: DELETE ME! -->
+    <!-- TODO: DELETE ME!
     <TextView
         android:id="@+id/text_find_chicks"
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+-->
     <EditText
         android:id="@+id/et_find_chick"
         android:layout_width="0dp"
