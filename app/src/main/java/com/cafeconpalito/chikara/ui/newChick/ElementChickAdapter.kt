@@ -37,7 +37,7 @@ class ElementChickAdapter (private val elements:MutableList<Uri>, private val on
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElementChickViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        return ElementChickViewHolder(layoutInflater.inflate(R.layout.item_element_chick,parent,false))
+        return ElementChickViewHolder(layoutInflater.inflate(R.layout.item_element_new_chick,parent,false))
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) {

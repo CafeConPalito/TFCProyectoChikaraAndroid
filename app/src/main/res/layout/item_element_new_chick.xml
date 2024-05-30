@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:tint="@color/primary_background" />
+            app:tint="@color/primary_background" />
 
         <ImageView
             android:id="@+id/ivImagePreview"

@@ -48,10 +48,7 @@ class MyChicksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Le paso el contecto a User Preferences.
-
         initUI()
-        //setupKeyboardListener(view)
     }
 
     private fun initUI() {
@@ -71,20 +68,6 @@ class MyChicksFragment : Fragment() {
                 else -> false
             }
         }
-    }
-
-    private fun setupKeyboardListener(view: View) {
-        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
-            val isKeyboardVisible = view.isKeyboardVisible()
-            Log.d("keyboard", "Keyboard visible: $isKeyboardVisible")
-            (activity as? HomeActivity)?.showNavBar(!isKeyboardVisible)
-            insets
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initRecyclerView() {
@@ -122,7 +105,5 @@ class MyChicksFragment : Fragment() {
             }
         }
     }
-
-
 
 }

@@ -32,6 +32,7 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+        //setupKeyboardListener(view)
     }
 
     private fun initUI() {
@@ -42,6 +43,19 @@ class UserFragment : Fragment() {
         // TODO("Not yet implemented")
     }
 
+    private fun setupKeyboardListener(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val isKeyboardVisible = view.isKeyboardVisible()
+            Log.d("keyboard", "Keyboard visible: $isKeyboardVisible")
+            (activity as? HomeActivity)?.showNavBar(!isKeyboardVisible)
+            insets
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 
 }
