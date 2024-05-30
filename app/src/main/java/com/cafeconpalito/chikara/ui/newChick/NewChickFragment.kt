@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
+import com.cafeconpalito.chikara.domain.assembler.ChickDtoAssembler
 import com.cafeconpalito.chikara.domain.model.ChickContentDto
 import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.cafeconpalito.chikara.domain.model.ChickTypeDto
@@ -39,7 +40,7 @@ class NewChickFragment : Fragment() {
     private lateinit var adapter: ElementChickAdapter
 
     //Lista de elementos para el post
-    private var elements = mutableListOf<Uri>()
+    private var contentElements = mutableListOf<Uri>()
 
     @Inject
     lateinit var chickUseCases: ChickUseCases
@@ -104,7 +105,7 @@ class NewChickFragment : Fragment() {
 
         //Le paso la lista al adaptador inicialmente.
         // Con lambda
-        adapter = ElementChickAdapter(elements) { deleteElement(it) }
+        adapter = ElementChickAdapter(contentElements) { deleteElement(it) }
 
         //le paso el adaptador a el Recycler View
         binding.rvChickElements.adapter = adapter
@@ -122,7 +123,7 @@ class NewChickFragment : Fragment() {
     private fun addElement(uri: Uri) {
 
         val newElement = uri
-        elements.add(newElement)
+        contentElements.add(newElement)
         adapter.notifyDataSetChanged()
 
     }
@@ -132,7 +133,7 @@ class NewChickFragment : Fragment() {
      */
     private fun deleteElement(position: Int) {
 
-        elements.removeAt(position)
+        contentElements.removeAt(position)
         //Correcto aviso de que borro algo
         adapter.notifyItemRemoved(position)
         //Metodo antiguo que revisa toda la lista
@@ -142,7 +143,7 @@ class NewChickFragment : Fragment() {
 
     //TODO PONER BONITO
     private fun publishNewChick() {
-        if (elements.isEmpty()) {
+        if (contentElements.isEmpty()) {
             GenericToast.generateToast(
                 requireContext(),
                 "AÑADE UN TITULO!!!!!!",
@@ -159,7 +160,14 @@ class NewChickFragment : Fragment() {
             ).show()
         } else {
 
-            val newChick = generateChickDto(elements)
+            val chickDtoAssembler = ChickDtoAssembler()
+
+            val title = binding.etTitle.text.toString()
+            val isPrivate = binding.sIsPrivate.isChecked
+            val newChick = chickDtoAssembler.buildChickDto(title,isPrivate, contentElements)
+
+            //TODO VIEJO PARA BORRAR
+            //val newChick = generateChickDto(elements)
 
             CoroutineScope(Dispatchers.Main).launch {
                 //Envio el contexto de la Aplicacion!
@@ -199,7 +207,7 @@ class NewChickFragment : Fragment() {
     }
 
 
-    //TODO MOVER A DOMAIN GENERATOR DTO!
+    //TODO MOVIDO A Assembler PROBAR Y BORRAR!
     /**
      * Generate Data for new Chick
      */
@@ -213,6 +221,7 @@ class NewChickFragment : Fragment() {
         )
     }
 
+    //TODO MOVIDO A Assembler PROBAR Y BORRAR!
     /**
      * Generate Data for Content Chick
      */
