@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.domain.useCase
 
-import android.util.Log
 import com.cafeconpalito.chikara.domain.repository.LoginRepository
 import javax.inject.Inject
 
