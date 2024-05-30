@@ -23,7 +23,6 @@ class FindChicksViewModel @Inject constructor(private val chickUseCases: ChickUs
     //@Inject
     //lateinit var chickUseCases: ChickUseCases
 
-    //TODO PARA LA BUSQUEDA SE PUEDE AÑADIR COMO PARAMETRO UN STRING A BUSCAR
     fun getTopChicks() {
 
         Log.d("FindChicks", "Enter ViewModel -> getTopChick()")

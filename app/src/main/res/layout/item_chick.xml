@@ -36,7 +36,7 @@
             tools:src="@color/primary_background" />
 
         <TextView
-            android:id="@+id/tv_autor"
+            android:id="@+id/tv_author"
             style="@style/FuenteBaseItemChick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
