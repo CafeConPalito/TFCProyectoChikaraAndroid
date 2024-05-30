@@ -13,7 +13,10 @@ import java.util.Collections
  * Recibe el item done pasado desde el Main
  */
 //Para operar con tasks, la lista de tareas, private val!
-class ElementChickAdapter (private val elements:MutableList<Uri>, private val onItemDone:(Int)-> Unit): RecyclerView.Adapter<ElementChickViewHolder>() {
+class ElementChickAdapter(
+    private val elements: MutableList<Uri>,
+    private val onItemDone: (Int) -> Unit
+) : RecyclerView.Adapter<ElementChickViewHolder>() {
 
     /**
      * Devuelve el numero de objetos de la lista.
@@ -37,7 +40,13 @@ class ElementChickAdapter (private val elements:MutableList<Uri>, private val on
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElementChickViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        return ElementChickViewHolder(layoutInflater.inflate(R.layout.item_element_new_chick,parent,false))
+        return ElementChickViewHolder(
+            layoutInflater.inflate(
+                R.layout.item_element_new_chick,
+                parent,
+                false
+            )
+        )
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) {

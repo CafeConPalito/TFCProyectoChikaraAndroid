@@ -11,10 +11,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyChicksViewModel @Inject constructor(private val chickUseCases: ChickUseCases):ViewModel() {
+class MyChicksViewModel @Inject constructor(private val chickUseCases: ChickUseCases) :
+    ViewModel() {
 
     //La lista que vamos a devolver con la info
     val userChicksLiveData = MutableLiveData<List<ChickDto>>()
+
     //La lista que mientras carga los datos esta mostrando datos Dummies
     val isLoading = MutableLiveData<Boolean>()
 
@@ -22,7 +24,7 @@ class MyChicksViewModel @Inject constructor(private val chickUseCases: ChickUseC
     //lateinit var chickUseCases: ChickUseCases
 
     //TODO PARA LA BUSQUEDA SE PUEDE AÑADIR COMO PARAMETRO UN STRING A BUSCAR
-    fun getUserChicks(){
+    fun getUserChicks() {
 
         Log.d("UserChicks", "Enter ViewModel -> getTopChick()")
 

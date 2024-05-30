@@ -11,14 +11,15 @@ import com.cafeconpalito.chikara.domain.model.ChickDto
  * Adapter se ocupa de controlar las ViewHolder (TaskViewHolder)
  * Recibe el item done pasado desde el Main
  */
-class MyChicksAdapter (private val elements:List<ChickDto>, private val onItemDone:(Int)-> Unit): RecyclerView.Adapter<MyChicksViewHolder>(){
+class MyChicksAdapter(private val elements: List<ChickDto>, private val onItemDone: (Int) -> Unit) :
+    RecyclerView.Adapter<MyChicksViewHolder>() {
 
     /**
      * Se ocupa de decir donde esta la vista (XML) para poder generarla y la devuelve.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyChicksViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        return MyChicksViewHolder(layoutInflater.inflate(R.layout.item_chick,parent,false))
+        return MyChicksViewHolder(layoutInflater.inflate(R.layout.item_chick, parent, false))
     }
 
     /**

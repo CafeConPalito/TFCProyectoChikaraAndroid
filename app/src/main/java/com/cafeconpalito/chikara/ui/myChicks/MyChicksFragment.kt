@@ -7,15 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
-import com.cafeconpalito.chikara.ui.findChicks.FindChicksAdapter
-import com.cafeconpalito.chikara.ui.findChicks.FindChicksViewModel
-import com.cafeconpalito.chikara.ui.home.HomeActivity
-import com.cafeconpalito.chikara.ui.utils.isKeyboardVisible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +31,7 @@ class MyChicksFragment : Fragment() {
     private var _binding: FragmentMyChicksBinding? = null
     private val binding get() = _binding!!
 
-    private val mcViewModel : MyChicksViewModel by viewModels()
+    private val mcViewModel: MyChicksViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +60,7 @@ class MyChicksFragment : Fragment() {
                     //TODO AL DARLE BUSCAR LLAMAR A LA API
                     true
                 }
+
                 else -> false
             }
         }

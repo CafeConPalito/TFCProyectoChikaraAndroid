@@ -6,20 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentFindChicksBinding
-import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
-import com.cafeconpalito.chikara.ui.newChick.ElementChickAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -28,7 +23,7 @@ class FindChicksFragment : Fragment() {
     private var _binding: FragmentFindChicksBinding? = null
     private val binding get() = _binding!!
 
-    private val fcViewModel : FindChicksViewModel by viewModels()
+    private val fcViewModel: FindChicksViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,7 +80,6 @@ class FindChicksFragment : Fragment() {
     }
 
     private fun initListeners() {
-
         //EDIT TEXT AL DARLE BUSCAR
         binding.etFindChick.setOnEditorActionListener { v, actionId, event ->
             return@setOnEditorActionListener when (actionId) {
@@ -97,8 +91,6 @@ class FindChicksFragment : Fragment() {
                 else -> false
             }
         }
-
-
-
     }
+
 }
