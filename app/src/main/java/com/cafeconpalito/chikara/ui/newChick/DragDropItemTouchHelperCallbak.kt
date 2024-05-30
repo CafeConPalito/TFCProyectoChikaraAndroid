@@ -3,7 +3,7 @@ package com.cafeconpalito.chikara.ui.newChick
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class DragDropItemTouchHelperCallbak(private val adapter: ElementChickAdapter) :
+class DragDropItemTouchHelperCallback(private val adapter: ElementChickAdapter) :
     ItemTouchHelper.Callback() {
 
     override fun getMovementFlags(

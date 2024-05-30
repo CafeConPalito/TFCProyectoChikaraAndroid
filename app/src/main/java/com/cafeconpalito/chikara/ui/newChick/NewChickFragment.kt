@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.model.ChickContentDto
@@ -108,6 +109,11 @@ class NewChickFragment : Fragment() {
         //le paso el adaptador a el Recycler View
         binding.rvChickElements.adapter = adapter
 
+        //TODO PROBAR DRAG AND DROP!
+        val callback = DragDropItemTouchHelperCallback(adapter)
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(binding.rvChickElements)
+
     }
 
     /**
@@ -192,49 +198,41 @@ class NewChickFragment : Fragment() {
 
     }
 
+
+    //TODO MOVER A DOMAIN GENERATOR DTO!
     /**
      * Generate Data for new Chick
      */
     private fun generateChickDto(elements: List<Uri>): ChickDto {
 
         val content = generateChickContentDto(elements)
-
         return ChickDto(
             title = binding.etTitle.text.toString(),
             isprivate = binding.sIsPrivate.isChecked,
             content = content
         )
-
     }
 
     /**
      * Generate Data for Content Chick
      */
     private fun generateChickContentDto(elements: List<Uri>): List<ChickContentDto> {
-
         //List to return of Content
         val list: MutableList<ChickContentDto> = LinkedList()
-
         //Position of element
         var pos: Long = 0
-
         //For each element add to list
         for (uri in elements) {
             //position
             pos++
-
             val content = ChickContentDto(
                 position = pos,
                 value = uri.toString(),
                 type = ChickTypeDto.TYPE_IMG
             )
-
             list.add(content)
-
         }
-
         return list
-
     }
 
 }
