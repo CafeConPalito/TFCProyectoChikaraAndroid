@@ -45,36 +45,29 @@ class FindChicksFragment : Fragment() {
 
     private fun initRecyclerView() {
 
-        Log.d("FindChicks", " FindChickFragment -> initRecyclerView()")
+        Log.d( this.javaClass.simpleName , "Method: ${this.javaClass.enclosingMethod?.name} -> start")
 
         CoroutineScope(Dispatchers.IO).launch {
 
             fcViewModel.getTopChicks()
 
             withContext(Dispatchers.Main) {
-                fcViewModel.topChicksLiveData.observe(viewLifecycleOwner, { ListTopChicks ->
+                fcViewModel.topChicksLiveData.observe(viewLifecycleOwner) { ListTopChicks ->
                     with(binding.rvFindChick) {
                         //Selecciono el tipo de Layout para el RV
                         layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                         //Paso la nueva lista de datos!
                         adapter = FindChicksAdapter(ListTopChicks) {
-                            /*
-                        //CREO QUE ESTO NO ES NECESARIO
-                        val intentDetail = Intent(context, DetailActivity::class.java)
-                        intentDetail.putExtra(EXTRA, it)
-                        startActivity(intentDetail)
-                        */
                         }
-
                     }
-                })
+                }
 
                 //Mientras no carge estara sin ser visible...
-                fcViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-                    Log.d("FindChicks", " FindChickFragment -> isLoagind!")
+                fcViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+                    Log.d( this.javaClass.simpleName , "Method: ${this.javaClass.enclosingMethod?.name} -> isLoading")
                     //TODO POR SI QUEREMOS AÑADIR UN PROGRESS BAR
-                })
+                }
             }
         }
     }

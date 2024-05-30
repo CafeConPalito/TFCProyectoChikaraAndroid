@@ -20,6 +20,7 @@ class MyChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         Picasso.get().load(chick.content[0].value).into(binding.ivChickImage)
         //SET AUTHOR
         binding.tvAuthor.text = chick.author_name
+
     }
 
 

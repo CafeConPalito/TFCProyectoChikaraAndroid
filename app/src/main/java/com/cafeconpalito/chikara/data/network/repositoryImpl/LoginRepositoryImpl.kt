@@ -6,7 +6,8 @@ import com.cafeconpalito.chikara.data.network.service.LoginApiService
 import com.cafeconpalito.chikara.domain.repository.LoginRepository
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiService):LoginRepository{
+class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiService) :
+    LoginRepository {
 
 
     /**
@@ -16,14 +17,24 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
     override suspend fun getLogin(user: String, password: String): Boolean {
 
         runCatching {
-            apiService.getLogin(user,password)
+            apiService.getLogin(user, password)
         }
             .onSuccess {
-                Log.d("LoginRepository: ", "Login SUCCESS AuthKey: $it")
+                //Log.d("LoginRepository: ", "Login SUCCESS AuthKey: $it")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS\nAuthKey: $it"
+                )
+
                 NetworkModule.AuthKey = it
-                return  true }
+                return true
+            }
             .onFailure {
-                Log.d("LoginRepository: ", "Login Fail: $it")
+                //Log.d("LoginRepository: ", "Login Fail: $it")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                )
             }
 
         return false
@@ -41,8 +52,9 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
             apiService.checkUser(user)
         }
             .onSuccess {
-                return  true }
-            .onFailure {  }
+                return true
+            }
+            .onFailure { }
 
         return false
 

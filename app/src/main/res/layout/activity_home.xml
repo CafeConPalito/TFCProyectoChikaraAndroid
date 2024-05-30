@@ -8,7 +8,6 @@
     tools:context=".ui.home.HomeActivity">
 
 
-
     <!--
      Necesario para que el fragmento funciones correctamente
              android:name="androidx.navigation.fragment.NavHostFragment"
@@ -51,15 +50,15 @@
         android:id="@+id/navBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:labelVisibilityMode="labeled"
         app:itemActiveIndicatorStyle="@null"
         app:itemIconTint="@color/bottom_nav_selector"
-        app:itemTextColor="@color/bottom_nav_selector"
         app:itemTextAppearanceActiveBoldEnabled="false"
+        app:itemTextColor="@color/bottom_nav_selector"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu"
-        />
+        app:layout_constraintTop_toBottomOf="@id/fragmentContainerView"
+        app:menu="@menu/bottom_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

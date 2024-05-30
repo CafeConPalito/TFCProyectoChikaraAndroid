@@ -20,11 +20,19 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
             apiService.getTopChicks()
         }
             .onSuccess {
-                Log.d("ChickRepository: ", "getTopChicks API SUCCESS")
+                //Log.d("ChickRepository: ", "getTopChicks API SUCCESS")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                )
                 return it
             }
             .onFailure {
-                Log.d("ChickRepository: ", "getTopChicks API FAIL $it")
+                //Log.d("ChickRepository: ", "getTopChicks API FAIL $it")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                )
             }
 
         return emptyList()
@@ -40,11 +48,19 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
             apiService.getUserChicks()
         }
             .onSuccess {
-                Log.d("ChickRepository: ", "findByAuthor API SUCCESS")
+                //Log.d("ChickRepository: ", "findByAuthor API SUCCESS")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                )
                 return it
             }
             .onFailure {
-                Log.d("ChickRepository: ", "findByAuthor API FAIL $it")
+                //Log.d("ChickRepository: ", "findByAuthor API FAIL $it")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                )
             }
 
         return emptyList()
@@ -58,16 +74,29 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
     override suspend fun newChick(chickDto: ChickDto): Boolean {
         runCatching {
 
-            Log.d("ChickRepository: ", "DTO Send:\n $chickDto")
+            //Log.d("ChickRepository: ", "DTO Send:\n $chickDto")
+            Log.d(
+                this.javaClass.simpleName,
+                "Method: ${this.javaClass.enclosingMethod?.name} -> DTO Send:\n$chickDto"
+            )
 
             apiService.newChick(chickDto)
+
         }
             .onSuccess {
-                Log.d("ChickRepository: ", "newChick API SUCCESS")
+                //Log.d("ChickRepository: ", "newChick API SUCCESS")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                )
                 return true
             }
             .onFailure {
-                Log.d("ChickRepository: ", "newChick API FAIL $it")
+                //Log.d("ChickRepository: ", "newChick API FAIL $it")
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                )
                 return false
             }
 
