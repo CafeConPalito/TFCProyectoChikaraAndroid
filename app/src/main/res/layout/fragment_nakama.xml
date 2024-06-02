@@ -1,118 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.nakama.NakamaFragment"
-    android:background="@color/primary_background">
+    android:background="@color/primary_background"
+    tools:context=".ui.nakama.NakamaFragment">
 
-    <TextView
-        android:id="@+id/text_find_chicks"
-        android:layout_width="181dp"
-        android:layout_height="91dp"
-        android:text="Nakamas is not yet implemented"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_background"
+        tools:context=".ui.nakama.NakamaFragment">
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/psgreen"
-        android:text="login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnRegister"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332" />
+        <TextView
+            android:id="@+id/text_find_chicks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/nakamas_implementation"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/psgreen"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnLogin"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332" />
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnTestCIFRAR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/psgreen"
-        android:text="CIFRAR"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnTestGUARDAR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnTestGUARDAR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GUARDAR"
-        android:backgroundTint="@color/psgreen"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintStart_toEndOf="@id/btnTestCIFRAR"
-        app:layout_constraintEnd_toStartOf="@id/btnTestLEER"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+                <TextView
+                    android:layout_marginTop="1500dp"
+                    android:id="@+id/test_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/test_buttons"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"/>
 
-    <Button
-        android:id="@+id/btnTestLEER"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LEER"
-        android:backgroundTint="@color/psgreen"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintStart_toEndOf="@id/btnTestGUARDAR"
-        app:layout_constraintEnd_toStartOf="@id/btnTestBORRAR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+                <LinearLayout
+                    android:id="@+id/buttons1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/test_buttons"
+                    app:layout_constraintVertical_bias="0.2">
 
-    <Button
-        android:id="@+id/btnTestBORRAR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/psgreen"
-        android:text="BORRAR"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintStart_toEndOf="@id/btnTestLEER"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+                    <Button
 
-    <Button
-        android:id="@+id/btnFindChick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/psgreen"
-        android:text="Find Top Chick"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnSaveChick"/>
+                        android:id="@+id/btnTestCIFRAR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/psgreen"
+                        android:text="@string/cifrar"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/test_buttons" />
 
-    <Button
-        android:id="@+id/btnSaveChick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/psgreen"
-        android:text="SaveChick"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnFindChick"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.502" />
+                    <Button
+                        android:id="@+id/btnTestGUARDAR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/psgreen"
+                        android:text="@string/guardar"
+                        app:layout_constraintStart_toEndOf="@id/btnTestCIFRAR"
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                    <Button
+                        android:id="@+id/btnTestLEER"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/psgreen"
+                        android:text="@string/leer"
+                        app:layout_constraintStart_toEndOf="@id/btnTestGUARDAR"
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buttons2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/buttons1">
+
+                <Button
+                    android:id="@+id/btnTestBORRAR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/psgreen"
+                    android:text="@string/borrar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnTestCIFRAR" />
+
+                <Button
+                    android:id="@+id/btnFindChick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/psgreen"
+                    android:text="@string/top_chik"
+                    app:layout_constraintStart_toEndOf="@id/btnTestBORRAR"
+                    app:layout_constraintTop_toBottomOf="@id/btnTestGUARDAR" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,17 +55,6 @@ class NakamaFragment : Fragment() {
 
     private fun initListeners() {
 
-        //TODO: GO TO ->
-        binding.btnLogin.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnRegister.setOnClickListener {
-            val intent = Intent(requireContext(), RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
         //TODO USER PREFERENCES PRUEBAS ->
         binding.btnTestCIFRAR.setOnClickListener {
             launchTestCifrar()
