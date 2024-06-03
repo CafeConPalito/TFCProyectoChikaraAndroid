@@ -16,7 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityRegisterBinding
 import com.cafeconpalito.chikara.domain.model.UserDto
-import com.cafeconpalito.chikara.domain.useCase.RegisterUseCase
+import com.cafeconpalito.chikara.domain.useCase.UserUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.ui.utils.GenericToast
@@ -38,7 +38,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var validateFields: ValidateFields
 
     @Inject
-    lateinit var registerUseCase: RegisterUseCase
+    lateinit var userUseCase: UserUseCase
 
     //LLevar el metodo initColor()
     private var defaultEditTextColor = 0
@@ -106,7 +106,7 @@ class RegisterActivity : AppCompatActivity() {
 
             Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
             lifecycleScope.launch() {
-                if(registerUseCase.registerUser(makeUserDto())){ //Si el registro es satisfactorio
+                if(userUseCase.registerUser(makeUserDto())){ //Si el registro es satisfactorio
                     registerSatisfactoryGoToLogin()
                 }else { //Si no lo es.
                     GenericToast.generateToast(applicationContext,getString(R.string.ToastGenericFail), Toast.LENGTH_LONG, true).show()
@@ -383,7 +383,7 @@ class RegisterActivity : AppCompatActivity() {
         lifecycleScope.launch() {
             //Completa con el @
             val userName = validateFields.completeUserName(binding.etUserName.text.toString())
-            if (registerUseCase.userNameExist(userName)) {
+            if (userUseCase.userNameExist(userName)) {
                 callback(true)
             } else {
                 callback(false)
@@ -431,7 +431,7 @@ class RegisterActivity : AppCompatActivity() {
      */
     private fun validateEtEmailExist(callback: (Boolean) -> Unit) {
         lifecycleScope.launch() {
-            if (registerUseCase.emailExist(binding.etEmail.text.toString())) {
+            if (userUseCase.emailExist(binding.etEmail.text.toString())) {
                 callback(true)
             } else {
                 callback(false)

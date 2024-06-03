@@ -13,10 +13,10 @@ import org.junit.Test
 import javax.inject.Inject
 
 @HiltAndroidTest
-class RegisterUseCaseTest {
+class UserUseCaseTest {
 
     @Inject
-    lateinit var repository: RegisterUseCase
+    lateinit var repository: UserUseCase
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

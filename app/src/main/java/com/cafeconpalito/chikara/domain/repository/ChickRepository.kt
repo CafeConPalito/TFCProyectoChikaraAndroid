@@ -9,22 +9,18 @@ interface ChickRepository {
      * si lo consigue devuelve la lista. (puede estar vacia)
      * en caso de error devuelve una lista vacia.
      */
-    suspend fun getTopChicks():List<ChickDto>
+    suspend fun getTopChicks(): List<ChickDto>
 
     /**
      * Busca los Chicks por el Id del Author
      * si lo consigue devuelve la lista. (puede estar vacia)
      * en caso de error devuelve una lista vacia.
      */
-    suspend fun getUserChicks():List<ChickDto>
+    suspend fun getUserChicks(): List<ChickDto>
 
     /**
      * Add new Chick
      */
-    suspend fun newChick(chickDto: ChickDto):Boolean
-
-    /**
-     *
-     */
+    suspend fun newChick(chickDto: ChickDto): Boolean
 
 }
