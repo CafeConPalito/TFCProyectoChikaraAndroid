@@ -1,7 +1,9 @@
 package com.cafeconpalito.chikara.domain.useCase
 
+import android.util.Log
 import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.repository.UserRepository
+import com.cafeconpalito.chikara.utils.UserSession
 import javax.inject.Inject
 
 class UserUseCase @Inject constructor(private val repository: UserRepository) {
@@ -40,5 +42,21 @@ class UserUseCase @Inject constructor(private val repository: UserRepository) {
      * @return true if register succeed
      */
     suspend fun updateUserInformation(userDto: UserDto) = repository.updateUserInformation(userDto)
+
+    suspend fun getSessionUserUUID() {
+        val userDto = repository.getUserInformation()
+        if (userDto != null) {
+            Log.d(
+                this.javaClass.simpleName,
+                "Method: ${this.javaClass.enclosingMethod?.name} -> SUCCESS"
+            )
+            UserSession.userUUID = userDto.id
+        } else {
+            Log.d(
+                this.javaClass.simpleName,
+                "Method: ${this.javaClass.enclosingMethod?.name} -> FAIL"
+            )
+        }
+    }
 
 }

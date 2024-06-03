@@ -22,7 +22,7 @@ class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
 
     //Necesario para Que initUIState Funcione
-    private val welcomeViewModel:WelcomeViewModel by viewModels()
+    private val welcomeViewModel: WelcomeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,7 +52,7 @@ class WelcomeActivity : AppCompatActivity() {
         //Hilo que esta pendiente de la vida de la VIEW, si la view muere el para!
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-               welcomeViewModel.state.collect {
+                welcomeViewModel.state.collect {
                     //Siempre que cambien el estado hara lo siguiente
                     when (it) {
                         //it es la informacion del estado que puede contener informacion.
@@ -75,7 +75,7 @@ class WelcomeActivity : AppCompatActivity() {
         binding.tvWelcomeMessage.text = getText(R.string.text_welcome_message2)
 
         delay(2000L)
-        val intent =  Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
 
     }
@@ -87,9 +87,9 @@ class WelcomeActivity : AppCompatActivity() {
     private suspend fun errorState(it: WelcomeState.Error) {
         binding.pbWelcome.isVisible = false
         binding.tvWelcomeMessage.text = getText(R.string.text_welcome_message)
-    
+
         delay(2000L)
-        val intent =  Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
 
 //        SI QUIERES QUE AL DAR ERROR TE ENVIE A HOME, COMENTA LO DE ARRIBA Y ACTIVA ESTO
@@ -114,7 +114,6 @@ class WelcomeActivity : AppCompatActivity() {
         welcomeViewModel.launchLoginFlow(applicationContext)
 
     }
-
 
 
 }

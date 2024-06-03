@@ -8,14 +8,18 @@ import android.view.ViewTreeObserver
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityHomeBinding
+import com.cafeconpalito.chikara.domain.useCase.UserUseCase
 import com.cafeconpalito.chikara.ui.utils.isKeyboardVisible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -23,6 +27,9 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
+
+    @Inject
+    lateinit var userUseCase: UserUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +43,8 @@ class HomeActivity : AppCompatActivity() {
     private fun initUI() {
 
         initNavigation()
+        initUserSession()
+
 
         //TODO FUNCIONA REGULAR.
         //setupFocusListener()
@@ -45,6 +54,29 @@ class HomeActivity : AppCompatActivity() {
 
         //TODO View.isKeyboardVisible
         setupKeyboardIsVisible()
+    }
+
+    /**
+     * Load the UserSession Information
+     */
+    private fun initUserSession() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            userUseCase.getSessionUserUUID()
+        }
+
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                val response = apiService.getUser(userId)
+//                withContext(Dispatchers.Main) {
+//                    UserSession.userUUID = response.id
+//                }
+//            } catch (e: Exception) {
+//                // Maneja errores aquí
+//                e.printStackTrace()
+//            }
+//        }
+
     }
 
 
@@ -60,7 +92,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initNavigation() {
 
-        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHost.navController
         binding.navBar.setupWithNavController(navController)
 
@@ -79,7 +112,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupKeyboardListener() {
         val rootView = findViewById<View>(android.R.id.content)
-        rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 val rect = Rect()
                 rootView.getWindowVisibleDisplayFrame(rect)
@@ -99,7 +133,8 @@ class HomeActivity : AppCompatActivity() {
      */
     private fun setupKeyboardListenerThreshold() {
         val rootView = findViewById<View>(android.R.id.content)
-        rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             private val threshold = 100 // Umbral en píxeles para detectar el teclado
 
             override fun onGlobalLayout() {
@@ -124,7 +159,7 @@ class HomeActivity : AppCompatActivity() {
      * NO BORRAR!
      */
     fun showNavBar(show: Boolean) {
-        Log.d("keyboard", "Modificando Visibilidad Valor: $show" )
+        Log.d("keyboard", "Modificando Visibilidad Valor: $show")
         binding.navBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
