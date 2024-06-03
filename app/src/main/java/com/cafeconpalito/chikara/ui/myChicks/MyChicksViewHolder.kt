@@ -10,7 +10,7 @@ class MyChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = ItemChickPreviewBinding.bind(view)
 
-    //se ocupa de setear el texto de la tareas!
+    //se ocupa de setear los elementos de la vista
     //On ItemDone Borra La tarea, esta recibe como un Int la posicion de la lista (ID)
     fun render(chick: ChickDto, onItemDone: (Int) -> Unit) {
 

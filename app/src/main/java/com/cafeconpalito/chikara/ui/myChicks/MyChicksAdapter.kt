@@ -19,7 +19,13 @@ class MyChicksAdapter(private val elements: List<ChickDto>, private val onItemDo
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyChicksViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        return MyChicksViewHolder(layoutInflater.inflate(R.layout.item_chick_preview, parent, false))
+        return MyChicksViewHolder(
+            layoutInflater.inflate(
+                R.layout.item_chick_preview,
+                parent,
+                false
+            )
+        )
     }
 
     /**

@@ -5,11 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityChikBinding
 import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import com.cafeconpalito.chikara.ui.home.HomeActivity
+import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
 import com.cafeconpalito.chikara.utils.UserSession
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +34,8 @@ class ChikActivity : AppCompatActivity() {
 
     @Inject
     lateinit var chickUseCase: ChickUseCases
+
+    private lateinit var adapter: ChickAdapter
 
     private var chickDto: ChickDto? = null
 
@@ -57,7 +61,28 @@ class ChikActivity : AppCompatActivity() {
     private fun initUI() {
         initEditables()
         initListeners()
+        initRecyclerView()
         initUserValuesOnThisChick()
+    }
+
+    private fun initRecyclerView() {
+
+        //El estilo del la lista de Objetos para mostrar (lista vertical normalita)
+        binding.rvChick.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        //Añado decoracion al RecyclerView
+        binding.rvChick.addItemDecoration(DotIndicatorDecoration(this))
+
+        //Le paso la lista al adaptador inicialmente.
+        // Con lambda
+        adapter = ChickAdapter(chickDto!!.content) {
+            //deleteElement(it)
+        }
+
+        //le paso el adaptador a el Recycler View
+        binding.rvChick.adapter = adapter
+
     }
 
     /**
