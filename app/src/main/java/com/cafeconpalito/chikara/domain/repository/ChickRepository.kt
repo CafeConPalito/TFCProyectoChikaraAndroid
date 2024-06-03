@@ -21,6 +21,12 @@ interface ChickRepository {
     /**
      * Add new Chick
      */
-    suspend fun newChick(chickDto: ChickDto): Boolean
+    suspend fun createChick(chickDto: ChickDto): Boolean
+
+    /**
+     * Delete Chick using chickId
+     * return True if is Success
+     */
+    suspend fun deleteChick(chickId: String): Boolean
 
 }

@@ -28,10 +28,8 @@ class ChickUseCases @Inject constructor(private val repository: ChickRepository)
     /**
      * Add new Chick
      */
-    suspend fun newChick(context: Context, chickDto: ChickDto): Boolean {
-
+    suspend fun createChick(context: Context, chickDto: ChickDto): Boolean {
         val encodeBase64 = EncodeBase64()
-
         //For Each Element in the Dto check if is Image and Encode to Base64
         chickDto.content.forEach { cont ->
             if (cont.type == ChickTypeDto.TYPE_IMG) {
@@ -39,8 +37,13 @@ class ChickUseCases @Inject constructor(private val repository: ChickRepository)
                 cont.value = encodeBase64(context, uri)
             }
         }
-
-        return repository.newChick(chickDto)
-
+        return repository.createChick(chickDto)
     }
+
+    /**
+     * Delete Chick using chickId
+     * return True if is Success
+     */
+    suspend fun deleteChick(chickId: String) = repository.deleteChick(chickId)
+
 }

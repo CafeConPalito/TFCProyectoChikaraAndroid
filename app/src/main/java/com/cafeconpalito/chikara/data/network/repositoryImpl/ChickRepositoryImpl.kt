@@ -71,7 +71,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      * if the chick is inserted correctly return true
      *
      */
-    override suspend fun newChick(chickDto: ChickDto): Boolean {
+    override suspend fun createChick(chickDto: ChickDto): Boolean {
         runCatching {
 
             //Log.d("ChickRepository: ", "DTO Send:\n $chickDto")
@@ -80,7 +80,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 "Method: ${this.javaClass.enclosingMethod?.name} -> DTO Send:\n$chickDto"
             )
 
-            apiService.newChick(chickDto)
+            apiService.createChick(chickDto)
 
         }
             .onSuccess {
@@ -100,6 +100,30 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 return false
             }
 
+        return false
+    }
+
+    /**
+     * Delete Chick using chickId
+     * return True if is Success
+     */
+    override suspend fun deleteChick(chickId: String): Boolean {
+        runCatching {
+            apiService.deleteChick(chickId)
+        }
+            .onSuccess {
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                )
+                return it
+            }
+            .onFailure {
+                Log.d(
+                    this.javaClass.simpleName,
+                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                )
+            }
         return false
     }
 

@@ -171,7 +171,7 @@ class NewChickFragment : Fragment() {
 
             CoroutineScope(Dispatchers.Main).launch {
                 //Envio el contexto de la Aplicacion!
-                chickUseCases.newChick(requireContext().applicationContext, newChick)
+                chickUseCases.createChick(requireContext().applicationContext, newChick)
                 Log.d("PhotoPicker", "Chick Publish $newChick")
             }
 

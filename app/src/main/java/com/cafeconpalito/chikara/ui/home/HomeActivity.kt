@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -62,7 +63,9 @@ class HomeActivity : AppCompatActivity() {
     private fun initUserSession() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            userUseCase.getSessionUserUUID()
+            withContext(Dispatchers.Main) {
+                userUseCase.getSessionUserUUID()
+            }
         }
 
 //        CoroutineScope(Dispatchers.IO).launch {

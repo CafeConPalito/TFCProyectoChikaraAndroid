@@ -7,19 +7,34 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityChikBinding
+import com.cafeconpalito.chikara.domain.model.ChickDto
+import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import com.cafeconpalito.chikara.ui.home.HomeActivity
+import com.cafeconpalito.chikara.utils.UserSession
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChikActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChikBinding
 
+    @Inject
+    lateinit var chickUseCase: ChickUseCases
+
+    //TODO: PARA ALMACENAR LA INFO DEL DTO
+    lateinit var chickDto: ChickDto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChikBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //TODO: AL CREAR LA INSTANCIA TRAER EL CHICK DTO
 
         initUI()
     }
@@ -35,17 +50,20 @@ class ChikActivity : AppCompatActivity() {
      */
     private fun initUserValuesOnThisChick() {
         //TODO("Not yet implemented")
-        //SI YA TENIA LIKE QUE LO PINTE DE ROJO SINO
-        //LEER DTO RECIBIDO Y PINTAR!
+        // SI YA TENIA LIKE QUE LO PINTE DE ROJO SINO
+        // LEER DTO RECIBIDO Y PINTAR!
     }
 
     /**
      * vuelve visibles los iconos para editar y borrar chick.
      */
     private fun initEditables() {
-        //TODO FALTA AÑADIR EL IF PARA COMPROBAR SI EL USUARIO ES EL DUEÑO
-        binding.ivEdit.isVisible = true
-        binding.ivDelete.isVisible = true
+
+        //SI EL USUARIO ES EL DUEÑO DEL CHICK ACTIVAMOS LAS OPCIONES
+        if (UserSession.userUUID.equals(chickDto._id)) {
+            binding.ivEdit.isVisible = true
+            binding.ivDelete.isVisible = true
+        }
 
     }
 
@@ -65,8 +83,8 @@ class ChikActivity : AppCompatActivity() {
     private fun erraseChick() {
         //Lanzar la pregunta al Usuario.
         //if -> ok
-            //Mensaje de Borrado.
-            //Cierra el chick y se va a Home.
+        //Mensaje de Borrado.
+        //Cierra el chick y se va a Home.
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("Confirmación")
@@ -76,6 +94,20 @@ class ChikActivity : AppCompatActivity() {
                 //TODO BORRAR EN LA API!
 
                 dialog.dismiss()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+
+                        withContext(Dispatchers.Main) {
+                            chickUseCase.deleteChick(chickDto._id)
+                        }
+                    } catch (e: Exception) {
+
+                        e.printStackTrace()
+                    }
+                }
+
+                //ENVIA AL HOME
                 intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
             }
@@ -110,13 +142,13 @@ class ChikActivity : AppCompatActivity() {
         //TODO("Not yet implemented")
 
         //IF -> NO TENIA LIKE DEL USUARIO
-            //SUMAR 1 -- Logica Interna
-            //Pintar de color el Icono
-            //ENVIAR EL Like a la API.
+        //SUMAR 1 -- Logica Interna
+        //Pintar de color el Icono
+        //ENVIAR EL Like a la API.
         //ELSE
-            //RESTAR 1 -- Logica interna
-            //Pintar el Icono
-            //QUITAR EL Like a la API
+        //RESTAR 1 -- Logica interna
+        //Pintar el Icono
+        //QUITAR EL Like a la API
 
     }
 
