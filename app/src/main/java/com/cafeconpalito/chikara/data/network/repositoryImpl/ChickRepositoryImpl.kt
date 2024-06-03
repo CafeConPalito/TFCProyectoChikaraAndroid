@@ -16,6 +16,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      * en caso de error devuelve una lista vacia.
      */
     override suspend fun getTopChicks(): List<ChickDto> {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.getTopChicks()
         }
@@ -23,7 +24,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 //Log.d("ChickRepository: ", "getTopChicks API SUCCESS")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                    "Method: $method -> API SUCCESS"
                 )
                 return it
             }
@@ -31,7 +32,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 //Log.d("ChickRepository: ", "getTopChicks API FAIL $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
 
@@ -44,6 +45,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      * en caso de error devuelve una lista vacia.
      */
     override suspend fun getUserChicks(): List<ChickDto> {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.getUserChicks()
         }
@@ -51,7 +53,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 //Log.d("ChickRepository: ", "findByAuthor API SUCCESS")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                    "Method: $method -> API SUCCESS"
                 )
                 return it
             }
@@ -59,7 +61,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 //Log.d("ChickRepository: ", "findByAuthor API FAIL $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
 
@@ -72,22 +74,20 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      *
      */
     override suspend fun createChick(chickDto: ChickDto): Boolean {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
-
             //Log.d("ChickRepository: ", "DTO Send:\n $chickDto")
             Log.d(
                 this.javaClass.simpleName,
-                "Method: ${this.javaClass.enclosingMethod?.name} -> DTO Send:\n$chickDto"
+                "Method: $method -> DTO Send:\n$chickDto"
             )
-
             apiService.createChick(chickDto)
-
         }
             .onSuccess {
                 //Log.d("ChickRepository: ", "newChick API SUCCESS")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                    "Method: $method -> API SUCCESS"
                 )
                 return true
             }
@@ -95,7 +95,7 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
                 //Log.d("ChickRepository: ", "newChick API FAIL $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
                 return false
             }

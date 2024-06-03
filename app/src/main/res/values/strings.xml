@@ -22,9 +22,10 @@
     <string name="ToastUserInfoUpdateFailed">"User info update failed"</string>
 
     <!--Alert Dialog-->
-    <string name="AlertDialogAccept">Aceptar</string>
-    <string name="AlertDialogCancel">Cancelar</string>
-    <string name="AlertDialogMessage">¿Estás seguro de realizar esta acción?</string>
+    <string name="AlertDialogAccept">Accept</string>
+    <string name="AlertDialogCancel">Cancel</string>
+    <string name="AlertDialogMessage">Are you sure you want to delete?</string>
+    <string name="AlertDialogTittle">Delete Chick</string>
 
     <!--Hints-->
     <string name="hint_title_chick">Titulo del chik</string>
@@ -70,6 +71,7 @@
     <string name="top_chik">TOP_CHIK</string>
     <string name="save_chik">SAVE_CHIK</string>
     <string name="nakamas_implementation">Coming Soon</string>
+
 
 
 </resources>

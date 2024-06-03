@@ -20,49 +20,52 @@
         app:layout_constraintTop_toTopOf="parent" />
 
         -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:hint="@string/hint_title_chick"
-        android:textColorHint="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChick"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        tools:layout_editor_absoluteX="40dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/TextoTítuloItemChick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:hint="@string/hint_title_chick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/llDots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/rvChick">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/tvAutor"
+            style="@style/TextoTítuloItemChick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/hint_autor"
-            android:textColorHint="@color/white"
-            android:textSize="24sp"
             app:layout_constraintTop_toBottomOf="@id/rvChick" />
 
         <TextView
             android:id="@+id/tvlikes"
+            style="@style/TextoTítuloItemChick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -70,8 +73,6 @@
             android:layout_weight="0.4"
             android:gravity="right"
             android:hint="@string/hint_n_likes"
-
-            android:textColorHint="@color/white"
             android:textSize="14sp" />
 
         <ImageView
@@ -80,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_not_liked" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -96,14 +98,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_edit" />
+            android:src="@drawable/ic_edit"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/ivDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_delete" />
+            android:src="@drawable/ic_delete"
+            tools:visibility="visible"
+            android:visibility="invisible" />
 
     </LinearLayout>
 

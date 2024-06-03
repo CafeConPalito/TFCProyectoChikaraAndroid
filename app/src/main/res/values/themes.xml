@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Chikara" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -22,15 +22,35 @@
         <item name="android:textSize">30sp</item>
     </style>
 
-    <!--Estilo del título ItemChick-->
-    <style name="TextoTítuloItemChick" parent="FuenteBase">
-        <item name="android:textStyle">bold</item>
+    <!--ChickPreview Text View Styles-->
+    <!--Estilo del fuente Base ItemChickPreview-->
+    <style name="FuenteBaseItemChickPreview" parent="FuenteBase">
         <item name="android:textColor">@color/primary_background</item>
     </style>
 
-    <!--Estilo del título ItemChick-->
+    <!--Estilo del título ItemChickPreview-->
+    <style name="TextoTítuloItemChickPreview" parent="FuenteBaseItemChickPreview">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!--Chick Text View Styles-->
+    <!--Estilo del fuente base Chick-->
     <style name="FuenteBaseItemChick" parent="FuenteBase">
-        <item name="android:textColor">@color/primary_background</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:shadowColor">@color/shadow_color</item>
+        <item name="android:shadowDx">3</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+
+    <style name="TextoTítuloItemChick" parent="FuenteBaseItemChick">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--ChickIcons Styles (delete, update)-->
+    <style name="chickIcons">
+        <item name="android:tint">@color/white</item>
     </style>
 
     <!--Estilo campos rellenables-->

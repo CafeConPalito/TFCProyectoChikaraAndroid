@@ -35,4 +35,6 @@
     <color name="test1">#FF0000</color>
     <color name="test2">#ffe78f</color>
 
+    <color name="shadow_color">#80000000</color> <!-- Un color negro semi-transparente -->
+
 </resources>

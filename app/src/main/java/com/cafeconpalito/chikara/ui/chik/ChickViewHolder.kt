@@ -4,11 +4,10 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeconpalito.chikara.databinding.ItemChickBinding
 import com.cafeconpalito.chikara.domain.model.ChickContentDto
-import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.cafeconpalito.chikara.domain.model.ChickTypeDto
 import com.squareup.picasso.Picasso
 
-class ChickViewHolder(view: View) : RecyclerView.ViewHolder(view){
+class ChickViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = ItemChickBinding.bind(view)
 

@@ -2,6 +2,7 @@ package com.cafeconpalito.chikara.ui.chik
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -99,7 +100,9 @@ class ChikActivity : AppCompatActivity() {
      * Si el usuario es el dueño del chick
      */
     private fun initEditables() {
-        if (UserSession.userUUID.equals(chickDto!!._id)) {
+
+        Log.d("USERS ID", "USER SESSION: ${UserSession.userUUID}  UserChickDto: ${chickDto!!.author}" )
+        if (UserSession.userUUID.equals(chickDto!!.author)) {
             binding.ivEdit.isVisible = true
             binding.ivDelete.isVisible = true
         }
@@ -123,7 +126,7 @@ class ChikActivity : AppCompatActivity() {
         //Cierra el chick y se va a Home.
         val builder = AlertDialog.Builder(this)
 
-        builder.setTitle("Confirmación")
+        builder.setTitle(getString(R.string.AlertDialogTittle))
             .setMessage(R.string.AlertDialogMessage)
             .setPositiveButton(R.string.AlertDialogAccept) { dialog, which ->
 
