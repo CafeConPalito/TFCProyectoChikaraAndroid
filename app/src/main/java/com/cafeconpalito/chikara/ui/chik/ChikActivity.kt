@@ -25,9 +25,8 @@ class ChikActivity : AppCompatActivity() {
 
     @Inject
     lateinit var chickUseCase: ChickUseCases
-
-    //TODO: PARA ALMACENAR LA INFO DEL DTO
-    lateinit var chickDto: ChickDto
+    
+    var chickDto: ChickDto? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +34,22 @@ class ChikActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //TODO: AL CREAR LA INSTANCIA TRAER EL CHICK DTO
+
+//        val intent = Intent(this, OtraActivity::class.java).apply {
+//            putExtra("chickDto", chickDto)
+//        }
+//        startActivity(intent)
+
+        //Obtenemos la informacion del Chick
+        chickDto = intent.getSerializableExtra("chickDto") as? ChickDto
+
+        if (chickDto != null) {
+            //Si contiene informacion la pintamos!
+        } else {
+            //Si no recibe informacion en el chickDto nos envia al home
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
 
         initUI()
     }
@@ -56,31 +71,27 @@ class ChikActivity : AppCompatActivity() {
 
     /**
      * vuelve visibles los iconos para editar y borrar chick.
+     * Si el usuario es el dueño del chick
      */
     private fun initEditables() {
-
-        //SI EL USUARIO ES EL DUEÑO DEL CHICK ACTIVAMOS LAS OPCIONES
-        if (UserSession.userUUID.equals(chickDto._id)) {
+        if (UserSession.userUUID.equals(chickDto!!._id)) {
             binding.ivEdit.isVisible = true
             binding.ivDelete.isVisible = true
         }
-
     }
 
     private fun initListeners() {
-
         binding.ivLike.setOnClickListener { likeChick() }
         binding.tvAutor.setOnClickListener { goToAutorChicks() }
         binding.ivEdit.setOnClickListener { goToEditChick() }
-        binding.ivDelete.setOnClickListener { erraseChick() }
-
+        binding.ivDelete.setOnClickListener { eraseChick() }
     }
 
     /**
      * Borra el Chick, Pregunta al Usuario antes si realmente lo quiere eliminar.
      *
      */
-    private fun erraseChick() {
+    private fun eraseChick() {
         //Lanzar la pregunta al Usuario.
         //if -> ok
         //Mensaje de Borrado.
@@ -91,18 +102,14 @@ class ChikActivity : AppCompatActivity() {
             .setMessage(R.string.AlertDialogMessage)
             .setPositiveButton(R.string.AlertDialogAccept) { dialog, which ->
 
-                //TODO BORRAR EN LA API!
-
                 dialog.dismiss()
 
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-
                         withContext(Dispatchers.Main) {
-                            chickUseCase.deleteChick(chickDto._id)
+                            chickUseCase.deleteChick(chickDto!!._id)
                         }
                     } catch (e: Exception) {
-
                         e.printStackTrace()
                     }
                 }
