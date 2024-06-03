@@ -16,19 +16,21 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLoginUseCase) : ViewModel(){
+class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLoginUseCase) :
+    ViewModel() {
 
     //Como valor inicial le paso el estado de Cargando
     private var _state = MutableStateFlow<WelcomeState>(WelcomeState.Loading)
+
     //devuelve el estado en el que se encuentra, por eso no es publica
     val state: StateFlow<WelcomeState> = _state
 
-    lateinit var userPreferences:UserPreferences
+    lateinit var userPreferences: UserPreferences
 
     /**
      * Inicializa el Flow para la ventana de carga y lanza el Loggin esperando respuesta.
      */
-    fun launchLoginFlow(context: Context){
+    fun launchLoginFlow(context: Context) {
 
         userPreferences = UserPreferences(context)
         //Esta trabajando en el Hilo principal
@@ -41,11 +43,11 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
             val result = tryToLoggin()
 
             //si la respuesta es correcta
-            if (result){
+            if (result) {
                 //Paso el esdado a Success y le paso el texto del horoscopo
                 //SE PUEDE DEVOLVER EL OBJETO ENTERO O LO QUE NECESITEMOS.
-                _state.value = WelcomeState.Success( true)
-            } else{
+                _state.value = WelcomeState.Success(true)
+            } else {
                 _state.value = WelcomeState.Error(false)
             }
 
@@ -57,10 +59,10 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
      * devuelve True si lo Logra.
      * Si no tiene datos o no lo consigue devuelve false
      */
-    suspend fun tryToLoggin():Boolean {
+    suspend fun tryToLoggin(): Boolean {
 
         return withContext(Dispatchers.IO) {
-            val userPreferenceModel = userPreferences.getSettings().first()
+            val userPreferenceModel = userPreferences.getUserPreferences().first()
 
             //Comprueba que los UserPreference no es null para leer los datos
             if (userPreferenceModel != null) {
@@ -68,9 +70,9 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
                 val password = userPreferenceModel.password
 
                 //Comprueba que los datos obtenidos no son falsos.
-                if (user.isNotBlank() && password.isNotBlank()){
+                if (user.isNotBlank() && password.isNotBlank()) {
                     return@withContext getLoginUseCase(user, password)
-                }else{
+                } else {
                     return@withContext false
                 }
 

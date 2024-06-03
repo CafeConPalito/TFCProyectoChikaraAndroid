@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class UserFragment : Fragment() {
 
-
     //Manera de trabajar con Binding y Fragmentos
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
@@ -71,8 +70,7 @@ class UserFragment : Fragment() {
 
     private fun launchLogOut() {
         CoroutineScope(Dispatchers.IO).launch {
-            userPreferences.deltePreference(UserPreferences.KEY_USER_STR)
-            userPreferences.deltePreference(UserPreferences.KEY_PASSWORD_STR)
+            userPreferences.deleteAllUserPreferences()
         }
     }
 

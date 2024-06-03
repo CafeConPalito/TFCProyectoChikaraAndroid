@@ -25,12 +25,13 @@ class UserPreferences @Inject constructor(private val context: Context) {
     companion object {
         val KEY_USER_STR = stringPreferencesKey("User")
         val KEY_PASSWORD_STR = stringPreferencesKey("Password")
+        val KEY_USER_UUID_STR = stringPreferencesKey("UserID")
     }
 
     /**
      * Metodo generico para añadir
      */
-    suspend fun <T> savePreference(preferenceKey: Preferences.Key<T>, value:T) {
+    suspend fun <T> savePreference(preferenceKey: Preferences.Key<T>, value: T) {
         context.dataStore.edit { preference ->
             preference[preferenceKey] = value
         }
@@ -49,13 +50,20 @@ class UserPreferences @Inject constructor(private val context: Context) {
      * Lee todos los datos y los devuelve,
      * Si no tiene datos por defecto pone  (   ?: ""  ) vacio,
      */
-    public fun getSettings(): Flow<UserPreferencesModel?> {
+    public fun getUserPreferences(): Flow<UserPreferencesModel?> {
         return context.dataStore.data.map { preferences ->
             UserPreferencesModel(
                 userName = preferences[KEY_USER_STR] ?: "",
-                password = preferences[KEY_PASSWORD_STR] ?: ""
+                password = preferences[KEY_PASSWORD_STR] ?: "",
+                userId = preferences[KEY_USER_UUID_STR] ?: ""
             )
         }
+    }
+
+    suspend fun deleteAllUserPreferences() {
+        deltePreference(KEY_USER_STR)
+        deltePreference(KEY_PASSWORD_STR)
+        deltePreference(KEY_USER_UUID_STR)
     }
 
 
@@ -68,8 +76,6 @@ class UserPreferences @Inject constructor(private val context: Context) {
 //            }
 //        }
 //    }
-
-
 
 
 //    //Tipos especificos. me paso al generico :D
