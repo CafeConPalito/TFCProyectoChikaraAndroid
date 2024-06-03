@@ -106,7 +106,10 @@ class RegisterActivity : AppCompatActivity() {
         binding.pbRegister.isVisible = true
         if (validateRegisterFields()) { // Comprueba que todos los campos son correctos.
 
-            Log.d(this.javaClass.simpleName, "Method: $method -> correct all fields information call API")
+            Log.d(
+                this.javaClass.simpleName,
+                "Method: $method -> correct all fields information call API"
+            )
             //Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
             lifecycleScope.launch() {
                 if (userUseCase.registerUser(makeUserDto())) { //Si el registro es satisfactorio
@@ -575,7 +578,7 @@ class RegisterActivity : AppCompatActivity() {
             ).show()
             genericIsErrorEt(editText)//Pinta el error
             return false
-        } else if (binding.etUserName.text.isBlank()) {
+        } else if (editText.text.isBlank()) {
             genericIsErrorEt(editText)//Pinta el error
             return false
         }

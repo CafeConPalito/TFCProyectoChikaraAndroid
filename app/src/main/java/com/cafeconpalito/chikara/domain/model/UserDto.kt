@@ -3,9 +3,9 @@ package com.cafeconpalito.chikara.domain.model
 data class UserDto(
 
     val id: String? = null,
-    val user_name: String,
-    val email: String,
-    val pwd: String,
+    var user_name: String,
+    var email: String,
+    var pwd: String,
     val first_name: String,
     val first_last_name: String,
     val second_last_name: String, //Optional
