@@ -67,15 +67,16 @@ class MyChicksFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-
-        Log.d("FindChicks", " UserChickFragment -> initRecyclerView()")
+        val method = object {}.javaClass.enclosingMethod?.name
+        Log.d(this.javaClass.simpleName, "Method: $method -> start")
+        //Log.d("FindChicks", " UserChickFragment -> initRecyclerView()")
 
         CoroutineScope(Dispatchers.IO).launch {
 
             mcViewModel.getUserChicks()
 
             withContext(Dispatchers.Main) {
-                mcViewModel.userChicksLiveData.observe(viewLifecycleOwner, { ListTopChicks ->
+                mcViewModel.userChicksLiveData.observe(viewLifecycleOwner) { ListTopChicks ->
                     with(binding.rvFindChick) {
                         //Selecciono el tipo de Layout para el RV
                         layoutManager =
@@ -91,13 +92,14 @@ class MyChicksFragment : Fragment() {
                         }
 
                     }
-                })
+                }
 
                 //Mientras no carge estara sin ser visible...
-                mcViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-                    Log.d("UserChicks", " UserChickFragment -> isLoagind!")
+                mcViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+                    Log.d(this.javaClass.simpleName, "Method: $method -> loading")
+                    //Log.d("UserChicks", " UserChickFragment -> isLoagind!")
                     //TODO POR SI QUEREMOS AÑADIR UN PROGRESS BAR
-                })
+                }
             }
         }
     }

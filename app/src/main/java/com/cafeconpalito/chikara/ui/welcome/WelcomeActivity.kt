@@ -48,7 +48,6 @@ class WelcomeActivity : AppCompatActivity() {
      * Inicializa el controlador para el cambio de estados.
      */
     private fun initUIState() {
-
         //Hilo que esta pendiente de la vida de la VIEW, si la view muere el para!
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

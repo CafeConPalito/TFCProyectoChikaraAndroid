@@ -25,8 +25,9 @@ class MyChicksViewModel @Inject constructor(private val chickUseCases: ChickUseC
 
     //TODO PARA LA BUSQUEDA SE PUEDE AÑADIR COMO PARAMETRO UN STRING A BUSCAR
     fun getUserChicks() {
-
-        Log.d("UserChicks", "Enter ViewModel -> getTopChick()")
+        val method = object {}.javaClass.enclosingMethod?.name
+        Log.d(this.javaClass.simpleName, "Method: $method -> start")
+        //Log.d("UserChicks", "Enter ViewModel -> getTopChick()")
 
         viewModelScope.launch {
 

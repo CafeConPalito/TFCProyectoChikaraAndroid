@@ -24,8 +24,9 @@ class FindChicksViewModel @Inject constructor(private val chickUseCases: ChickUs
     //lateinit var chickUseCases: ChickUseCases
 
     fun getTopChicks() {
-
-        Log.d("FindChicks", "Enter ViewModel -> getTopChick()")
+        val method = object {}.javaClass.enclosingMethod?.name
+        //Log.d("FindChicks", "Enter ViewModel -> getTopChick()")
+        Log.d(this.javaClass.simpleName, "Method: $method -> start")
 
         viewModelScope.launch {
 

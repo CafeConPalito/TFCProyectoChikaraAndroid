@@ -44,17 +44,18 @@ class UserUseCase @Inject constructor(private val repository: UserRepository) {
     suspend fun updateUserInformation(userDto: UserDto) = repository.updateUserInformation(userDto)
 
     suspend fun getSessionUserUUID() {
+        val method = object {}.javaClass.enclosingMethod?.name
         val userDto = repository.getUserInformation()
         if (userDto != null) {
             Log.d(
                 this.javaClass.simpleName,
-                "Method: ${this.javaClass.enclosingMethod?.name} -> SUCCESS"
+                "Method: $method -> SUCCESS"
             )
             UserSession.userUUID = userDto.id
         } else {
             Log.d(
                 this.javaClass.simpleName,
-                "Method: ${this.javaClass.enclosingMethod?.name} -> FAIL"
+                "Method: $method -> FAIL"
             )
         }
     }

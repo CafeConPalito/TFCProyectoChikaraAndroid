@@ -7,7 +7,7 @@ import java.util.LinkedList
 
 class ChickContentDtoAssembler {
 
-    fun buildChickContentDto(contentElements: List<Uri>): List<ChickContentDto>{
+    fun buildChickContentDto(contentElements: List<Uri>): List<ChickContentDto> {
 
         //List to return of Content
         val list: MutableList<ChickContentDto> = LinkedList()

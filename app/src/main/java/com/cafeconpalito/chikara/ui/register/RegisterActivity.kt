@@ -18,8 +18,8 @@ import com.cafeconpalito.chikara.databinding.ActivityRegisterBinding
 import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.useCase.UserUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
-import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.ui.utils.GenericToast
+import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.UserPreferences
 import com.cafeconpalito.chikara.utils.ValidateFields
 import dagger.hilt.android.AndroidEntryPoint
@@ -99,33 +99,42 @@ class RegisterActivity : AppCompatActivity() {
      * Accion del boton Register, comprueba que todos los campos son correctos, si es asi intenta registrar.
      */
     private fun tryToRegister() {
+        val method = object {}.javaClass.enclosingMethod?.name
+        Log.d(this.javaClass.simpleName, "Method: $method -> start")
 
         clearErrors() //Limpia los errores al dar al boton de registro.
         binding.pbRegister.isVisible = true
         if (validateRegisterFields()) { // Comprueba que todos los campos son correctos.
 
-            Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
+            Log.d(this.javaClass.simpleName, "Method: $method -> correct all fields information call API")
+            //Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
             lifecycleScope.launch() {
-                if(userUseCase.registerUser(makeUserDto())){ //Si el registro es satisfactorio
+                if (userUseCase.registerUser(makeUserDto())) { //Si el registro es satisfactorio
                     registerSatisfactoryGoToLogin()
-                }else { //Si no lo es.
-                    GenericToast.generateToast(applicationContext,getString(R.string.ToastGenericFail), Toast.LENGTH_LONG, true).show()
+                } else { //Si no lo es.
+                    GenericToast.generateToast(
+                        applicationContext,
+                        getString(R.string.ToastGenericFail),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
                 }
             }
         } else {
-            Log.i("RegistroUsuario: ", "alguno de los campos es incorrecto")
+            Log.d(this.javaClass.simpleName, "Method: $method -> incorrect fields information")
+            //Log.i("RegistroUsuario: ", "alguno de los campos es incorrecto")
         }
         binding.pbRegister.isVisible = false
 
     }
 
-    private fun registerSatisfactoryGoToLogin(){
+    private fun registerSatisfactoryGoToLogin() {
 //        var bundle:Bundle = Bundle()
 //        bundle.putString(UserPreferences.KEY_USER_STR.name, "@"+binding.etUserName.text.toString())
 //        bundle.putString(UserPreferences.KEY_PASSWORD_STR.name, binding.etPassword.text.toString())
 
         val intent = Intent(this, LoginActivity::class.java).apply {
-            putExtra(UserPreferences.KEY_USER_STR.name, "@"+binding.etUserName.text.toString())
+            putExtra(UserPreferences.KEY_USER_STR.name, "@" + binding.etUserName.text.toString())
             putExtra(UserPreferences.KEY_PASSWORD_STR.name, binding.etPassword.text.toString())
         }
         startActivity(intent)
@@ -141,12 +150,14 @@ class RegisterActivity : AppCompatActivity() {
         //METODO CORRETO, FALTA LA FECHA
         val userDto = UserDto(
 
-            user_name = "@"+binding.etUserName.text.toString(),
+            user_name = "@" + binding.etUserName.text.toString(),
             email = binding.etEmail.text.toString(),
             pwd = cypherTextToMD5(binding.etPassword.text.toString()),
             first_name = binding.etFirstName.text.toString().trim().replace(Regex("\\s+"), " "),
-            first_last_name = binding.etFirstLastName.text.toString().trim().replace(Regex("\\s+"), " "),
-            second_last_name = binding.etSecondLastName.text.toString().trim().replace(Regex("\\s+"), " "), // Puedes asignar null si es opcional
+            first_last_name = binding.etFirstLastName.text.toString().trim()
+                .replace(Regex("\\s+"), " "),
+            second_last_name = binding.etSecondLastName.text.toString().trim()
+                .replace(Regex("\\s+"), " "), // Puedes asignar null si es opcional
             birthdate = binding.etBirthDate.text.toString()
 
         )
@@ -241,7 +252,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-
     private fun dpBirthDateListener() {
 
         binding.etBirthDate.setOnClickListener {
@@ -272,7 +282,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun updateBirthDate(calendar: Calendar) {
         val dateFormat = "yyyy-MM-dd"
         val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.ENGLISH)
-        binding.etBirthDate.setText (simpleDateFormat.format(calendar.time))
+        binding.etBirthDate.setText(simpleDateFormat.format(calendar.time))
     }
 
     private fun etPasswordListeners() {
@@ -350,7 +360,12 @@ class RegisterActivity : AppCompatActivity() {
         if (validateEtUserNameIsValid()) {
             validateEtUserNameExist {
                 if (it) { // El usuario Existe
-                    GenericToast.generateToast(this,getString(R.string.ToastUserAlreadyExists), Toast.LENGTH_LONG, true).show()
+                    GenericToast.generateToast(
+                        this,
+                        getString(R.string.ToastUserAlreadyExists),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
                     genericIsErrorEt(binding.etUserName)
                 }
                 return@validateEtUserNameExist
@@ -368,7 +383,12 @@ class RegisterActivity : AppCompatActivity() {
         if (!genericValidateEditText(binding.etUserName)) {
             return false
         } else if (!validateFields.validUserName(binding.etUserName.text.toString())) {
-            GenericToast.generateToast(this,getString(R.string.ToastUserFormatIncorrect), Toast.LENGTH_LONG, true).show()
+            GenericToast.generateToast(
+                this,
+                getString(R.string.ToastUserFormatIncorrect),
+                Toast.LENGTH_LONG,
+                true
+            ).show()
             genericIsErrorEt(binding.etUserName) // Pinta los errores.
             return false
         }
@@ -400,7 +420,12 @@ class RegisterActivity : AppCompatActivity() {
         if (validateEtEmailIsValid()) {
             validateEtEmailExist {
                 if (it) { // El Email ya esta registrado
-                    GenericToast.generateToast(this,getString(R.string.ToastEmailAlreadyExists), Toast.LENGTH_LONG, true).show()
+                    GenericToast.generateToast(
+                        this,
+                        getString(R.string.ToastEmailAlreadyExists),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
                     genericIsErrorEt(binding.etEmail)
                 }
                 return@validateEtEmailExist
@@ -418,7 +443,12 @@ class RegisterActivity : AppCompatActivity() {
         if (!genericValidateEditText(binding.etEmail)) {
             return false
         } else if (!validateFields.validEmail(binding.etEmail.text.toString())) {
-            GenericToast.generateToast(this,getString(R.string.ToastEmailFormatIncorrect), Toast.LENGTH_LONG, true).show()
+            GenericToast.generateToast(
+                this,
+                getString(R.string.ToastEmailFormatIncorrect),
+                Toast.LENGTH_LONG,
+                true
+            ).show()
             genericIsErrorEt(binding.etEmail) // Pinta los errores.
             return false
         }
@@ -479,7 +509,7 @@ class RegisterActivity : AppCompatActivity() {
      * True si el campo es valido
      */
     private fun validateDpBirthDate(): Boolean {
-        if (binding.etBirthDate.text.isBlank()){
+        if (binding.etBirthDate.text.isBlank()) {
             genericIsErrorEt(binding.etBirthDate)
             return false
         }
@@ -493,7 +523,12 @@ class RegisterActivity : AppCompatActivity() {
         if (!genericValidateEditText(binding.etPassword)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
             return false
         } else if (!validateFields.validatePassword(binding.etPassword.text.toString())) { // Valida que el Password formato correcto
-            GenericToast.generateToast(this,getString(R.string.ToastPasswordFormatIncorrect), Toast.LENGTH_LONG, true).show()
+            GenericToast.generateToast(
+                this,
+                getString(R.string.ToastPasswordFormatIncorrect),
+                Toast.LENGTH_LONG,
+                true
+            ).show()
             genericIsErrorEt(binding.etPassword)
             return false
         }
@@ -512,7 +547,12 @@ class RegisterActivity : AppCompatActivity() {
                 binding.etPasswordRepeat.text.toString()
             )
         ) {
-            GenericToast.generateToast(this,getString(R.string.ToastPasswordMissMatch), Toast.LENGTH_LONG, true).show()
+            GenericToast.generateToast(
+                this,
+                getString(R.string.ToastPasswordMissMatch),
+                Toast.LENGTH_LONG,
+                true
+            ).show()
             genericIsErrorEt(binding.etPasswordRepeat)
             return false
         }
@@ -527,7 +567,12 @@ class RegisterActivity : AppCompatActivity() {
     private fun genericValidateEditText(editText: EditText): Boolean {
         val textToValidate = editText.text.toString()
         if (validateFields.validateHaveBlankSpaces(textToValidate)) {
-            GenericToast.generateToast(this,getString(R.string.ToastFieldWithOutBlankSpaces), Toast.LENGTH_LONG, true).show()
+            GenericToast.generateToast(
+                this,
+                getString(R.string.ToastFieldWithOutBlankSpaces),
+                Toast.LENGTH_LONG,
+                true
+            ).show()
             genericIsErrorEt(editText)//Pinta el error
             return false
         } else if (binding.etUserName.text.isBlank()) {

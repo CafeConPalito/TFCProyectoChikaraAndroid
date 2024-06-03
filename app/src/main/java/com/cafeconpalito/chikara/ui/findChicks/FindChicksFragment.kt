@@ -44,8 +44,8 @@ class FindChicksFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-
-        Log.d( this.javaClass.simpleName , "Method: ${this.javaClass.enclosingMethod?.name} -> start")
+        val method = object {}.javaClass.enclosingMethod?.name
+        Log.d(this.javaClass.simpleName, "Method: $method -> start")
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -65,7 +65,7 @@ class FindChicksFragment : Fragment() {
 
                 //Mientras no carge estara sin ser visible...
                 fcViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                    Log.d( this.javaClass.simpleName , "Method: ${this.javaClass.enclosingMethod?.name} -> isLoading")
+                    Log.d(this.javaClass.simpleName, "Method: $method -> isLoading")
                     //TODO POR SI QUEREMOS AÑADIR UN PROGRESS BAR
                 }
             }

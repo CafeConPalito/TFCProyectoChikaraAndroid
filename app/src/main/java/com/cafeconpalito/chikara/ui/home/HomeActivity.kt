@@ -61,30 +61,19 @@ class HomeActivity : AppCompatActivity() {
      * Load the UserSession Information
      */
     private fun initUserSession() {
-
         CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.Main) {
                 userUseCase.getSessionUserUUID()
             }
         }
-
-//        CoroutineScope(Dispatchers.IO).launch {
-//            try {
-//                val response = apiService.getUser(userId)
-//                withContext(Dispatchers.Main) {
-//                    UserSession.userUUID = response.id
-//                }
-//            } catch (e: Exception) {
-//                // Maneja errores aquí
-//                e.printStackTrace()
-//            }
-//        }
-
     }
 
 
     private fun setupKeyboardIsVisible() {
+        val method = object {}.javaClass.enclosingMethod?.name
+        Log.d(this.javaClass.simpleName, "Method: $method -> startGlobalListener")
         Log.d("keyboard", "startGlobalListener")
+
         val rootView = findViewById<View>(android.R.id.content)
         ViewCompat.setOnApplyWindowInsetsListener(rootView) { _, insets ->
             val isKeyboardVisible = rootView.isKeyboardVisible()

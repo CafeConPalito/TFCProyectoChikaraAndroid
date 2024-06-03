@@ -108,24 +108,24 @@ class ChickRepositoryImpl @Inject constructor(private val apiService: ChickApiSe
      * return True if is Success
      */
     override suspend fun deleteChick(chickId: String): Boolean {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.deleteChick(chickId)
         }
             .onSuccess {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS"
+                    "Method: $method -> API SUCCESS"
                 )
                 return it
             }
             .onFailure {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
         return false
     }
-
 
 }

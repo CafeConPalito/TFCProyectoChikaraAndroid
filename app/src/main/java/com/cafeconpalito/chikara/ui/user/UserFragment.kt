@@ -54,6 +54,7 @@ class UserFragment : Fragment() {
         //setupKeyboardListener(binding.root)
     }
 
+    //TODO PARA BORRAR KEYBOARD
     private fun setupKeyboardListener(view: View) {
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
             val isKeyboardVisible = view.isKeyboardVisible()

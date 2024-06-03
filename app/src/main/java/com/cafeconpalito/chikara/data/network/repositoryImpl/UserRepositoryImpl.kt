@@ -14,6 +14,7 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
      * True si existe
      */
     override suspend fun userNameExist(userName: String): Boolean {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.userNameExist(userName)
         }
@@ -21,7 +22,7 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
                 //Log.i("RegistroUsuario: ", "API Usuario Existe = $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS: $it"
+                    "Method: $method -> API SUCCESS: $it"
                 )
                 return true
             }
@@ -29,7 +30,7 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
                 //Log.i("RegistroUsuario: ", "API Usuario Existe = $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
 
@@ -41,20 +42,21 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
      * True si existe
      */
     override suspend fun emailExist(email: String): Boolean {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.emailExist(email)
         }
             .onSuccess {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS: $it"
+                    "Method: $method -> API SUCCESS: $it"
                 )
                 return true
             }
             .onFailure {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
 
@@ -66,6 +68,7 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
      * Devuelve el DTO
      */
     override suspend fun registerUser(userDto: UserDto): Boolean {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.registerUser(userDto)
         }
@@ -73,7 +76,7 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
                 //Log.i("RegistroUsuario: ", "Registro de usuario satisfactorio $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS: $it"
+                    "Method: $method -> API SUCCESS: $it"
                 )
                 return true
             }
@@ -81,7 +84,7 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
                 //Log.i("RegistroUsuario: ", "Error registro de usuario " + it.message)
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
         return false
@@ -91,20 +94,21 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
      * Get User Information from Api
      */
     override suspend fun getUserInformation(): UserDto? {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.getUserInformation()
         }
             .onSuccess {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS: $it"
+                    "Method: $method -> API SUCCESS: $it"
                 )
                 return it
             }
             .onFailure {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
         return null
@@ -114,20 +118,21 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
      * Update user information
      */
     override suspend fun updateUserInformation(userDto: UserDto): Boolean {
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.updateUserInformation(userDto)
         }
             .onSuccess {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS: $it"
+                    "Method: $method -> API SUCCESS: $it"
                 )
                 return true
             }
             .onFailure {
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
         return false

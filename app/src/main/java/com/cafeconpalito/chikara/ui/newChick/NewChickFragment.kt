@@ -14,9 +14,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.assembler.ChickDtoAssembler
-import com.cafeconpalito.chikara.domain.model.ChickContentDto
-import com.cafeconpalito.chikara.domain.model.ChickDto
-import com.cafeconpalito.chikara.domain.model.ChickTypeDto
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
 import com.cafeconpalito.chikara.ui.utils.GenericToast
@@ -24,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.LinkedList
 import javax.inject.Inject
 
 
@@ -142,10 +138,16 @@ class NewChickFragment : Fragment() {
 
 
     //TODO PONER BONITO
+    /**
+     * Action of Button publish, try to publish NewChick validate fields
+     */
     private fun publishNewChick() {
+        val method = object {}.javaClass.enclosingMethod?.name
+
         if (contentElements.isEmpty()) {
             GenericToast.generateToast(
                 requireContext(),
+                //TODO MODIFICAR MENSAJE
                 "AÑADE UN TITULO!!!!!!",
                 Toast.LENGTH_LONG,
                 true
@@ -154,6 +156,7 @@ class NewChickFragment : Fragment() {
         } else if (binding.etTitle.text.isBlank()) {
             GenericToast.generateToast(
                 requireContext(),
+                //TODO MODIFICAR MENSAJE
                 "AÑADE UN ELEMENTOS!!!!!!",
                 Toast.LENGTH_LONG,
                 true
@@ -164,21 +167,21 @@ class NewChickFragment : Fragment() {
 
             val title = binding.etTitle.text.toString()
             val isPrivate = binding.sIsPrivate.isChecked
-            val newChick = chickDtoAssembler.buildChickDto(title,isPrivate, contentElements)
-
-            //TODO VIEJO PARA BORRAR
-            //val newChick = generateChickDto(elements)
+            val newChick = chickDtoAssembler.buildChickDto(title, isPrivate, contentElements)
 
             CoroutineScope(Dispatchers.Main).launch {
                 //Envio el contexto de la Aplicacion!
                 chickUseCases.createChick(requireContext().applicationContext, newChick)
-                Log.d("PhotoPicker", "Chick Publish $newChick")
+
+                Log.d(this.javaClass.simpleName, "Method: $method ->\n$newChick")
+                //Log.d("PhotoPicker", "Chick Publish $newChick")
             }
 
         }
 
     }
 
+    //TODO Add Camera Option!
     /**
      * Launch Image Picker to select a Image to Upload.
      *
@@ -204,44 +207,6 @@ class NewChickFragment : Fragment() {
 //        val mimeType = "image/gif"
 //        pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.SingleMimeType(mimeType)))
 
-    }
-
-
-    //TODO MOVIDO A Assembler PROBAR Y BORRAR!
-    /**
-     * Generate Data for new Chick
-     */
-    private fun generateChickDto(elements: List<Uri>): ChickDto {
-
-        val content = generateChickContentDto(elements)
-        return ChickDto(
-            title = binding.etTitle.text.toString(),
-            isprivate = binding.sIsPrivate.isChecked,
-            content = content
-        )
-    }
-
-    //TODO MOVIDO A Assembler PROBAR Y BORRAR!
-    /**
-     * Generate Data for Content Chick
-     */
-    private fun generateChickContentDto(elements: List<Uri>): List<ChickContentDto> {
-        //List to return of Content
-        val list: MutableList<ChickContentDto> = LinkedList()
-        //Position of element
-        var pos: Long = 0
-        //For each element add to list
-        for (uri in elements) {
-            //position
-            pos++
-            val content = ChickContentDto(
-                position = pos,
-                value = uri.toString(),
-                type = ChickTypeDto.TYPE_IMG
-            )
-            list.add(content)
-        }
-        return list
     }
 
 }

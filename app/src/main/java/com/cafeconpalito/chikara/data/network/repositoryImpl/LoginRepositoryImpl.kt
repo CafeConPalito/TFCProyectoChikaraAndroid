@@ -15,7 +15,7 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
      * La respuesta esperada es un 200 con una Api Key
      */
     override suspend fun getLogin(user: String, password: String): Boolean {
-
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
             apiService.getLogin(user, password)
         }
@@ -23,9 +23,8 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
                 //Log.d("LoginRepository: ", "Login SUCCESS AuthKey: $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API SUCCESS\nAuthKey: $it"
+                    "Method: $method -> API SUCCESS\nAuthKey: $it"
                 )
-
                 NetworkModule.AuthKey = it
                 return true
             }
@@ -33,7 +32,7 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
                 //Log.d("LoginRepository: ", "Login Fail: $it")
                 Log.d(
                     this.javaClass.simpleName,
-                    "Method: ${this.javaClass.enclosingMethod?.name} -> API FAIL: $it"
+                    "Method: $method -> API FAIL: $it"
                 )
             }
 
@@ -46,7 +45,7 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
      * Mirando por UserName O Email.
      */
     override suspend fun checkUser(user: String): Boolean {
-
+        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
 
             apiService.checkUser(user)

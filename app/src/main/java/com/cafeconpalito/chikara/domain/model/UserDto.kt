@@ -2,7 +2,7 @@ package com.cafeconpalito.chikara.domain.model
 
 data class UserDto(
 
-    val id: String,
+    val id: String? = null,
     val user_name: String,
     val email: String,
     val pwd: String,
