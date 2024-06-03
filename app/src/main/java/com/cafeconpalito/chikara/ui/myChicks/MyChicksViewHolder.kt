@@ -2,13 +2,13 @@ package com.cafeconpalito.chikara.ui.myChicks
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.cafeconpalito.chikara.databinding.ItemChickBinding
+import com.cafeconpalito.chikara.databinding.ItemChickPreviewBinding
 import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.squareup.picasso.Picasso
 
 class MyChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val binding = ItemChickBinding.bind(view)
+    private val binding = ItemChickPreviewBinding.bind(view)
 
     //se ocupa de setear el texto de la tareas!
     //On ItemDone Borra La tarea, esta recibe como un Int la posicion de la lista (ID)

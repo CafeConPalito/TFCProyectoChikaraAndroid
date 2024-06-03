@@ -45,7 +45,6 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: LoginApiSe
      * Mirando por UserName O Email.
      */
     override suspend fun checkUser(user: String): Boolean {
-        val method = object {}.javaClass.enclosingMethod?.name
         runCatching {
 
             apiService.checkUser(user)

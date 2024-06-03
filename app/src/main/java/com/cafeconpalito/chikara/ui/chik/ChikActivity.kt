@@ -21,24 +21,24 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ChikActivity : AppCompatActivity() {
 
+    //TODO AÑADIR A LOS ITEMS PARA QUE LLAMEN A LA ACTIVITY CON LA INFORMACION DEL CHICK
+
+//            val intent = Intent(this, OtraActivity::class.java).apply {
+//            putExtra("chickDto", chickDto)
+//        }
+//        startActivity(intent)
+
     private lateinit var binding: ActivityChikBinding
 
     @Inject
     lateinit var chickUseCase: ChickUseCases
-    
-    var chickDto: ChickDto? = null
+
+    private var chickDto: ChickDto? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChikBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //TODO: AL CREAR LA INSTANCIA TRAER EL CHICK DTO
-
-//        val intent = Intent(this, OtraActivity::class.java).apply {
-//            putExtra("chickDto", chickDto)
-//        }
-//        startActivity(intent)
 
         //Obtenemos la informacion del Chick
         chickDto = intent.getSerializableExtra("chickDto") as? ChickDto

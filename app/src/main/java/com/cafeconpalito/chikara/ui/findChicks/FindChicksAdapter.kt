@@ -21,7 +21,7 @@ class FindChicksAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FindChicksViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        return FindChicksViewHolder(layoutInflater.inflate(R.layout.item_chick, parent, false))
+        return FindChicksViewHolder(layoutInflater.inflate(R.layout.item_chick_preview, parent, false))
     }
 
     /**
