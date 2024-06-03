@@ -22,6 +22,7 @@ import com.cafeconpalito.chikara.ui.home.HomeActivity
 import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.ui.utils.GenericToast
 import com.cafeconpalito.chikara.ui.utils.isKeyboardVisible
+import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.UserPreferences
 import com.cafeconpalito.chikara.utils.ValidateFields
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,6 +90,9 @@ class UserFragment : Fragment() {
                     binding.etNewUserName.setText(userInformation!!.user_name)
                     //Set Email
                     binding.etNewEmail.setText(userInformation!!.email)
+                    //Set Pass
+                    binding.etNewPassword.setText(userInformation!!.pwd)
+                    binding.etNewPasswordRepeat.setText(userInformation!!.pwd)
                 } else {
                     //TODO SI LA RESPUESTA ES NULL MOSTRAR UN MENSAJE DE ERROR!
                 }
@@ -113,20 +117,51 @@ class UserFragment : Fragment() {
      * Update User Information
      */
     private fun updateInformation() {
-        //TODO REVISAR COMO UPDATEAR EL PASS O LA INFO DEL USUARIO,
-        // SI LOS PASS ESTAN VACIOS NO ES NECESARIO MODIFICAR LA CONTRASEÑA.
-        // SI LOS CAMPOS DE EMAIL AND USERNAME ESTAN IGUALES NO HACE NADA.
+        //TODO REVISAR LOS DATOS
         if (validateFields()) {//PENSANDO QUE LA VALIDACION ES CORRECTA!
 
-            userInformation!!.user_name = binding.etNewUserName.text.toString()
-            userInformation!!.email = binding.etNewEmail.text.toString()
-            userInformation!!.pwd = binding.etNewPassword.text.toString()
+            var isModified = false
+            //Si se modifico el UserName lo actualiza
+            if (userInformation!!.user_name != binding.etNewUserName.text.toString()) {
+                userInformation!!.user_name = binding.etNewUserName.text.toString()
+                isModified = true
+            }
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val updateInfo = userUseCase.updateUserInformation(userInformation!!)
-                withContext(Dispatchers.Main) {
-                    //SI EL UPDATE ES CORRECTO!
+            //Si se modifico el email lo actualiza
+            if (userInformation!!.email != binding.etNewEmail.text.toString()) {
+                userInformation!!.email = binding.etNewEmail.text.toString()
+                isModified = true
+            }
 
+            //Si se modifico la contraseña la actualiza.
+            if (userInformation!!.pwd != binding.etNewPassword.text.toString()) {
+                val cypherTextToMD5 = CypherTextToMD5()
+                userInformation!!.pwd = cypherTextToMD5(binding.etNewPassword.text.toString())
+                isModified = true
+            }
+
+            //SI SE MODIFICO ALGUN CAMPO LANZAMOS EL UPDATE
+            if (isModified) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val updateSuccess = userUseCase.updateUserInformation(userInformation!!)
+                    withContext(Dispatchers.Main) {
+                        if (updateSuccess){
+                            GenericToast.generateToast(
+                                requireContext(),
+                                getString(R.string.ToastUserInfoUpdateSuccessful),
+                                Toast.LENGTH_LONG,
+                                false
+                            ).show()
+
+                        }else{
+                            GenericToast.generateToast(
+                                requireContext(),
+                                getString(R.string.ToastUserInfoUpdateFailed),
+                                Toast.LENGTH_LONG,
+                                true
+                            ).show()
+                        }
+                    }
                 }
             }
 
@@ -139,7 +174,6 @@ class UserFragment : Fragment() {
                 !validateEtEmail() and //Es Necesario Negarlo para que si es falso se que no esta utilizado
                 validateEtPassword() and
                 validateEtPasswordRepeat()
-
     }
 
 

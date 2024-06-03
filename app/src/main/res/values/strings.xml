@@ -18,7 +18,8 @@
     <string name="ToastPasswordFormatIncorrect">El formato del password es incorrecto. Mayúscula, Minúscula, Número y al menos 8 caracteres</string>
     <string name="ToastPasswordMissMatch">Los passwords no coinciden</string>
     <string name="ToastFieldWithOutBlankSpaces">El campo no puede contener espacios en blanco</string>
-
+    <string name="ToastUserInfoUpdateSuccessful">"User info update successful"</string>
+    <string name="ToastUserInfoUpdateFailed">"User info update failed"</string>
 
     <!--Alert Dialog-->
     <string name="AlertDialogAccept">Aceptar</string>
