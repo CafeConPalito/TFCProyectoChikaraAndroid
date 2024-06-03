@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityChikBinding
 import com.cafeconpalito.chikara.domain.model.ChickDto
@@ -20,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class ChikActivity : AppCompatActivity() {
@@ -75,6 +77,10 @@ class ChikActivity : AppCompatActivity() {
         //Añado decoracion al RecyclerView
         binding.rvChick.addItemDecoration(DotIndicatorDecoration(this))
 
+        //Efecto de magnetismo que centra la imagen en el RecyclerView
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rvChick)
+
         //Le paso la lista al adaptador inicialmente.
         // Con lambda
         adapter = ChickAdapter(chickDto!!.content) {
@@ -90,6 +96,9 @@ class ChikActivity : AppCompatActivity() {
      * Modifica la vista del Chick en funcion de las anteries interacciones de este en el.
      */
     private fun initUserValuesOnThisChick() {
+        binding.tvTitle.text = chickDto!!.title
+        binding.tvAutor.text = chickDto!!.author_name
+        binding.tvlikes.text = chickDto!!.likes.toString()
         //TODO("Not yet implemented")
         // SI YA TENIA LIKE QUE LO PINTE DE ROJO SINO
         // LEER DTO RECIBIDO Y PINTAR!

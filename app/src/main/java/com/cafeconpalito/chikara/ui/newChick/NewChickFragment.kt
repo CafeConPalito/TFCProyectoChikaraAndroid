@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.assembler.ChickDtoAssembler
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
+import com.cafeconpalito.chikara.ui.myChicks.MyChicksFragment
 import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
 import com.cafeconpalito.chikara.ui.utils.GenericToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,6 +81,9 @@ class NewChickFragment : Fragment() {
     private fun initListeners() {
         binding.btnPublish.setOnClickListener {
             publishNewChick()
+
+            //TODO cambia a my chiks para que no pueda volver a cargar lo mismo
+
         }
 
         binding.btnAddElement.setOnClickListener {

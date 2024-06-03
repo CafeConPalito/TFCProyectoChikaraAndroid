@@ -26,7 +26,7 @@
         android:id="@+id/rvChick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/primary_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,8 +35,10 @@
     <TextView
         android:id="@+id/tvTitle"
         style="@style/TextoTítuloItemChick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="#4F227093"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_margin="20dp"
         android:gravity="center"
         android:hint="@string/hint_title_chick"
@@ -46,13 +48,14 @@
 
     <LinearLayout
         android:id="@+id/llDots"
+        android:background="#4F227093"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/lledit">
 
         <TextView
             android:id="@+id/tvAutor"
@@ -69,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="0.4"
             android:gravity="right"
             android:hint="@string/hint_n_likes"
@@ -77,6 +80,7 @@
 
         <ImageView
             android:id="@+id/ivLike"
+            android:background="#4F227093"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -88,21 +92,24 @@
         android:id="@+id/lledit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="30dp"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:id="@+id/ivEdit"
+            android:background="#4F227093"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_edit"
+            tools:visibility="visible"
             android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/ivDelete"
+            android:background="#4F227093"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
