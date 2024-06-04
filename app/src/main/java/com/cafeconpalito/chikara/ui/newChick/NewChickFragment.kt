@@ -1,5 +1,6 @@
 package com.cafeconpalito.chikara.ui.newChick
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +13,11 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.assembler.ChickDtoAssembler
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
+import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.ui.myChicks.MyChicksFragment
 import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
 import com.cafeconpalito.chikara.ui.utils.GenericToast
@@ -81,9 +84,6 @@ class NewChickFragment : Fragment() {
     private fun initListeners() {
         binding.btnPublish.setOnClickListener {
             publishNewChick()
-
-            //TODO cambia a my chiks para que no pueda volver a cargar lo mismo
-
         }
 
         binding.btnAddElement.setOnClickListener {
@@ -180,6 +180,13 @@ class NewChickFragment : Fragment() {
                 Log.d(this.javaClass.simpleName, "Method: $method ->\n$newChick")
                 //Log.d("PhotoPicker", "Chick Publish $newChick")
             }
+
+            //Permite cambiar el Fragmento Actual a otro.
+            val fragment = MyChicksFragment()
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
 
         }
 
