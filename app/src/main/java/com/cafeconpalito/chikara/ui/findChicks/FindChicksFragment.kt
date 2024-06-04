@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentFindChicksBinding
 import com.cafeconpalito.chikara.domain.model.ChickDto
+import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -26,9 +31,10 @@ class FindChicksFragment : Fragment() {
 
     private val fcViewModel: FindChicksViewModel by viewModels()
 
-    private lateinit var mutableListChicks: MutableList<ChickDto>
+    @Inject
+    lateinit var chickUseCase: ChickUseCases
 
-    private lateinit var adapter: FindChicksAdapter
+    private var mutableListChicks: MutableList<ChickDto> = emptyList<ChickDto>().toMutableList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +52,19 @@ class FindChicksFragment : Fragment() {
     private fun initUI() {
         initListeners()
         initRecyclerView()
+    }
+
+    private fun initListeners() {
+        //EDIT TEXT AL DARLE BUSCAR
+        binding.etFindChick.setOnEditorActionListener { v, actionId, event ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    //TODO AL DARLE BUSCAR LLAMAR A LA API Y ACTUALIZAR EL RV
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -66,7 +85,7 @@ class FindChicksFragment : Fragment() {
                         mutableListChicks.addAll(listTopChicks)
                         //Paso la nueva lista de datos!
                         //TODO MIRAR SI FUNCIONA
-                        adapter = FindChicksAdapter(mutableListChicks) { deleteChick(it) }
+                        adapter = FindChicksAdapter(mutableListChicks) { deleteChick(it, adapter) }
                     }
                 }
 
@@ -83,28 +102,42 @@ class FindChicksFragment : Fragment() {
      * Delete the chick from the list
      *
      */
-    private fun deleteChick(position: Int) {
+    private fun deleteChick(
+        position: Int,
+        adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?
+    ) {
 
-        //TODO DECIDIR SI SE BORRA AQUI O SE BORRA EN EL VIEW HOLDER
-        //Elimino el elemento de la lista
-        mutableListChicks.removeAt(position)
-        //Notifico que se ha borrado
-        adapter.notifyItemRemoved(position)
+        //Lanzar la pregunta al Usuario.
+        //if -> ok
+        val builder = AlertDialog.Builder(requireContext())
 
-    }
+        builder.setTitle(R.string.AlertDialogTittle)
+            .setMessage(R.string.AlertDialogMessage)
+            .setPositiveButton(R.string.AlertDialogAccept) { dialog, which ->
 
-    private fun initListeners() {
-        //EDIT TEXT AL DARLE BUSCAR
-        binding.etFindChick.setOnEditorActionListener { v, actionId, event ->
-            return@setOnEditorActionListener when (actionId) {
-                EditorInfo.IME_ACTION_SEARCH -> {
-                    //TODO AL DARLE BUSCAR LLAMAR A LA API Y ACTUALIZAR EL RV
-                    true
+                dialog.dismiss()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        withContext(Dispatchers.Main) {
+                            //BORRA EL CHICK DE LA DB
+                            chickUseCase.deleteChick(mutableListChicks.get(position)._id)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
 
-                else -> false
+                //Elimino el elemento de la lista
+                mutableListChicks.removeAt(position)
+                //Notifico que se ha borrado
+                adapter!!.notifyItemRemoved(position)
+
             }
-        }
+            .setNegativeButton(R.string.AlertDialogCancel) { dialog, which ->
+                dialog.dismiss() // Cierra el diálogo si el usuario cancela
+            }
+            .show()
     }
 
 }

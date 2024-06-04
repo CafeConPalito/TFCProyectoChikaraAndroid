@@ -16,7 +16,6 @@ import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.assembler.ChickDtoAssembler
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
-import com.cafeconpalito.chikara.ui.myChicks.MyChicksFragment
 import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
 import com.cafeconpalito.chikara.ui.utils.GenericToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -174,11 +173,12 @@ class NewChickFragment : Fragment() {
             }
 
             //Permite cambiar el Fragmento Actual a otro.
-            val fragment = MyChicksFragment()
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainerView, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            //TODO REVISAR REVIENTA AL CAMBIAR DE FRAGMENT!
+//            val fragment = MyChicksFragment()
+//            val transaction = parentFragmentManager.beginTransaction()
+//            transaction.replace(R.id.fragmentContainerView, fragment)
+//            transaction.addToBackStack(null)
+//            transaction.commit()
 
         }
 
