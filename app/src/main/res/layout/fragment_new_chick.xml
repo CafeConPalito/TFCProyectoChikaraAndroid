@@ -7,26 +7,17 @@
     android:background="@color/primary_background"
     tools:context=".ui.newChick.NewChickFragment">
 
-    <TextView
-        android:id="@+id/text_find_chicks"
-        style="@style/TextoTítulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="New Chick"
-        app:layout_constraintEnd_toStartOf="@id/btnPublish"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/text_find_chicks"-->
+    <!--        style="@style/TextoTítulo"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="15dp"-->
+    <!--        android:text="New Chick"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <Button
-        android:id="@+id/btnPublish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:backgroundTint="@color/psgreen"
-        android:text="@string/publish"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etTitle"
@@ -39,8 +30,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnPublish" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/sIsPrivate"
@@ -49,10 +39,24 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:text="@string/private_chick"
+        android:thumbTint="@color/switch_thumb_color"
+        android:trackTint="@color/switch_track_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etTitle"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChickElements"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sIsPrivate" />
 
     <Button
         android:id="@+id/btnAddElement"
@@ -61,18 +65,17 @@
         android:layout_margin="15dp"
         android:backgroundTint="@color/psgreen"
         android:text="@string/add_element"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sIsPrivate" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChickElements"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="15dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnAddElement" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPublish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:backgroundTint="@color/psgreen"
+        android:text="@string/publish"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

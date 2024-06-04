@@ -32,6 +32,12 @@
     <!--    Select Colors para copiar y pegar-->
     <color name="select_text">#aaa69d</color>
 
+    <!--    Switch Colors-->
+    <color name="switch_track_checked_false">#218c74</color>
+    <color name="switch_track_checked_true">#ff5252</color>
+    <color name="switch_thumb_checked_false">#FFFFFFFF</color>
+    <color name="switch_thumb_checked_true">#FFFFFFFF</color>
+
     <color name="test1">#FF0000</color>
     <color name="test2">#ffe78f</color>
 
