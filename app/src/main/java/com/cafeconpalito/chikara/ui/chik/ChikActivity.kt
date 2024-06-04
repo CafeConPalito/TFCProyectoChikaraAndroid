@@ -99,8 +99,7 @@ class ChikActivity : AppCompatActivity() {
         binding.tvTitle.text = chickDto!!.title
         binding.tvAutor.text = chickDto!!.author_name
         binding.tvlikes.text = chickDto!!.likes.toString()
-        //TODO("Not yet implemented")
-        // SI YA TENIA LIKE QUE LO PINTE DE ROJO SINO
+        //TODO SI YA TENIA LIKE QUE LO PINTE DE ROJO SINO
         // LEER DTO RECIBIDO Y PINTAR!
     }
 

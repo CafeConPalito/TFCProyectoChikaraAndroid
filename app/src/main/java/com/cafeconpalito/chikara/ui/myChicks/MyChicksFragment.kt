@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentMyChicksBinding
+import com.cafeconpalito.chikara.domain.model.ChickDto
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +33,10 @@ class MyChicksFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val mcViewModel: MyChicksViewModel by viewModels()
+
+    private lateinit var mutableListChicks: MutableList<ChickDto>
+
+    private lateinit var adapter: MyChicksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,20 +81,16 @@ class MyChicksFragment : Fragment() {
             mcViewModel.getUserChicks()
 
             withContext(Dispatchers.Main) {
-                mcViewModel.userChicksLiveData.observe(viewLifecycleOwner) { ListTopChicks ->
+                mcViewModel.userChicksLiveData.observe(viewLifecycleOwner) { listMyChicks ->
                     with(binding.rvFindChick) {
                         //Selecciono el tipo de Layout para el RV
                         layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+                        mutableListChicks.addAll(listMyChicks)
                         //Paso la nueva lista de datos!
-                        adapter = MyChicksAdapter(ListTopChicks) {
-                            /*
-                        //CREO QUE ESTO NO ES NECESARIO
-                        val intentDetail = Intent(context, DetailActivity::class.java)
-                        intentDetail.putExtra(EXTRA, it)
-                        startActivity(intentDetail)
-                        */
-                        }
+                        //TODO MIRAR SI FUNCIONA
+                        adapter = MyChicksAdapter(mutableListChicks) { deleteChick(it) }
 
                     }
                 }
@@ -102,6 +103,20 @@ class MyChicksFragment : Fragment() {
                 }
             }
         }
+    }
+
+    /**
+     * Delete the chick from the list
+     *
+     */
+    private fun deleteChick(position: Int) {
+
+        //TODO DECIDIR SI SE BORRA AQUI O SE BORRA EN EL VIEW HOLDER
+        //Elimino el elemento de la lista
+        mutableListChicks.removeAt(position)
+        //Notifico que se ha borrado
+        adapter.notifyItemRemoved(position)
+
     }
 
 }

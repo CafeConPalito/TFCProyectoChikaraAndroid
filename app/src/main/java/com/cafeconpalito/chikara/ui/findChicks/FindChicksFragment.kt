@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.databinding.FragmentFindChicksBinding
+import com.cafeconpalito.chikara.domain.model.ChickDto
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,10 @@ class FindChicksFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val fcViewModel: FindChicksViewModel by viewModels()
+
+    private lateinit var mutableListChicks: MutableList<ChickDto>
+
+    private lateinit var adapter: FindChicksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,14 +57,16 @@ class FindChicksFragment : Fragment() {
             fcViewModel.getTopChicks()
 
             withContext(Dispatchers.Main) {
-                fcViewModel.topChicksLiveData.observe(viewLifecycleOwner) { ListTopChicks ->
+                fcViewModel.topChicksLiveData.observe(viewLifecycleOwner) { listTopChicks ->
                     with(binding.rvFindChick) {
                         //Selecciono el tipo de Layout para el RV
                         layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+                        mutableListChicks.addAll(listTopChicks)
                         //Paso la nueva lista de datos!
-                        adapter = FindChicksAdapter(ListTopChicks) {
-                        }
+                        //TODO MIRAR SI FUNCIONA
+                        adapter = FindChicksAdapter(mutableListChicks) { deleteChick(it) }
                     }
                 }
 
@@ -70,6 +77,20 @@ class FindChicksFragment : Fragment() {
                 }
             }
         }
+    }
+
+    /**
+     * Delete the chick from the list
+     *
+     */
+    private fun deleteChick(position: Int) {
+
+        //TODO DECIDIR SI SE BORRA AQUI O SE BORRA EN EL VIEW HOLDER
+        //Elimino el elemento de la lista
+        mutableListChicks.removeAt(position)
+        //Notifico que se ha borrado
+        adapter.notifyItemRemoved(position)
+
     }
 
     private fun initListeners() {
