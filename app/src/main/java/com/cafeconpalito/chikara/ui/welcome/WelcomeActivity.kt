@@ -30,19 +30,15 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initUI()
-
     }
 
     /**
      * Inicializa todos los procesos necesarios para que la vista funcione.
      */
     private fun initUI() {
-
         initUIState()
         initUIlaunchLoginFlow()
-
     }
-
 
     /**
      * Inicializa el controlador para el cambio de estados.
@@ -69,14 +65,12 @@ class WelcomeActivity : AppCompatActivity() {
      * Cambio de Estado a Success.
      */
     private suspend fun successState(it: WelcomeState.Success) {
-
         binding.pbWelcome.isVisible = false
         binding.tvWelcomeMessage.text = getText(R.string.text_welcome_message2)
 
         delay(2000L)
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
-
     }
 
     /**
@@ -90,29 +84,19 @@ class WelcomeActivity : AppCompatActivity() {
         delay(2000L)
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-
-//        SI QUIERES QUE AL DAR ERROR TE ENVIE A HOME, COMENTA LO DE ARRIBA Y ACTIVA ESTO
-//        val intent =  Intent(this, HomeActivity::class.java)
-//        startActivity(intent)
-
     }
 
     /**
      * Cambio de Estado a Loading.
      * No tiene que hacer nada en principio.
      */
-    private fun loadingState() {
-
-    }
+    private fun loadingState() {}
 
     /**
      * Lee desde el fichero de properties e intenta logear.
      */
     private fun initUIlaunchLoginFlow() {
-
         welcomeViewModel.launchLoginFlow(applicationContext)
-
     }
-
 
 }

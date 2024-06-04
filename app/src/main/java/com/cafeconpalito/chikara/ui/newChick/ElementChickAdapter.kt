@@ -49,6 +49,9 @@ class ElementChickAdapter(
         )
     }
 
+    /**
+     * Drag And Drop Movement
+     */
     fun onItemMove(fromPosition: Int, toPosition: Int) {
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {

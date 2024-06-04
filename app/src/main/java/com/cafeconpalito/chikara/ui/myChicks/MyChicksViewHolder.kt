@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cafeconpalito.chikara.R
@@ -12,7 +11,6 @@ import com.cafeconpalito.chikara.databinding.ItemChickPreviewBinding
 import com.cafeconpalito.chikara.domain.model.ChickDto
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
 import com.cafeconpalito.chikara.ui.chik.ChikActivity
-import com.cafeconpalito.chikara.ui.home.HomeActivity
 import com.cafeconpalito.chikara.utils.UserSession
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
@@ -33,10 +31,8 @@ class MyChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val context: Context = view.context
 
     //se ocupa de setear los elementos de la vista
-    //On ItemDone Borra La tarea, esta recibe como un Int la posicion de la lista (ID)
+    //On ItemDone Borra La elementos, esta recibe como un Int la posicion de la lista (ID)
     fun render(chick: ChickDto, onItemDone: (Int) -> Unit) {
-
-
         chickDto = chick
 
         //SET TITTLE
@@ -56,18 +52,14 @@ class MyChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private fun initListeners(onItemDone: (Int) -> Unit) {
         binding.ivChickImage.setOnClickListener { goToChickActivity() }
-
         //BORRAR EL CHICK
         binding.ivDeleteItem.setOnClickListener { deleteChick(onItemDone) }
-
     }
 
     private fun deleteChick(onItemDone: (Int) -> Unit) {
 
         //Lanzar la pregunta al Usuario.
         //if -> ok
-        //Mensaje de Borrado.
-        //Cierra el chick y se va a Home.
         val builder = AlertDialog.Builder(context)
 
         builder.setTitle(R.string.AlertDialogTittle)
@@ -102,7 +94,6 @@ class MyChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
-
     private fun goToChickActivity() {
         val context = itemView.context
         val intent = Intent(context, ChikActivity::class.java).apply {
@@ -110,6 +101,5 @@ class MyChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
         context.startActivity(intent)
     }
-
 
 }

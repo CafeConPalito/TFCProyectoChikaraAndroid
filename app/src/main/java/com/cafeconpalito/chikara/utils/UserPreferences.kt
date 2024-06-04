@@ -55,90 +55,18 @@ class UserPreferences @Inject constructor(private val context: Context) {
             UserPreferencesModel(
                 userName = preferences[KEY_USER_STR] ?: "",
                 password = preferences[KEY_PASSWORD_STR] ?: "",
-                userId = preferences[KEY_USER_UUID_STR] ?: ""
+                userUUID = preferences[KEY_USER_UUID_STR] ?: ""
             )
         }
     }
 
+    /**
+     * Delete all user preferences.
+     */
     suspend fun deleteAllUserPreferences() {
         deltePreference(KEY_USER_STR)
         deltePreference(KEY_PASSWORD_STR)
         deltePreference(KEY_USER_UUID_STR)
     }
-
-
-//    //NO BORRAR COORUTINA PARA GUARDAR DATOS DESDE UN ACTIVITY O FRAME
-//    private fun initUI() {
-//        binding.rsVolume.addOnChangeListener { _, value, _ ->
-//            Log.i("Aris", "El valor es $value")
-//            CoroutineScope(Dispatchers.IO).launch {
-//                saveVolume(value.toInt())
-//            }
-//        }
-//    }
-
-
-//    //Tipos especificos. me paso al generico :D
-//
-//    /**
-//     * Guarda un Boolean en la data store,
-//     * recibe como parametro preferenceKey y un valor
-//     */
-//    suspend fun savePreferenceBoolean(preferenceKey: String, value: Boolean) {
-//        context.dataStore.edit { settings ->
-//            settings[booleanPreferencesKey(preferenceKey)] = value
-//        }
-//    }
-//
-//    /**
-//     * Guarda un Int en la data store,
-//     * recibe como parametro preferenceKey y un valor
-//     */
-//    suspend fun savePreferenceInt(preferenceKey: String, value: Int) {
-//        context.dataStore.edit { settings ->
-//            settings[intPreferencesKey(preferenceKey)] = value
-//        }
-//    }
-//
-//    /**
-//     * Guarda un String en la data store,
-//     * recibe como parametro preferenceKey y un valor
-//     */
-//    suspend fun savePreferenceString(preferenceKey: String, value: String) {
-//        context.dataStore.edit { settings ->
-//            settings[stringPreferencesKey(preferenceKey)] = value
-//        }
-//    }
-
-
-//    //Antiguo
-//
-//    private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-//
-//    private val editor = sharedPreferences.edit();
-//
-//    /**
-//     * Guarda un Boleano en las preferencias.
-//     */
-//    fun putPreferenceBoolean(preference: String , value: Boolean){
-//        editor.putBoolean(preference,value)
-//        editor.commit()
-//    }
-//
-//    /**
-//     * Rescata un Boleano de las preferencias.
-//     */
-//    fun getPreferenceBoolean(preference: String):Boolean{
-//        return getPreferenceBoolean(preference);
-//    }
-//
-//    /**
-//     * Elimina una preferencia
-//     */
-//    fun removePrerence(preference: String){
-//        editor.remove(preference)
-//        editor.commit()
-//    }
-
 
 }

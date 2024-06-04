@@ -4,6 +4,6 @@ data class UserPreferencesModel(
 
     var userName: String,
     var password: String,
-    var userId: String,
+    var userUUID: String,
 
     )

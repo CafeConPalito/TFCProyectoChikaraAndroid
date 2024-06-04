@@ -64,18 +64,6 @@ class LoginActivity : AppCompatActivity() {
 
         initUI()
 
-        //Lo mismo que abajo pero resumido!
-//        val userName = intent.getStringExtra(UserPreferences.KEY_USER_STR.name)
-//        val password = intent.getStringExtra(UserPreferences.KEY_PASSWORD_STR.name)
-//
-//        if (userName != null) {
-//            binding.etUserName.setText(userName)
-//        }
-//        if (password != null) {
-//            binding.etPassword.setText(password)
-//        }
-
-
         // Recuperar los datos del Intent y establecer en EditText si no son null
         intent.getStringExtra(UserPreferences.KEY_USER_STR.name)?.let {
             binding.etUserName.setText(it)

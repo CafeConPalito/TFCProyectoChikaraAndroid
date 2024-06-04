@@ -30,12 +30,11 @@ class FindChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val context: Context = view.context
 
-    //se ocupa de setear el texto de la tareas!
-    //On ItemDone Borra La tarea, esta recibe como un Int la posicion de la lista (ID)
+    //se ocupa de setear los elementos de la vista
+    //On ItemDone Borra La elementos, esta recibe como un Int la posicion de la lista (ID)
     fun render(chick: ChickDto, onItemDone: (Int) -> Unit) {
-
         chickDto = chick
-        
+
         //SET TITTLE
         binding.tvTitle.text = chick.title
         //SET IMAGE
@@ -44,7 +43,7 @@ class FindChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.tvAuthor.text = chick.author_name
 
         //Si el autor es usuario activa el boton de borrar.
-        if (UserSession.userUUID.equals(chick.author)){
+        if (UserSession.userUUID.equals(chick.author)) {
             binding.ivDeleteItem.isVisible = true
         }
 
@@ -61,8 +60,6 @@ class FindChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         //Lanzar la pregunta al Usuario.
         //if -> ok
-        //Mensaje de Borrado.
-        //Cierra el chick y se va a Home.
         val builder = AlertDialog.Builder(context)
 
         builder.setTitle(R.string.AlertDialogTittle)
@@ -97,7 +94,6 @@ class FindChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
-
     private fun goToChickActivity() {
         val context = itemView.context
         val intent = Intent(context, ChikActivity::class.java).apply {
@@ -105,4 +101,5 @@ class FindChicksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
         context.startActivity(intent)
     }
+
 }

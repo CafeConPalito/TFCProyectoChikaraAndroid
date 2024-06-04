@@ -91,7 +91,7 @@ class ChikActivity : AppCompatActivity() {
     private fun initUserValuesOnThisChick() {
         binding.tvTitle.text = chickDto!!.title
         binding.tvAutor.text = chickDto!!.author_name
-        binding.tvlikes.text = chickDto!!.likes.toString()
+        binding.tvLikes.text = chickDto!!.likes.toString()
         //TODO SI YA TENIA LIKE QUE LO PINTE DE ROJO SINO
         // LEER DTO RECIBIDO Y PINTAR!
     }

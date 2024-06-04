@@ -31,17 +31,13 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
      * Inicializa el Flow para la ventana de carga y lanza el Loggin esperando respuesta.
      */
     fun launchLoginFlow(context: Context) {
-
         userPreferences = UserPreferences(context)
         //Esta trabajando en el Hilo principal
         viewModelScope.launch {
-
             //Cambio el stado a loading.
             _state.value = WelcomeState.Loading
-
             //Espererando la respuesta
-            val result = tryToLoggin()
-
+            val result = tryToLogin()
             //si la respuesta es correcta
             if (result) {
                 //Paso el esdado a Success y le paso el texto del horoscopo
@@ -50,8 +46,8 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
             } else {
                 _state.value = WelcomeState.Error(false)
             }
-
         }
+
     }
 
     /**
@@ -59,28 +55,24 @@ class WelcomeViewModel @Inject constructor(private val getLoginUseCase: GetLogin
      * devuelve True si lo Logra.
      * Si no tiene datos o no lo consigue devuelve false
      */
-    suspend fun tryToLoggin(): Boolean {
+    private suspend fun tryToLogin(): Boolean {
 
         return withContext(Dispatchers.IO) {
             val userPreferenceModel = userPreferences.getUserPreferences().first()
-
             //Comprueba que los UserPreference no es null para leer los datos
             if (userPreferenceModel != null) {
                 val user = userPreferenceModel.userName
                 val password = userPreferenceModel.password
-
                 //Comprueba que los datos obtenidos no son falsos.
                 if (user.isNotBlank() && password.isNotBlank()) {
                     return@withContext getLoginUseCase(user, password)
                 } else {
                     return@withContext false
                 }
-
             } else {
                 return@withContext false
             }
         }
-
     }
 
 }
