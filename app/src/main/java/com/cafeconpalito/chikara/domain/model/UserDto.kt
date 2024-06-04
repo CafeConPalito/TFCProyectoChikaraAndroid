@@ -15,14 +15,3 @@ data class UserDto(
     val is_premium: Boolean = false
 
 )
-
-//    {
-//        "user_name": "string",
-//        "email": "string",
-//        "pwd": "string",
-//        "first_name": "string",
-//        "first_last_name": "string",
-//        "second_last_name": "string",
-//        "birthdate": "2024-04-22",
-//        "is_premium": true
-//    }
