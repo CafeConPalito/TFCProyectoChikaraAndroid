@@ -9,7 +9,7 @@
     </style>
 
     <!--Estilo base-->
-    <style name="FuenteBase">
+    <style name="BaseFont">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white</item>
@@ -17,14 +17,14 @@
     </style>
 
     <!--Estilo del título-->
-    <style name="TextoTítulo" parent="FuenteBase">
+    <style name="TextoTítulo" parent="BaseFont">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">30sp</item>
     </style>
 
     <!--ChickPreview Text View Styles-->
     <!--Estilo del fuente Base ItemChickPreview-->
-    <style name="FuenteBaseItemChickPreview" parent="FuenteBase">
+    <style name="FuenteBaseItemChickPreview" parent="BaseFont">
         <item name="android:textColor">@color/primary_background</item>
     </style>
 
@@ -36,17 +36,14 @@
 
     <!--Chick Text View Styles-->
     <!--Estilo del fuente base Chick-->
-
-    <!--<item name="android:shadowColor">@color/shadow_color</item>
-        <item name="android:shadowDx">3</item>
-        <item name="android:shadowDy">3</item>
-        <item name="android:shadowRadius">4</item>-->
-    <style name="FuenteBaseItemChick" parent="FuenteBase">
+    <style name="TextItemChick" parent="BaseFont">
         <item name="android:textColorHint">@color/white</item>
     </style>
-
-    <style name="TextoTítuloItemChick" parent="FuenteBaseItemChick">
-        <item name="android:textStyle">normal</item>
+    <style name="TítleItemChick" parent="TextItemChick">
+        <item name="android:textSize">30sp</item>
+    </style>
+    <style name="SmallTextItemChick" parent="TextItemChick">
+        <item name="android:textSize">14sp</item>
     </style>
 
     <!--ChickIcons Styles (delete, update)-->
@@ -55,13 +52,13 @@
     </style>
 
     <!--Estilo campos rellenables-->
-    <style name="EditTextField" parent="FuenteBase">
+    <style name="EditTextField" parent="BaseFont">
         <item name="android:textColorHint">@color/default_hint_edit_text</item>
         <item name="android:backgroundTint">@color/default_edit_text</item>
     </style>
 
     <!--Estilo campos discretito-->
-    <style name="TextoDiscreto" parent="FuenteBase">
+    <style name="TextoDiscreto" parent="BaseFont">
         <item name="android:textSize">15sp</item>
     </style>
 

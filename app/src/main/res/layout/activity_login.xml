@@ -70,7 +70,7 @@
 
     <Button
         android:id="@+id/btnLogin"
-        style="@style/FuenteBase"
+        style="@style/BaseFont"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginHorizontal="40dp"

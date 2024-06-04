@@ -37,4 +37,6 @@
 
     <color name="shadow_color">#80000000</color> <!-- Un color negro semi-transparente -->
 
+    <color name="translucent_background">#4F227093</color>
+
 </resources>
