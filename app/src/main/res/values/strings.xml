@@ -2,6 +2,7 @@
     <string name="app_name">Chikara</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!-- Menu Titles -->
     <string name="user">User</string>
     <string name="my_chicks">My Chicks</string>
@@ -57,21 +58,25 @@
     <string name="chick_title">Chick Title</string>
     <string name="private_chick">Private Chick</string>
     <string name="add_element">Add Element</string>
+    <string name="add_elements_to_chick">Add elements to publish chick</string>
+    <string name="add_title_chick">Add title to publish chick</string>
+
+    <!--UserSettings-->
+    <string name="text_change_account">To change user</string>
+    <string name="text_logOut">Logout</string>
     <string name="hint_new_username">New Username</string>
     <string name="hint_new_email">New Email</string>
     <string name="hint_new_password">New Password</string>
     <string name="hint_new_repeat_password">Repeat New Password</string>
-    <string name="text_logOut">Logout</string>
-    <string name="text_change_account">To change user</string>
+
+    <!--Nakamas-->
+    <string name="nakamas_implementation">Coming Soon</string>
     <string name="test_buttons">Test Buttons</string>
+    <string name="save_chik">SAVE_CHIK</string>
     <string name="cifrar">ENCRYPT</string>
     <string name="guardar">LOAD_USER</string>
     <string name="leer">READ_USER</string>
     <string name="borrar">DELETE_USER</string>
     <string name="top_chik">TOP_CHIK</string>
-    <string name="save_chik">SAVE_CHIK</string>
-    <string name="nakamas_implementation">Coming Soon</string>
-
-
 
 </resources>

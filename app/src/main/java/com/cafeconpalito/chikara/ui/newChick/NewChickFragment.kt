@@ -152,7 +152,7 @@ class NewChickFragment : Fragment() {
             GenericToast.generateToast(
                 requireContext(),
                 //TODO MODIFICAR MENSAJE
-                "AÑADE UN TITULO!!!!!!",
+                getString(R.string.add_title_chick),
                 Toast.LENGTH_LONG,
                 true
             ).show()
@@ -161,7 +161,7 @@ class NewChickFragment : Fragment() {
             GenericToast.generateToast(
                 requireContext(),
                 //TODO MODIFICAR MENSAJE
-                "AÑADE UN ELEMENTOS!!!!!!",
+                getString(R.string.add_elements_to_chick),
                 Toast.LENGTH_LONG,
                 true
             ).show()
