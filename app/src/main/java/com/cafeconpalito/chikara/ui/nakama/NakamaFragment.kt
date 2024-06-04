@@ -80,7 +80,7 @@ class NakamaFragment : Fragment() {
             val listTopChicks = chickUseCases.getTopChicks()
 
             for (x in listTopChicks) {
-                Log.i("Chick", x.toString())
+                Log.d("Chick", x.toString())
             }
         }
     }
@@ -97,8 +97,8 @@ class NakamaFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             userPreferences.getUserPreferences().collect { userPreferenceModel ->
                 if (userPreferenceModel != null) {
-                    Log.i("TEST", userPreferenceModel.userName)
-                    Log.i("TEST", "" + userPreferenceModel.password)
+                    Log.d("TEST", userPreferenceModel.userName)
+                    Log.d("TEST", "" + userPreferenceModel.password)
                 }
             }
         }
@@ -120,7 +120,7 @@ class NakamaFragment : Fragment() {
     private fun launchTestCifrar() {
         val cypherMD5 = CypherTextToMD5()
         val cypher: String = cypherMD5("1234")
-        Log.i("TEST", "Cifrado MD5:" + cypher)
+        Log.d("TEST", "Cifrado MD5:" + cypher)
 
     }
 

@@ -26,7 +26,7 @@ class ChickUseCasesTest {
     val hiltRule = HiltAndroidRule(this)
 
     /**
-     * TODO: IMPORTANT NEED TO SETUP A AuthKey
+     *  IMPORTANT NEED TO SETUP A AuthKey !!!
      */
     @Before
     fun setup() {

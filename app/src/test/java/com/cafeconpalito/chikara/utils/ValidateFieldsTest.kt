@@ -32,11 +32,6 @@ class ValidateFieldsTest {
         validateFields = ValidateFields()
     }
 
-//    @Test
-//    fun validEmail() {
-//        //TODO: COMO NECESITA DEPENDEICIAS SE REALIZA EN ANDROID TEST
-//    }
-
     /**
      * Test for a valid UserName
      * Correct username must have: at least 3 characters and not start whit '@'

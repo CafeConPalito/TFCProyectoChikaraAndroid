@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,6 +19,7 @@ import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityLoginBinding
 import com.cafeconpalito.chikara.ui.home.HomeActivity
 import com.cafeconpalito.chikara.ui.register.RegisterActivity
+import com.cafeconpalito.chikara.ui.utils.GenericToast
 import com.cafeconpalito.chikara.utils.CypherTextToMD5
 import com.cafeconpalito.chikara.utils.LoginValidateUsername
 import com.cafeconpalito.chikara.utils.UserPreferences
@@ -112,7 +114,12 @@ class LoginActivity : AppCompatActivity() {
                 clearErrorEtUserName()
             } else { // Al perder el foco
                 if (validateFields.validateHaveBlankSpaces(binding.etUserName.text.toString())) {
-                    //TODO: AÑADIR TOAST
+                    GenericToast.generateToast(
+                        this,
+                        getString(R.string.ToastFieldWithOutBlankSpaces),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
                 }
             }
         }
@@ -132,7 +139,12 @@ class LoginActivity : AppCompatActivity() {
                 clearErrorEtPassword()
             } else {
                 if (validateFields.validateHaveBlankSpaces(binding.etPassword.text.toString())) {
-                    //TODO: AÑADIR TOAST
+                    GenericToast.generateToast(
+                        this,
+                        getString(R.string.ToastFieldWithOutBlankSpaces),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
                 }
             }
         }
@@ -275,13 +287,13 @@ class LoginActivity : AppCompatActivity() {
         binding.pbLoggin.isVisible = false
 
         if (it.UserFounded) {
-            binding.etPassword.setTextColor(errorEditTextColor)
-            //TODO: la contraseña esta mal pinta lo que sea ...
+            //la contraseña esta mal, muestra el error
             //Toast.makeText(this, "Contraseña Incorrecta", Toast.LENGTH_LONG).show()
+            binding.etPassword.setTextColor(errorEditTextColor)
         } else {
-            binding.etUserName.setTextColor(errorEditTextColor)
-            //TODO: no encontro al usuario pinta lo que sea ...
+            //no encontro al usuario, muestra el error
             //Toast.makeText(this, "Usuario No Existe", Toast.LENGTH_LONG).show()
+            binding.etUserName.setTextColor(errorEditTextColor)
         }
 
     }

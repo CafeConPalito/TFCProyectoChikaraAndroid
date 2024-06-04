@@ -7,20 +7,6 @@
     android:background="@color/primary_background"
     tools:context=".ui.myChicks.MyChicksFragment">
 
-    <!-- TODO: DELETE ME!
-    <TextView
-        android:id="@+id/text_find_chicks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Chicks"
-        android:textSize="24sp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
--->
-
     <EditText
         android:id="@+id/et_find_chick"
         android:layout_width="0dp"

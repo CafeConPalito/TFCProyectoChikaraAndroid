@@ -196,7 +196,7 @@ class UserFragment : Fragment() {
     private fun validateEtUserName(): Boolean {
 
         //TODO SI NO SE MODIFICA NO ES NECESARIO HACER NADA
-        if (!binding.etNewUserName.text.equals(userInformation!!.user_name)) return false
+        if (binding.etNewUserName.text.equals(userInformation!!.user_name)) return false
 
         if (validateEtUserNameIsValid()) {
             validateEtUserNameExist {
@@ -274,7 +274,7 @@ class UserFragment : Fragment() {
     private fun validateEtEmail(): Boolean {
 
         //TODO SI NO SE MODIFICA NO ES NECESARIO HACER NADA
-        if (!binding.etNewEmail.text.equals(userInformation!!.email)) return false
+        if (binding.etNewEmail.text.equals(userInformation!!.email)) return false
 
         if (validateEtEmailIsValid()) {
             validateEtEmailExist {
@@ -369,17 +369,6 @@ class UserFragment : Fragment() {
             return false
         }
         return true
-    }
-
-
-    //TODO PARA BORRAR KEYBOARD
-    private fun setupKeyboardListener(view: View) {
-        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
-            val isKeyboardVisible = view.isKeyboardVisible()
-            Log.d("keyboard", "Keyboard visible: $isKeyboardVisible")
-            (activity as? HomeActivity)?.showNavBar(!isKeyboardVisible)
-            insets
-        }
     }
 
     override fun onDestroyView() {

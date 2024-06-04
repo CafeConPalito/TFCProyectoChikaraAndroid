@@ -26,13 +26,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ChikActivity : AppCompatActivity() {
 
-    //TODO AÑADIR A LOS ITEMS PARA QUE LLAMEN A LA ACTIVITY CON LA INFORMACION DEL CHICK
-
-//            val intent = Intent(this, OtraActivity::class.java).apply {
-//            putExtra("chickDto", chickDto)
-//        }
-//        startActivity(intent)
-
     private lateinit var binding: ActivityChikBinding
 
     @Inject
@@ -109,7 +102,10 @@ class ChikActivity : AppCompatActivity() {
      */
     private fun initEditables() {
 
-        Log.d("USERS ID", "USER SESSION: ${UserSession.userUUID}  UserChickDto: ${chickDto!!.author}" )
+        Log.d(
+            "USERS ID",
+            "USER SESSION: ${UserSession.userUUID}  UserChickDto: ${chickDto!!.author}"
+        )
         if (UserSession.userUUID.equals(chickDto!!.author)) {
             binding.ivEdit.isVisible = true
             binding.ivDelete.isVisible = true
@@ -118,7 +114,7 @@ class ChikActivity : AppCompatActivity() {
 
     private fun initListeners() {
         binding.ivLike.setOnClickListener { likeChick() }
-        binding.tvAutor.setOnClickListener { goToAutorChicks() }
+        binding.tvAutor.setOnClickListener { goToAuthorChicks() }
         binding.ivEdit.setOnClickListener { goToEditChick() }
         binding.ivDelete.setOnClickListener { eraseChick() }
     }
@@ -169,9 +165,9 @@ class ChikActivity : AppCompatActivity() {
     }
 
     /**
-     * Nos envia a la lista de Chicks de un Autor
+     * List of Author chicks
      */
-    private fun goToAutorChicks() {
+    private fun goToAuthorChicks() {
         //Capturar el dato del Autor y lanzar un intent con una Recicler View con los chicks del autor!
         //TODO("Not yet implemented")
     }

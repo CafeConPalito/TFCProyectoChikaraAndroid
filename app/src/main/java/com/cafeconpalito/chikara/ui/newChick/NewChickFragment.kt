@@ -31,8 +31,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NewChickFragment : Fragment() {
 
-    //TODO ADD DRAG AND DROP FOR THE ELEMENTS!
-
     //Manera de trabajar con Binding y Fragmentos
     private var _binding: FragmentNewChickBinding? = null
     private val binding get() = _binding!!
@@ -50,12 +48,10 @@ class NewChickFragment : Fragment() {
 
         //Si la imagen fue seleccionada
         if (uri != null) {
+
             Log.d("PhotoPicker", "Selected URI: $uri")
-
             //selectedImageUri = uri
-
             //Si Selecciona una imagen envio la Uri Sino nada ;)
-
             addElement(uri)
 
         } else {
@@ -151,7 +147,6 @@ class NewChickFragment : Fragment() {
         if (contentElements.isEmpty()) {
             GenericToast.generateToast(
                 requireContext(),
-                //TODO MODIFICAR MENSAJE
                 getString(R.string.add_title_chick),
                 Toast.LENGTH_LONG,
                 true
@@ -160,7 +155,6 @@ class NewChickFragment : Fragment() {
         } else if (binding.etTitle.text.isBlank()) {
             GenericToast.generateToast(
                 requireContext(),
-                //TODO MODIFICAR MENSAJE
                 getString(R.string.add_elements_to_chick),
                 Toast.LENGTH_LONG,
                 true
