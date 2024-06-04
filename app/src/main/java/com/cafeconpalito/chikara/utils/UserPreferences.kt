@@ -25,7 +25,7 @@ class UserPreferences @Inject constructor(private val context: Context) {
     companion object {
         val KEY_USER_STR = stringPreferencesKey("User")
         val KEY_PASSWORD_STR = stringPreferencesKey("Password")
-        val KEY_USER_UUID_STR = stringPreferencesKey("UserID")
+        val KEY_USER_UUID_STR = stringPreferencesKey("UserUUID")
     }
 
     /**

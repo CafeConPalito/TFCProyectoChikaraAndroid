@@ -80,6 +80,9 @@ class UserFragment : Fragment() {
         initListeners()
     }
 
+    /**
+     * Load User Information
+     */
     private fun loadInformation() {
         CoroutineScope(Dispatchers.IO).launch {
             userInformation = userUseCase.getUserInformation()
@@ -90,9 +93,6 @@ class UserFragment : Fragment() {
                     binding.etNewUserName.setText(userInformation!!.user_name)
                     //Set Email
                     binding.etNewEmail.setText(userInformation!!.email)
-                    //Set Pass
-                    binding.etNewPassword.setText(userInformation!!.pwd)
-                    binding.etNewPasswordRepeat.setText(userInformation!!.pwd)
                 } else {
                     //TODO SI LA RESPUESTA ES NULL MOSTRAR UN MENSAJE DE ERROR!
                 }
@@ -110,7 +110,6 @@ class UserFragment : Fragment() {
 
         etUserNameListeners()
         etEmailListeners()
-        //setupKeyboardListener(binding.root)
     }
 
     /**
@@ -164,7 +163,6 @@ class UserFragment : Fragment() {
                     }
                 }
             }
-
         }
     }
 
@@ -196,6 +194,9 @@ class UserFragment : Fragment() {
      * True si es correcto;
      */
     private fun validateEtUserName(): Boolean {
+
+        //TODO SI NO SE MODIFICA NO ES NECESARIO HACER NADA
+        if (!binding.etNewUserName.text.equals(userInformation!!.user_name)) return false
 
         if (validateEtUserNameIsValid()) {
             validateEtUserNameExist {
@@ -271,6 +272,10 @@ class UserFragment : Fragment() {
      * True si es correcto;
      */
     private fun validateEtEmail(): Boolean {
+
+        //TODO SI NO SE MODIFICA NO ES NECESARIO HACER NADA
+        if (!binding.etNewEmail.text.equals(userInformation!!.email)) return false
+
         if (validateEtEmailIsValid()) {
             validateEtEmailExist {
                 if (it) { // El Email ya esta registrado
