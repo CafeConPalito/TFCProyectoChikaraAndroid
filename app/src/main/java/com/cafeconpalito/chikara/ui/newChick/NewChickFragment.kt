@@ -1,6 +1,5 @@
 package com.cafeconpalito.chikara.ui.newChick
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.assembler.ChickDtoAssembler
 import com.cafeconpalito.chikara.domain.useCase.ChickUseCases
-import com.cafeconpalito.chikara.ui.login.LoginActivity
 import com.cafeconpalito.chikara.ui.myChicks.MyChicksFragment
 import com.cafeconpalito.chikara.ui.utils.DotIndicatorDecoration
 import com.cafeconpalito.chikara.ui.utils.GenericToast
@@ -165,7 +163,7 @@ class NewChickFragment : Fragment() {
 
             val title = binding.etTitle.text.toString()
             val isPrivate = binding.sIsPrivate.isChecked
-            val newChick = chickDtoAssembler.buildChickDto(title, isPrivate, contentElements)
+            val newChick = chickDtoAssembler.buildDto(title, isPrivate, contentElements)
 
             CoroutineScope(Dispatchers.Main).launch {
                 //Envio el contexto de la Aplicacion!

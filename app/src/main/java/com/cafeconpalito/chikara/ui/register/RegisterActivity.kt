@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.ActivityRegisterBinding
+import com.cafeconpalito.chikara.domain.assembler.UserDtoAssembler
 import com.cafeconpalito.chikara.domain.model.UserDto
 import com.cafeconpalito.chikara.domain.useCase.UserUseCase
 import com.cafeconpalito.chikara.ui.login.LoginActivity
@@ -111,6 +112,34 @@ class RegisterActivity : AppCompatActivity() {
                 "Method: $method -> correct all fields information call API"
             )
             //Log.i("RegistroUsuario: ", "Todos los campos correctos intento registrar!")
+
+            //Make UserDto
+            val userDtoAssembler = UserDtoAssembler()
+            val userDto = userDtoAssembler.buildDto(
+                binding.etUserName.text.toString(),
+                binding.etEmail.text.toString(),
+                binding.etPassword.text.toString(),
+                binding.etFirstName.text.toString(),
+                binding.etFirstLastName.text.toString(),
+                binding.etSecondLastName.text.toString(),
+                binding.etBirthDate.text.toString()
+            )
+
+            lifecycleScope.launch() {
+                if (userUseCase.registerUser(userDto)) { //Si el registro es satisfactorio
+                    registerSatisfactoryGoToLogin()
+                } else { //Si no lo es.
+                    GenericToast.generateToast(
+                        applicationContext,
+                        getString(R.string.ToastGenericFail),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
+                }
+            }
+
+            //TODO PARA BORRAR SI FUNCIONA LO NUEVO
+            /*
             lifecycleScope.launch() {
                 if (userUseCase.registerUser(makeUserDto())) { //Si el registro es satisfactorio
                     registerSatisfactoryGoToLogin()
@@ -123,6 +152,8 @@ class RegisterActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+            */
+
         } else {
             Log.d(this.javaClass.simpleName, "Method: $method -> incorrect fields information")
             //Log.i("RegistroUsuario: ", "alguno de los campos es incorrecto")
@@ -143,16 +174,14 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+
+    //TODO PARA BORRAR SI FUNCIONA LO NUEVO
     /**
      * Genera un UserDto con los datos del Registro.
      */
     private fun makeUserDto(): UserDto {
-
         val cypherTextToMD5 = CypherTextToMD5()
-
-        //METODO CORRETO, FALTA LA FECHA
         val userDto = UserDto(
-
             user_name = "@" + binding.etUserName.text.toString(),
             email = binding.etEmail.text.toString(),
             pwd = cypherTextToMD5(binding.etPassword.text.toString()),
@@ -162,11 +191,8 @@ class RegisterActivity : AppCompatActivity() {
             second_last_name = binding.etSecondLastName.text.toString().trim()
                 .replace(Regex("\\s+"), " "), // Puedes asignar null si es opcional
             birthdate = binding.etBirthDate.text.toString()
-
         )
-
         return userDto
-
     }
 
 
