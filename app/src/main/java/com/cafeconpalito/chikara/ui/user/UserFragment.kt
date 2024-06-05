@@ -49,6 +49,9 @@ class UserFragment : Fragment() {
 
     private var userInformation: UserDto? = null
 
+    private var originalUserName:String = ""
+    private var originalEmail:String = ""
+
     //LLevar el metodo initColor()
     private var defaultEditTextColor = 0
     private var errorEditTextColor = 0
@@ -89,8 +92,12 @@ class UserFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 if (userInformation != null) {
                     //Set UserName
+
+                    originalUserName = userInformation!!.user_name.replaceFirst("^@".toRegex(), "")
+                    originalEmail = userInformation!!.email
+
                     binding.tvUsername.text = userInformation!!.user_name
-                    binding.etNewUserName.setText(userInformation!!.user_name)
+                    binding.etNewUserName.setText(originalUserName)
                     //Set Email
                     binding.etNewEmail.setText(userInformation!!.email)
                 } else {
@@ -105,9 +112,9 @@ class UserFragment : Fragment() {
         binding.btnLogOut.setOnClickListener {
             launchLogOut()
             val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
-
         etUserNameListeners()
         etEmailListeners()
     }
@@ -181,7 +188,11 @@ class UserFragment : Fragment() {
             if (hasFocus) {
                 genericClearErrorEt(binding.etNewUserName)
             } else {
-                validateEtUserName()
+                if (binding.etNewUserName.text.toString() != originalUserName){
+                    //AL CAMBIAR EL NOMBRE TOCA VALIDAR
+                    validateEtUserName()
+                }
+
             }
         }
         //Cuando el texto se modifica
@@ -194,9 +205,6 @@ class UserFragment : Fragment() {
      * True si es correcto;
      */
     private fun validateEtUserName(): Boolean {
-
-        //TODO SI NO SE MODIFICA NO ES NECESARIO HACER NADA
-        if (binding.etNewUserName.text.equals(userInformation!!.user_name)) return false
 
         if (validateEtUserNameIsValid()) {
             validateEtUserNameExist {

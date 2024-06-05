@@ -70,6 +70,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         delay(2000L)
         val intent = Intent(this, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
     }
 
@@ -83,6 +84,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         delay(2000L)
         val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
     }
 
