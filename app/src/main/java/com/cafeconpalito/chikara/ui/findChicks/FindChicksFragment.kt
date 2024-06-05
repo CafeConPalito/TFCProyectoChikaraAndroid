@@ -82,7 +82,7 @@ class FindChicksFragment : Fragment() {
                         layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                        mutableListChicks.addAll(listTopChicks)
+                        mutableListChicks = listTopChicks.toMutableList()
                         //Paso la nueva lista de datos!
                         //TODO MIRAR SI FUNCIONA
                         adapter = FindChicksAdapter(mutableListChicks) { deleteChick(it, adapter) }
@@ -121,7 +121,7 @@ class FindChicksFragment : Fragment() {
                     try {
                         withContext(Dispatchers.Main) {
                             //BORRA EL CHICK DE LA DB
-                            chickUseCase.deleteChick(mutableListChicks.get(position)._id)
+                            chickUseCase.deleteChick(mutableListChicks[position-1]._id)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
