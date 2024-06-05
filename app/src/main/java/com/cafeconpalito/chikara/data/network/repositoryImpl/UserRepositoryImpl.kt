@@ -119,6 +119,7 @@ class UserRepositoryImpl @Inject constructor(private val apiService: UserApiServ
      */
     override suspend fun updateUserInformation(userDto: UserDto): Boolean {
         val method = object {}.javaClass.enclosingMethod?.name
+        println("")
         runCatching {
             apiService.updateUserInformation(userDto)
         }

@@ -22,7 +22,7 @@ interface UserApiService {
     suspend fun getUserInformation(): UserDto
 
     @PUT("/users/update")
-    suspend fun updateUserInformation(userDto: UserDto): Boolean
+    suspend fun updateUserInformation(@Body userDto: UserDto): Boolean
 
 
 }

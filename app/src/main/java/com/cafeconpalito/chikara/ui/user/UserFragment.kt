@@ -49,8 +49,8 @@ class UserFragment : Fragment() {
 
     private var userInformation: UserDto? = null
 
-    private var originalUserName:String = ""
-    private var originalEmail:String = ""
+    private var originalUserName: String = ""
+    private var originalEmail: String = ""
 
     //LLevar el metodo initColor()
     private var defaultEditTextColor = 0
@@ -117,6 +117,8 @@ class UserFragment : Fragment() {
         }
         etUserNameListeners()
         etEmailListeners()
+        etPasswordListeners()
+        etPasswordRepeatListeners()
     }
 
     /**
@@ -129,7 +131,7 @@ class UserFragment : Fragment() {
             var isModified = false
             //Si se modifico el UserName lo actualiza
             if (userInformation!!.user_name != binding.etNewUserName.text.toString()) {
-                userInformation!!.user_name = binding.etNewUserName.text.toString()
+                userInformation!!.user_name = "@" + binding.etNewUserName.text.toString()
                 isModified = true
             }
 
@@ -140,7 +142,7 @@ class UserFragment : Fragment() {
             }
 
             //Si se modifico la contraseña la actualiza.
-            if (userInformation!!.pwd != binding.etNewPassword.text.toString()) {
+            if (binding.etNewPassword.text.toString().isNotBlank()) {
                 val cypherTextToMD5 = CypherTextToMD5()
                 userInformation!!.pwd = cypherTextToMD5(binding.etNewPassword.text.toString())
                 isModified = true
@@ -151,7 +153,7 @@ class UserFragment : Fragment() {
                 CoroutineScope(Dispatchers.IO).launch {
                     val updateSuccess = userUseCase.updateUserInformation(userInformation!!)
                     withContext(Dispatchers.Main) {
-                        if (updateSuccess){
+                        if (updateSuccess) {
                             GenericToast.generateToast(
                                 requireContext(),
                                 getString(R.string.ToastUserInfoUpdateSuccessful),
@@ -159,7 +161,7 @@ class UserFragment : Fragment() {
                                 false
                             ).show()
 
-                        }else{
+                        } else {
                             GenericToast.generateToast(
                                 requireContext(),
                                 getString(R.string.ToastUserInfoUpdateFailed),
@@ -181,18 +183,13 @@ class UserFragment : Fragment() {
                 validateEtPasswordRepeat()
     }
 
-
     private fun etUserNameListeners() {
         //Cuando Gana Foco
         binding.etNewUserName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 genericClearErrorEt(binding.etNewUserName)
             } else {
-                if (binding.etNewUserName.text.toString() != originalUserName){
-                    //AL CAMBIAR EL NOMBRE TOCA VALIDAR
-                    validateEtUserName()
-                }
-
+                validateEtUserName()
             }
         }
         //Cuando el texto se modifica
@@ -205,19 +202,21 @@ class UserFragment : Fragment() {
      * True si es correcto;
      */
     private fun validateEtUserName(): Boolean {
-
-        if (validateEtUserNameIsValid()) {
-            validateEtUserNameExist {
-                if (it) { // El usuario Existe
-                    GenericToast.generateToast(
-                        requireContext(),
-                        getString(R.string.ToastUserAlreadyExists),
-                        Toast.LENGTH_LONG,
-                        true
-                    ).show()
-                    genericIsErrorEt(binding.etNewUserName)
+        //Si cambia el texto original intenta validar
+        if (binding.etNewUserName.text.toString() != originalUserName) {
+            if (validateEtUserNameIsValid()) {
+                validateEtUserNameExist {
+                    if (it) { // El usuario Existe
+                        GenericToast.generateToast(
+                            requireContext(),
+                            getString(R.string.ToastUserAlreadyExists),
+                            Toast.LENGTH_LONG,
+                            true
+                        ).show()
+                        genericIsErrorEt(binding.etNewUserName)
+                    }
+                    return@validateEtUserNameExist
                 }
-                return@validateEtUserNameExist
             }
         }
         return false
@@ -282,20 +281,23 @@ class UserFragment : Fragment() {
     private fun validateEtEmail(): Boolean {
 
         //TODO SI NO SE MODIFICA NO ES NECESARIO HACER NADA
-        if (binding.etNewEmail.text.equals(userInformation!!.email)) return false
+        //if (binding.etNewEmail.text.equals(userInformation!!.email)) return false
 
-        if (validateEtEmailIsValid()) {
-            validateEtEmailExist {
-                if (it) { // El Email ya esta registrado
-                    GenericToast.generateToast(
-                        requireContext(),
-                        getString(R.string.ToastEmailAlreadyExists),
-                        Toast.LENGTH_LONG,
-                        true
-                    ).show()
-                    genericIsErrorEt(binding.etNewEmail)
+        //Si cambia el texto original intenta validar
+        if (binding.etNewEmail.text.toString() != originalEmail) {
+            if (validateEtEmailIsValid()) {
+                validateEtEmailExist {
+                    if (it) { // El Email ya esta registrado
+                        GenericToast.generateToast(
+                            requireContext(),
+                            getString(R.string.ToastEmailAlreadyExists),
+                            Toast.LENGTH_LONG,
+                            true
+                        ).show()
+                        genericIsErrorEt(binding.etNewEmail)
+                    }
+                    return@validateEtEmailExist
                 }
-                return@validateEtEmailExist
             }
         }
         return false
@@ -336,45 +338,77 @@ class UserFragment : Fragment() {
         }
     }
 
+    //TODO !!! SIGO POR AQUI
+    private fun etPasswordListeners() {
+        //Cuando Gana Foco
+        binding.etNewPassword.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                genericClearErrorEt(binding.etNewPassword)
+            } else {
+                validateEtPassword()
+            }
+        }
+        //Cuando el texto se modifica
+        genericOnModifyTextListener(binding.etNewPassword)
+    }
+
     /**
      * Comprueba el campo del password
      */
     private fun validateEtPassword(): Boolean {
-        if (!genericValidateEditText(binding.etNewPassword)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
-            return false
-        } else if (!validateFields.validatePassword(binding.etNewPassword.text.toString())) { // Valida que el Password formato correcto
-            GenericToast.generateToast(
-                requireContext(),
-                getString(R.string.ToastPasswordFormatIncorrect),
-                Toast.LENGTH_LONG,
-                true
-            ).show()
-            genericIsErrorEt(binding.etNewPassword)
-            return false
+        if (binding.etNewPassword.text.toString().isNotBlank()) {
+            if (!genericValidateEditText(binding.etNewPassword)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
+                return false
+            } else if (!validateFields.validatePassword(binding.etNewPassword.text.toString())) { // Valida que el Password formato correcto
+                GenericToast.generateToast(
+                    requireContext(),
+                    getString(R.string.ToastPasswordFormatIncorrect),
+                    Toast.LENGTH_LONG,
+                    true
+                ).show()
+                genericIsErrorEt(binding.etNewPassword)
+                return false
+            }
         }
         return true
+    }
 
+    //TODO !!! SIGO POR AQUI
+    private fun etPasswordRepeatListeners() {
+        //Cuando Gana Foco
+        binding.etNewPasswordRepeat.onFocusChangeListener =
+            View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    genericClearErrorEt(binding.etNewPasswordRepeat)
+                } else {
+                    validateEtPasswordRepeat()
+                }
+            }
+        //Cuando el texto se modifica
+        genericOnModifyTextListener(binding.etNewPasswordRepeat)
     }
 
     /**
      * Valida que los passwords coinciden.
      */
     private fun validateEtPasswordRepeat(): Boolean {
-        if (!genericValidateEditText(binding.etNewPasswordRepeat)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
-            return false
-        } else if (!validateFields.validatePasswordsMatches(
-                binding.etNewPassword.text.toString(),
-                binding.etNewPasswordRepeat.text.toString()
-            )
-        ) {
-            GenericToast.generateToast(
-                requireContext(),
-                getString(R.string.ToastPasswordMissMatch),
-                Toast.LENGTH_LONG,
-                true
-            ).show()
-            genericIsErrorEt(binding.etNewPasswordRepeat)
-            return false
+        if (binding.etNewPasswordRepeat.text.toString().isNotBlank() || binding.etNewPassword.text.toString().isNotBlank()) {
+            if (!genericValidateEditText(binding.etNewPasswordRepeat)) { //Valida que no este en blanco o contenga espacios y pinta el Error.
+                return false
+            } else if (!validateFields.validatePasswordsMatches(
+                    binding.etNewPassword.text.toString(),
+                    binding.etNewPasswordRepeat.text.toString()
+                )
+            ) {
+                GenericToast.generateToast(
+                    requireContext(),
+                    getString(R.string.ToastPasswordMissMatch),
+                    Toast.LENGTH_LONG,
+                    true
+                ).show()
+                genericIsErrorEt(binding.etNewPasswordRepeat)
+                return false
+            }
         }
         return true
     }
