@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cafeconpalito.chikara.R
@@ -166,19 +167,34 @@ class NewChickFragment : Fragment() {
 
             CoroutineScope(Dispatchers.Main).launch {
                 //Envio el contexto de la Aplicacion!
-                chickUseCases.createChick(requireContext().applicationContext, newChick)
-
+                val result =
+                    chickUseCases.createChick(requireContext().applicationContext, newChick)
                 Log.d(this.javaClass.simpleName, "Method: $method ->\n$newChick")
-                //Log.d("PhotoPicker", "Chick Publish $newChick")
+
+                if (result) {
+                    GenericToast.generateToast(
+                        requireContext(),
+                        getString(R.string.chick_publish_success),
+                        Toast.LENGTH_LONG,
+                        false
+                    ).show()
+                } else {
+                    GenericToast.generateToast(
+                        requireContext(),
+                        getString(R.string.chick_publish_fail),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
+                }
             }
 
+            binding.etTitle.text.clear()
+            contentElements.clear()
+            adapter.notifyDataSetChanged()
+
             //Permite cambiar el Fragmento Actual a otro.
-            //TODO REVISAR REVIENTA AL CAMBIAR DE FRAGMENT!
-//            val fragment = MyChicksFragment()
-//            val transaction = parentFragmentManager.beginTransaction()
-//            transaction.replace(R.id.fragmentContainerView, fragment)
-//            transaction.addToBackStack(null)
-//            transaction.commit()
+            val navController = findNavController()
+            navController.navigate(R.id.action_newChick_to_myChicks)
 
         }
 

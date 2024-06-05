@@ -14,7 +14,11 @@
         android:id="@+id/newChickFragment"
         android:name="com.cafeconpalito.chikara.ui.newChick.NewChickFragment"
         android:label="fragment_new_chick"
-        tools:layout="@layout/fragment_new_chick" />
+        tools:layout="@layout/fragment_new_chick">
+        <action
+            android:id="@+id/action_newChick_to_myChicks"
+            app:destination="@+id/myChicksFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myChicksFragment"
         android:name="com.cafeconpalito.chikara.ui.myChicks.MyChicksFragment"

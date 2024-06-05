@@ -60,6 +60,8 @@
     <string name="add_element">Add Element</string>
     <string name="add_elements_to_chick">Add elements to publish chick</string>
     <string name="add_title_chick">Add title to publish chick</string>
+    <string name="chick_publish_success">Chick published correctly</string>
+    <string name="chick_publish_fail">Something went wrong, the chick was not published</string>
 
     <!--UserSettings-->
     <string name="text_change_account">To change user</string>
@@ -78,5 +80,6 @@
     <string name="leer">READ_USER</string>
     <string name="borrar">DELETE_USER</string>
     <string name="top_chik">TOP_CHIK</string>
+
 
 </resources>

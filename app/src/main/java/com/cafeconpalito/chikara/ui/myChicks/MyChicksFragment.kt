@@ -65,6 +65,7 @@ class MyChicksFragment : Fragment() {
                     //TODO AL DARLE BUSCAR LLAMAR A LA API
                     true
                 }
+
                 else -> false
             }
         }
@@ -126,7 +127,7 @@ class MyChicksFragment : Fragment() {
                     try {
                         withContext(Dispatchers.Main) {
                             //BORRA EL CHICK DE LA DB
-                            chickUseCase.deleteChick(mutableListChicks[position-1]._id)
+                            chickUseCase.deleteChick(mutableListChicks[position - 1]._id)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
