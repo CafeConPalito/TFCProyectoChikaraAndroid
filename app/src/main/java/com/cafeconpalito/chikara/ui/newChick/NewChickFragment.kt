@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.cafeconpalito.chikara.R
 import com.cafeconpalito.chikara.databinding.FragmentNewChickBinding
 import com.cafeconpalito.chikara.domain.assembler.ChickDtoAssembler
@@ -96,6 +97,9 @@ class NewChickFragment : Fragment() {
 
         //Añado decoracion al RecyclerView
         binding.rvChickElements.addItemDecoration(DotIndicatorDecoration(requireContext()))
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rvChickElements)
 
         //Le paso la lista al adaptador inicialmente.
         // Con lambda
