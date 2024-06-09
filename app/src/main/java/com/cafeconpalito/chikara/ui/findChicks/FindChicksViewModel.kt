@@ -15,7 +15,7 @@ class FindChicksViewModel @Inject constructor(private val chickUseCases: ChickUs
     ViewModel() {
 
     //La lista que vamos a devolver con la info
-    val topChicksLiveData = MutableLiveData<List<ChickDto>>()
+    val topChicksLiveData = MutableLiveData<MutableList<ChickDto>>()
 
     //La lista que mientras carga los datos esta mostrando datos Dummies
     val isLoading = MutableLiveData<Boolean>()
@@ -32,7 +32,7 @@ class FindChicksViewModel @Inject constructor(private val chickUseCases: ChickUs
 
             isLoading.postValue(true)
             val response = chickUseCases.getTopChicks()
-            topChicksLiveData.postValue(response)
+            topChicksLiveData.postValue(response.toMutableList())
             isLoading.postValue(false)
 
         }

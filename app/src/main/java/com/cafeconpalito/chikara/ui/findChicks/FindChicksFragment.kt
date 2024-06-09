@@ -34,8 +34,6 @@ class FindChicksFragment : Fragment() {
     @Inject
     lateinit var chickUseCase: ChickUseCases
 
-    private var mutableListChicks: MutableList<ChickDto> = emptyList<ChickDto>().toMutableList()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,10 +81,10 @@ class FindChicksFragment : Fragment() {
                         layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                        mutableListChicks = listTopChicks.toMutableList()
+                        //mutableListChicks = listTopChicks.toMutableList()
                         //Paso la nueva lista de datos!
                         //TODO MIRAR SI FUNCIONA
-                        adapter = FindChicksAdapter(mutableListChicks) { deleteChick(it, adapter) }
+                        adapter = FindChicksAdapter(listTopChicks) { deleteChick(it, adapter,listTopChicks) }
                     }
                 }
 
@@ -105,7 +103,8 @@ class FindChicksFragment : Fragment() {
      */
     private fun deleteChick(
         position: Int,
-        adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?
+        adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?,
+        listTopChicks: MutableList<ChickDto>
     ) {
 
         //Lanzar la pregunta al Usuario.
@@ -118,11 +117,13 @@ class FindChicksFragment : Fragment() {
 
                 dialog.dismiss()
 
+                val chickId = listTopChicks.get(position)._id
+
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
                         withContext(Dispatchers.Main) {
                             //BORRA EL CHICK DE LA DB
-                            chickUseCase.deleteChick(mutableListChicks[position - 1]._id)
+                            chickUseCase.deleteChick(chickId)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -130,7 +131,7 @@ class FindChicksFragment : Fragment() {
                 }
 
                 //Elimino el elemento de la lista
-                mutableListChicks.removeAt(position)
+                listTopChicks.removeAt(position)
                 //Notifico que se ha borrado
                 adapter!!.notifyItemRemoved(position)
 
