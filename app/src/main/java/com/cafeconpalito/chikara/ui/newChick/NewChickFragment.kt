@@ -122,7 +122,12 @@ class NewChickFragment : Fragment() {
 
         val newElement = uri
         contentElements.add(newElement)
-        adapter.notifyDataSetChanged()
+
+        adapter.notifyItemInserted(contentElements.size - 1)
+
+        // Desplazar el RecyclerView al nuevo elemento
+        val position = contentElements.size - 1
+        binding.rvChickElements.smoothScrollToPosition(position)
 
     }
 
