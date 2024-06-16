@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_background"
+
+
+    tools:context=".ui.user.UserFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_user_start_data"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_user_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_logo_chikara_500" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            style="@style/BaseFont"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_user_picture"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintVertical_bias="0.504"
+            android:text="@string/hint_username" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_user_start_data"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etNewUserName"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_user_login"
+                android:hint="@string/hint_new_username"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etNewEmail"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_email_box"
+                android:hint="@string/hint_new_email"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etNewUserName" />
+
+
+             <EditText
+                android:id="@+id/etNewPassword"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_password_login"
+                android:hint="@string/hint_new_password"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etNewEmail" />
+
+            <EditText
+                android:id="@+id/etNewPasswordRepeat"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_password_login"
+                android:hint="@string/hint_new_repeat_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etNewPassword" />
+
+
+
+            <Button
+                android:id="@+id/btnUpdateInfo"
+                style="@style/BaseFont"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/psgreen"
+                android:elevation="4dp"
+                android:text="@string/text_update_info"
+                android:textAlignment="gravity"
+                app:layout_constraintBottom_toTopOf="@id/llRegister"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etNewPasswordRepeat" />
+
+            <LinearLayout
+                android:id="@+id/llRegister"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnUpdateInfo">
+
+                <TextView
+                    android:id="@+id/tvLogin"
+                    style="@style/TextoDiscreto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/text_change_account" />
+
+                <Button
+                    android:id="@+id/btnLogOut"
+                    style="@style/TextoDiscreto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:backgroundTint="@color/ssblue"
+                    android:elevation="4dp"
+                    android:text="@string/text_logOut"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- colores para chickara de https://flatuicolors.com/palette/es -->
+    <color name="lppurple">#40407a</color>
+    <color name="lpurple">#474787</color>
+    <color name="secondary">#aaa69d</color>
+    <color name="primary_background">#227093</color>
+    <color name="psgreen">#218c74</color>
+    <color name="fred">#ff5252</color>
+    <color name="sporange">#ff793f</color>
+    <color name="ctgrey">#d1ccc0</color>
+    <color name="ssblue">#34ace0</color>
+    <color name="swwhite">#f7f1e3</color>
+
+    <!--    Toast-->
+    <color name="toast_text_error">#ff5252</color>
+    <color name="toast_text">#f7f1e3</color>
+    <color name="toast_background">#DF14516C</color>
+
+    <!--    Icon Colors-->
+    <color name="selected_icon_background">#6DFF793F</color> <!-- Cambia el color como desees -->
+
+    <!--    Edit Text Colors-->
+    <color name="error_edit_text">#ff5252</color>
+    <color name="default_edit_text">#FFFFFFFF</color>
+    <color name="default_hint_edit_text">#aaa69d</color>
+    <color name="error_hint_edit_text">#ff5252</color>
+
+    <!--    Select Colors para copiar y pegar-->
+    <color name="select_text">#aaa69d</color>
+
+    <!--    Switch Colors-->
+    <color name="switch_track_checked_false">#218c74</color>
+    <color name="switch_track_checked_true">#ff5252</color>
+    <color name="switch_thumb_checked_false">#FFFFFFFF</color>
+    <color name="switch_thumb_checked_true">#FFFFFFFF</color>
+
+    <color name="test1">#FF0000</color>
+    <color name="test2">#ffe78f</color>
+
+    <color name="shadow_color">#80000000</color> <!-- Un color negro semi-transparente -->
+
+    <color name="translucent_background">#4F227093</color>
+
+</resources>

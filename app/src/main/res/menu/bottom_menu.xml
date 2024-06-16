@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/userFragment"
+        android:icon="@drawable/ic_user"
+        android:title="@string/user"
+        />
+
+    <item
+        android:id="@+id/myChicksFragment"
+        android:icon="@drawable/ic_my_chicks"
+        android:title="@string/my_chicks"
+        />
+
+    <item
+        android:id="@+id/newChickFragment"
+        android:icon="@drawable/ic_new_chick"
+        android:title="@string/new_chick"
+        />
+
+    <item
+        android:id="@+id/findChicksFragment"
+        android:icon="@drawable/ic_find_chicks"
+        android:title="@string/find_chick"
+        />
+
+    <item
+        android:id="@+id/nakamaFragment"
+        android:icon="@drawable/ic_account_group"
+        android:title="@string/nakamas"
+        />
+
+</menu>

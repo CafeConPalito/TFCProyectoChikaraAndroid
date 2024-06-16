@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">Chikara</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Menu Titles -->
+    <string name="user">User</string>
+    <string name="my_chicks">My Chicks</string>
+    <string name="new_chick">New</string>
+    <string name="find_chick">Find</string>
+    <string name="nakamas">Nakamas</string>
+
+    <!--Toast Error Messages  -->
+    <string name="ToastGenericFail">Something strange has happened. Please try again</string>
+    <string name="ToastUserAlreadyExists">Username already exists</string>
+    <string name="ToastUserFormatIncorrect">The user\'s name must be at least three characters long and cannot contain @</string>
+    <string name="ToastEmailAlreadyExists">Email is already registered</string>
+    <string name="ToastEmailFormatIncorrect">Email is formatted incorrectly</string>
+    <string name="ToastPasswordFormatIncorrect">The password format is incorrect. Uppercase, Lowercase, Number, and at least 8 characters</string>
+    <string name="ToastPasswordMissMatch">Passwords don\'t match</string>
+    <string name="ToastFieldWithOutBlankSpaces">Field cannot contain blank space</string>
+    <string name="ToastUserInfoUpdateSuccessful">"User info update successful"</string>
+    <string name="ToastUserInfoUpdateFailed">"User info update failed"</string>
+
+    <!--Alert Dialog-->
+    <string name="AlertDialogAccept">Accept</string>
+    <string name="AlertDialogCancel">Cancel</string>
+    <string name="AlertDialogMessage">Are you sure you want to delete?</string>
+    <string name="AlertDialogTittle">Delete Chick</string>
+
+    <!--Hints-->
+    <string name="hint_title_chick">Chik tittle</string>
+    <string name="hint_autor">Author</string>
+    <string name="hint_n_likes">nº likes</string>
+    <string name="hint_username_email">Username/Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_first_last_name">First Last Name</string>
+    <string name="hint_second_last_name_optional">Second Last Name (optional)</string>
+    <string name="hint_birth_date">Birth Date</string>
+    <string name="hint_repeat_password">Repeat password</string>
+    <string name="hint_find_chick">Find Chick</string>
+
+    <!--Key Words-->
+    <string name="text_login">Login</string>
+    <string name="text_register">Register</string>
+    <string name="text_don_t_have_an_account">Don\'t have an account?</string>
+    <string name="text_already_have_an_account">Already have an account?</string>
+    <string name="text_update_info">Update Information</string>
+    <string name="text_welcome_message">Welcome To Chikara</string>
+    <string name="text_welcome_message2">Your strength in your pocket</string>
+
+    <!--New Chick-->
+    <string name="publish">Publish</string>
+    <string name="element_type">Element Type</string>
+    <string name="chick_title">Chick Title</string>
+    <string name="private_chick">Private Chick</string>
+    <string name="add_element">Add Element</string>
+    <string name="add_elements_to_chick">Add elements to publish chick</string>
+    <string name="add_title_chick">Add title to publish chick</string>
+    <string name="chick_publish_success">Chick published correctly</string>
+    <string name="chick_publish_fail">Something went wrong, the chick was not published</string>
+
+    <!--UserSettings-->
+    <string name="text_change_account">To change user</string>
+    <string name="text_logOut">Logout</string>
+    <string name="hint_new_username">New Username</string>
+    <string name="hint_new_email">New Email</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="hint_new_repeat_password">Repeat New Password</string>
+
+    <!--Nakamas-->
+    <string name="nakamas_implementation">Coming Soon</string>
+    <string name="test_buttons">Test Buttons</string>
+    <string name="save_chik">SAVE_CHIK</string>
+    <string name="cifrar">ENCRYPT</string>
+    <string name="guardar">LOAD_USER</string>
+    <string name="leer">READ_USER</string>
+    <string name="borrar">DELETE_USER</string>
+    <string name="top_chik">TOP_CHIK</string>
+
+
+</resources>

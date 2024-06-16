@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@color/primary_background"
+    android:orientation="vertical"
+    tools:context=".ui.register.RegisterActivity">
+
+    <ProgressBar
+        android:id="@+id/pbRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="50dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_logo_chikara_500" />
+
+            <EditText
+                android:id="@+id/etUserName"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_user_login"
+                android:hint="@string/hint_username"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_email_box"
+                android:hint="@string/hint_email"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etUserName" />
+
+            <EditText
+                android:id="@+id/etFirstName"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_account_details"
+                android:hint="@string/hint_first_name"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+            <EditText
+                android:id="@+id/etFirstLastName"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_account_details"
+                android:hint="@string/hint_first_last_name"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
+
+            <EditText
+                android:id="@+id/etSecondLastName"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_account_details"
+                android:hint="@string/hint_second_last_name_optional"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etFirstLastName" />
+
+            <EditText
+                android:id="@+id/etBirthDate"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_calendar_range"
+                android:hint="@string/hint_birth_date"
+                android:imeOptions="actionNext"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etSecondLastName" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_password_login"
+                android:hint="@string/hint_password"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etBirthDate" />
+
+            <EditText
+                android:id="@+id/etPasswordRepeat"
+                style="@style/EditTextField"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_password_login"
+                android:hint="@string/hint_repeat_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                style="@style/BaseFont"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/psgreen"
+                android:elevation="4dp"
+                android:text="@string/text_register"
+                android:textAlignment="gravity"
+                app:layout_constraintBottom_toTopOf="@id/llRegister"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etPasswordRepeat" />
+
+            <LinearLayout
+                android:id="@+id/llRegister"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnRegister">
+
+                <TextView
+                    android:id="@+id/tvLogin"
+                    style="@style/TextoDiscreto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/text_already_have_an_account" />
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    style="@style/TextoDiscreto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:backgroundTint="@color/ssblue"
+                    android:elevation="4dp"
+                    android:text="@string/text_login"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

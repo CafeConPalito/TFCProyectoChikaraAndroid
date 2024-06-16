@@ -1,0 +1,67 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Chikara" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/primary_background</item>
+        <item name="android:textColorHighlight">@color/select_text</item>
+        <item name="android:colorControlActivated">@color/select_text</item>
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <!--Estilo base-->
+    <style name="BaseFont">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <!--Estilo del título-->
+    <style name="TextoTítulo" parent="BaseFont">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <!--ChickPreview Text View Styles-->
+    <!--Estilo del fuente Base ItemChickPreview-->
+    <style name="FuenteBaseItemChickPreview" parent="BaseFont">
+        <item name="android:textColor">@color/primary_background</item>
+    </style>
+
+    <!--Estilo del título ItemChickPreview-->
+    <style name="TextoTítuloItemChickPreview" parent="FuenteBaseItemChickPreview">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!--Chick Text View Styles-->
+    <!--Estilo del fuente base Chick-->
+    <style name="TextItemChick" parent="BaseFont">
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+    <style name="TítleItemChick" parent="TextItemChick">
+        <item name="android:textSize">30sp</item>
+    </style>
+    <style name="SmallTextItemChick" parent="TextItemChick">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!--ChickIcons Styles (delete, update)-->
+    <style name="chickIcons">
+        <item name="android:tint">@color/white</item>
+    </style>
+
+    <!--Estilo campos rellenables-->
+    <style name="EditTextField" parent="BaseFont">
+        <item name="android:textColorHint">@color/default_hint_edit_text</item>
+        <item name="android:backgroundTint">@color/default_edit_text</item>
+    </style>
+
+    <!--Estilo campos discretito-->
+    <style name="TextoDiscreto" parent="BaseFont">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Theme.Chikara" parent="Base.Theme.Chikara" />
+
+</resources>

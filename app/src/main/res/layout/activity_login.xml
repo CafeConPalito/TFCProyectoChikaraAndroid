@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@color/primary_background"
+    tools:context=".ui.login.LoginActivity"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/pbLoggin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        />
+
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/ic_logo_chikara_500" />
+
+
+    <EditText
+        android:id="@+id/etUserName"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="40dp"
+        android:drawableRight="@drawable/ic_user_login"
+        android:hint="@string/hint_username_email"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        style="@style/EditTextField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:drawableRight="@drawable/ic_password_login"
+        android:hint="@string/hint_password"
+        android:layout_marginHorizontal="40dp"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        style="@style/EditTextField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUserName" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        style="@style/BaseFont"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/psgreen"
+        android:text="@string/text_login"
+        android:textAlignment="gravity"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/llRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+    <LinearLayout
+        android:id="@+id/llRegister"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin">
+
+        <TextView
+            style="@style/TextoDiscreto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:text="@string/text_don_t_have_an_account" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            style="@style/TextoDiscreto"
+            android:layout_marginRight="10dp"
+            android:layout_width="0dp"
+            android:elevation="4dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:backgroundTint="@color/ssblue"
+            android:text="@string/text_register"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
